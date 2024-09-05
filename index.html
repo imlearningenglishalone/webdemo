@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+<style>
+  html{min-width:435px;min-height:180px;padding:0;margin:0}
+body{background: #292a2d;color:#c5c4c4;font-size:12px}
+textarea{
+  font-size: 16px;
+}
+#date{font-size:24px;color:blue}
+
+#wrapper {
+  width: 70%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background-color: #292a2d;
+}
+.textarea1 {
+    width: 600px;
+    height: 550px;
+    color:#c5c4c4;
+    background: #202124;
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+  .textarea2 {
+    width: 250px;
+    height: 240px;
+    color:#c5c4c4;
+    background: #202124;
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+  .left{
+    float:left;
+      width:500px;
+    }
+    .right{
+    float:right;
+    width:400px;
+}
+</style>
+  </head>
+  <body>
+    
+    <h1>Improve Your G-Code</h1>
+    <input type="radio" class="chngRadio" name="GFG" id="3head" value="3head" checked>3Head<br>
+ 
+<input type="radio" class="chngRadio" name="GFG" id="2head" value="2head">2Head<br>
+ 
+<input type="radio" class="chngRadio" name="GFG" id="Shoda" value="Shoda">Shoda<br><br>
+    
+    <p></p>
+<div id="wrapper">
+             
+<textarea class="textarea1" name="text" id="w3review" placeholder="%O0000 (Name)
+
+N130 G0 G90 X546.528 Y-269.918 A0. S3500 M3
+N140 G43 H1 Z25.
+N150 Z10.
+.....
+N300 G0 Z25.
+N310 M5
+N320 G91 G28 Z0.
+N330 G28 X0. Y0. A0.
+N340 M30
+%" spellcheck="false"></textarea>
+                   <p></p>
+                   <button class="button" id="notify-button"> Save </button>
+</div>
+
+
+
+
+
+
+
+
+<script>
+    changeSelect = function(){
+    var matches = document.querySelectorAll('.chngRadio');
+    for (match in matches) {
+      matches[match].onchange = function() {
+        console.log(this.value);
+        document.getElementById("w3review").value = "";
+      }
+    }
+}();
+
+document.getElementById("notify-button").addEventListener("click",function(e){
+ 		 
+    var tools = "";
+    var endpro = "";
+    if(document.getElementById('3head').checked){
+      endpro=`;M81\n;M92\n;M95\n;M14\n;M24\n;M34\nG53Z0.0\n;M212\nG53X0.0Y0.0\nM30\n`;
+    }
+    if(document.getElementById('2head').checked){
+      endpro = `G59 T1 T9 \nG43 H1 \nG900 \nG0 Z100. \nM5 \nG901 G64\n(M100) (CHU Y KHI DUNG BAN NANG VAN TU DONG ) \n(M99)`;
+     }
+     if(document.getElementById('Shoda').checked){
+          endpro =`M99`;
+     }
+     
+    var str = document.getElementById("w3review").value;
+
+    var str2 = str;
+
+    var r = /G43 H+\d+ /g; //Tool lengh (-FIX TOOLS NUMBER LENGHT MORE THAN TWO IT NOT REGONIZE)
+    var r2 = /N+\d+ G21/; // G21 inches -or milimeter
+    var r3 = /N+\d+ T+\d+ .*/g; //N100 T1 M6  (-FIX TOOLS NUMBER LENGHT MORE THAN TWO IT NOT REGONIZE)
+    var r4 = /(G90 G17 G54|G90 G54)/g; //G90 G17 Or G90 G54 OR
+   // var r5 = /([(]DATE.*|[(]MCAM FILE.*|[(]NC FILE.*|[(]MATERIAL.*)/g;
+    var r5 = /([(]DATE.*|[(]MCAM FILE.*|[(]NC FILE.*)/g;
+    var r5_time = /([(]MATERIAL.*)/g;
+
+    var r6 = /([%]\n+O0000)/;
+    
+   var r7 = /N+\d+ M5/g;
+   var r8 = /N+\d+ M01/g;
+   var r9 = /N+\d+ M30/g;
+   
+   var r10 = /N+\d+ A0./g;
+   var r11 = /N+\d+ G91 G28 Z0./g;
+   var r12 = /N+\d+ G28.*A0./g;
+   
+   var r13 = /^(?=\n)$|^\s*|\s*$|\n\n+/gm; //remove blank Line
+   var r14 = /(N+\d+) (G5+\d)/g;    //N580 G54   REPLACE WITH   N580 ...
+   var r16 = /(N+\d+) (G0 G90) (G+\d+ G+\d+|G+\d+)/g; //(N930 G0 G90 G17 G54)  OR (N930 G0 G90 G54) REAPLACE
+
+    var speed = str.match(/S+\d+ M3/g); //get all speed
+    var tl = 0; //number of tools
+    function fn_changetools(e){
+        
+          var newtool;
+          var ss = speed[tl].split(' ');  //get only s18000 -remove m3
+          
+          if(document.getElementById('3head').checked){
+                  newtool =`;M82\n;M92\n;M95\n;M211\n;G90\n;G40\n;G80\n;G53Z0.0\n;G54P01\n;M11\n;M13 ${ss[0]}\n`;
+            }          
+          if(document.getElementById('2head').checked){
+                  newtool =`G901\nG54 T1 T9 (M)\nM3 M13 ${ss[0]}\nG43 H1\nG900\n`;
+            }
+          if(document.getElementById('Shoda').checked){
+              newtool =`T#1 M6`;
+             }
+          tl++;
+          return newtool;
+    }
+
+    var s = str.replace(r,"G43 "); //G43
+      s = s.replace(r2,"");
+      s = s.replace(r3,fn_changetools); //change tool
+      //s = s.replace(r4,"G90");
+      
+      s = s.replace(r5,""); //     var insert_time =  new Date().toLocaleString();
+      s = s.replace(r5_time,"(" + new Date().toLocaleString() + ")");
+
+      s = s.replace(r6,"%O0000");
+
+      s = s.replace(r7,"");
+      s = s.replace(r8,"");
+      s = s.replace(r9,endpro); //endprogam
+      s = s.replace(r10,"");
+      s = s.replace(r11,"");
+      s = s.replace(r12,"");
+      
+       s = s.replace(r13,"");
+       s = s.replace(r14,"$1");
+       s = s.replace(r16,"$1 $2");
+       
+    document.getElementById("w3review").value = s; 
+    return;      
+
+});
+  </script>
+  </body>
+</html>
