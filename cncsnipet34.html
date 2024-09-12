@@ -714,13 +714,8 @@ a:link, a:visited{
     <a class="menu-link saveSelect lk-Select visible">Save</a>
     <br>&nbsp;
     <a class="menu-link pushDataServer">Post Server</a>
-    <br>&nbsp;
     <a class="menu-link newproduct">Add New</a>
     <a class="menu-link CodeID">Code ID</a>
-    <!-- <a class="menu-link search">Clean Search </a>
-    <a class="menu-link newone">New Pannel</a> 
-    <a class="menu-link moverows">Move Rows </a>  -->
-
     <a class="menu-link machine">Machine1</a>
     <a class="menu-link machine">Machine2</a>
     <a class="menu-link machine">Machine3</a>
@@ -732,9 +727,12 @@ a:link, a:visited{
     <a class="menu-link show-active">Show Active</a>
     <a class="menu-link show-pending">Show Pending</a>
 
-    <a class="menu-link font">font size</a>
+    <br>&nbsp;
+    <a class="menu-link show-Home">Home</a>
+
+    <!-- <a class="menu-link font">font size</a>
     <a class="menu-link reload">reload</a>
-    <a class="menu-link time">Get Time</a>
+    <a class="menu-link time">Get Time</a> -->
     </div>
 
 <!--Form add new-->
@@ -789,34 +787,6 @@ a:link, a:visited{
     </div>
     </form>
 </noscript>
-
-
-
-<!-- Add New TO TABLE
-<form class="form_addTable ft-modal"  name="form_addTable" style="border:0px solid #ccc">
-<div class="divAddTable">
-<div class="ft-modal-content">
-<h1>Add New to table1</h1>
-<p>Please fill in this form to create an new Pannel.</p>
-<hr>
-<label for="in_addid"><b>ID</b></label>
-<input type="text" autocomplete="off" placeholder="LRD395" name="in_addid" required>
-<label for="in_addset"><b>Set</b></label>
-<input type="text" autocomplete="off" placeholder="100" name="in_addset" required>
-<label for="in_addcont"><b>Cont</b></label>
-<input type="text" autocomplete="off" placeholder="LRD-24-12.." name="in_addcont" required>
-<label for="in_addfsc"><b>FSC</b></label>
-<input type="checkbox" name="in_addfsc" >
-<div class="clearfix">
-  <button type="reset" class="cancelbtn">Cancel</button>
-  <button type="submit" class="signupbtn">Save</button>
-</div>
-</div>
-</div>
-</form>
--->
-
-
 <noscript class="main_table_extened">
     <!-- teamplates for EXTENED TR -->
         <td colspan=9>
@@ -1003,7 +973,6 @@ a:link, a:visited{
        </div>  
    </div>  
 </noscript>
-
 <noscript class="Extended_partList">
  
 </noscript>
@@ -1179,15 +1148,7 @@ function db_dataLocalUpdate(callback){
                 callback();
             })
 }
-//***********************************
-//  MAIN PROGAM 
-//***********************************
-db_getDataLocal( () => {
-    main_table_newLoad();
-    main_table_extened();
-    main_searching();
-});
-main_navbar();
+
 
 
 
@@ -1195,6 +1156,9 @@ main_navbar();
 //  FUNCTION OF MAIN PROGRAM
 //***********************************
 function main_navbar(){
+    
+    return;
+
     // dofun.navbar_click = navbar_Click
     // dofun.navbar_addEvent = navbar_addEvent
     return (() => {
@@ -1273,7 +1237,7 @@ function main_navbar(){
             let elementClick = e.target.classList;
             let nav = e.currentTarget.classList
 
-            console.log("Navbar::",elementClick[1])
+            //console.log("Navbar::",elementClick[1])
             switch(elementClick[1]) {
             case "close-btn":
 
@@ -1289,10 +1253,10 @@ function main_navbar(){
                     console.log("edit remove table")
                     tableRemove();
             break;
-            case "link-select":
+            case "link-select    111111":
 
                     //push function to Temp
-                    dofun.table_expaned_clean(); //clean all expaned
+                    modules.main_tableExtened_clean(); //clean all expaned
                     dofun.tableSelectCleanUp = tableSelectCleanUp; //clean row choice color
                     //dofun.update_status = update_status; 
                     if(elementClick.toggle("select")){
@@ -1350,19 +1314,19 @@ function main_navbar(){
             case "show-all":
             case "show-active":
             case "show-pending":
-                        main_showStatusTb(elementClick[1].replace('show-',''))
-                        nav.toggle("show")
+                        //main_showStatusTb(elementClick[1].replace('show-',''))
+                        //nav.toggle("show")
                 break;
             case "CodeID":
-                        modules.main_table_showIDCODE();
-                        nav.toggle("show")
+                        //modules.main_table_showIDCODE();
+                        //nav.toggle("show")
                 break;
             case "machine":
-                        modules.main_table_showMACHINES(parseInt( e.target.textContent.slice(-1) ));
-                        nav.toggle("show")
+                        //modules.main_table_showMACHINES(parseInt( e.target.textContent.slice(-1) ));
+                        //nav.toggle("show")
                 break;
             default:
-                console.log("nothing happen")
+                //console.log("nothing happen")
             }//end-Swich
     }//end-func
 }
@@ -2494,7 +2458,7 @@ modules.event_longPress();
 
 
 
-modules.main_table_showIDCODE = () => {
+modules.main_table_showIDCODE = function() {
 
 
         //Make list of ID
@@ -2513,23 +2477,15 @@ modules.main_table_showIDCODE = () => {
     }
 
 
-    //modifile function event listenner
-    dofun.table_expaned = (e) => {
+    //modifile function event listenner 
+    modules.main_tableExtened_show = function (e){
+
             let tr = e.target.closest("tr");
-            //console.log({tr})
-               // console.log(tr.cells[0].textContent ,tr.cells[2].textContent)
-                //tr.style.background = "yellow";
-
-                if(!!dofun.tableSelect) return (()=> { 
-                    console.log("Youre in SelectMode")
-                    dofun.table_expaned_clean();
-                })()
-
         
             let next_element = tr.nextElementSibling;
             if(next_element && next_element.classList.contains("newRow")){
                 next_element.classList.toggle("new_Hide");
-                return dofun.table_expaned_clean()
+                return modules.main_tableExtened_clean()
             } 
             if(tr.classList.contains("newRow")) return console.log("nothing happen");
 
@@ -2607,6 +2563,7 @@ modules.main_table_showIDCODE = () => {
 
 
     }
+    
 
     //print TR ROWS TO TABLE
     let table =  document.querySelector("table tbody");
@@ -2662,7 +2619,7 @@ modules.form_addTable = (e) => {  /// khogn xai xoa ham nay
 
 
 
-modules.main_table_showMACHINES = (e) => {
+modules.main_table_showMACHINES = function(e) {
         let list = [6,6,7,8,9,10]
         let machin = list[e]
         if([1,2,3,4,5].indexOf(e) < 0) return console.log("Id machine have tobe 1,2,3,4,5")
@@ -2699,4 +2656,269 @@ Add new
     modules.main_table_showMACHINES  // Show Machines Plan , Machine 1 ,2 , 3 , 4, 5
 
 
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+modules.main_tableExtened = e =>  modules.main_tableExtened_show(e)
+modules.main_tableExtened_show = function(e) {
+        //Show extened Row when Click on Table get more infomation
+            let tr = e.target.closest("tr"); // let row_id = tr.rowIndex;
+            let next_element = tr.nextElementSibling;
+
+            if(next_element.classList.contains("newRow")){
+                next_element.classList.toggle("new_Hide");
+                return modules.main_tableExtened_clean()
+            } 
+            if(tr.classList.contains("newRow")) return console.log("nothing happen");
+
+            let parent = tr;
+            let id = parseInt(parent.dataset.key)
+
+            let s_set = dofun.data_sheet1[id][12]
+            let s_cont = dofun.data_sheet1[id][11]
+            let s_id = dofun.data_sheet1[id][1]
+
+            let s_date = main_getbacktime(dofun.data_sheet1[id][14])
+            let s_parts = dofun.data_sheet1[id][3]
+
+            let s_comments = dofun.data_sheet1[id][4]
+            let s_m1 = dofun.data_sheet1[id][6]
+            let s_m2 = dofun.data_sheet1[id][7]
+            let s_m3 = dofun.data_sheet1[id][8]
+            let s_m4 = dofun.data_sheet1[id][9]
+            let s_m5 = dofun.data_sheet1[id][10]
+
+            //Machines Expaned -Show what part you're have done
+            const split_commentvalue = (text) => {
+                    if(!text) return "";
+                    let text_output = [];
+                    let news_comment = JSON.parse(text)
+
+            //UNlock this to see what have done when Extention tr open        
+                    let ss_m1 = [],
+                        ss_m2 = [],
+                        ss_m3 = [],
+                        ss_m4 = [],
+                        ss_m5 = []
+
+                        news_comment.data.forEach(e => {
+                                //console.log(e)
+                                let part = e[0],
+                                    qty = e[1],
+                                    machines = e[3];
+
+                                text_output.push(part)
+                               // part = (qty =="") ? part : part +"/"+ qty
+
+                                let maachine = machines.split(",")
+                                    maachine.forEach(m => {
+
+                                        if (m == "M1")  ss_m1.push(part) 
+                                        if (m == "M2")  ss_m2.push(part) 
+                                        if (m == "M3")  ss_m3.push(part) 
+                                        if (m == "M4")  ss_m4.push(part) 
+                                        if (m == "M5")  ss_m5.push(part) 
+                                    })
+                        })
+            //UNlock this to see what have done when Extention tr open    
+                        // s_m1 = ss_m1.join(",")
+                        // s_m2 = ss_m2.join(",")
+                        // s_m3 = ss_m3.join(",")
+                        // s_m4 = ss_m4.join(",")
+                        // s_m5 = ss_m5.join(",")
+            //UNlock this to see what have done when Extention tr open    
+
+                        //Remove duplicate values
+                        let uniqueArray = text_output.filter(function(item, pos) {
+                            return text_output.indexOf(item) == pos;
+                        })
+
+                        //SORT String by NUMBER
+                        const new_sort = (text) => {
+                                let string = text //.toString().split(",")
+                                const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+                                return string.sort(collator.compare).join(",")
+                        }
+                    return new_sort(uniqueArray)
+            }
+            s_comments = split_commentvalue(s_comments);
+            
+            //add new one
+            let newRow = document.createElement("tr")
+                newRow.setAttribute("Class","newRow new_Hide");
+                newRow.dataset.key = id;
+
+            //get teamplates 
+            let text = document.querySelector("NOSCRIPT.main_table_extened").textContent; //document.getElementsByTagName("noscript")[1].textContent;
+            let newtxt = text.replace(/{s_cont}/, s_cont)
+                            .replace(/{s_set}/, s_set)
+                            .replace(/{s_id}/g, s_id)
+                            .replace(/{s_date}/, s_date)
+                            .replace(/{s_parts}/, s_parts)
+                            .replace(/{s_comments}/, s_comments)
+                            .replace(/{s_m1}/, s_m1)
+                            .replace(/{s_m2}/, s_m2)
+                            .replace(/{s_m3}/, s_m3)
+                            .replace(/{s_m4}/, s_m4)
+                            .replace(/{s_m5}/, s_m5)
+
+                          // .replace(/{data-script}/, divDataScript)
+
+                newRow.innerHTML = newtxt;
+
+                //insert HTML 
+                // modules.extened_row
+                //add data-script 
+                newRow.querySelector("div.data-script").innerHTML = modules.extened_row(id)
+
+            document.querySelector("table tbody").insertBefore(newRow,tr.nextElementSibling);
+            setTimeout(() => newRow.classList.remove("new_Hide"),100)
+}
+modules.main_tableExtened_clean = function() {
+    setTimeout(() => document.querySelectorAll("table tbody tr.newRow").forEach((row,i) => row.remove()) ,500);
+}
+
+modules.clickMenu = function(e) {
+     // Check if the clicked element is the target (or contains specific classes)
+    const element = e.target;
+
+    // Array of class names to check
+    const className = element.textContent
+    switch (className) {
+            case 'Code ID':
+                    //Show CODE ID
+                    modules.main_table_showIDCODE()
+                break;
+            case 'Select':
+                    //Click on mode Select
+                    modules.clickMenu_selectMode(element)
+                break;
+            case 'Machine1':
+            case 'Machine2':
+            case 'Machine3':
+            case 'Machine4':
+            case 'Machine5':
+                    //Machines..
+                    modules.main_table_showMACHINES(parseInt(className.slice(-1) ))
+                break;
+            case 'Show All':
+            case 'Show Active':
+            case 'Show Pending':
+                    //doing..
+                    main_showStatusTb(className.replace('Show ','').toString().toLowerCase())
+            break;
+            case 'Home':
+                    //doing.. ×
+                    location.reload();
+            break;
+            case '×':
+                    //close - ×
+            break;
+            default:
+                console.log('No matching action found');
+    }
+    //Hide menu
+    element.classList.toggle("show")
+}
+modules.clickMenu_selectMode = function(e){
+
+            const element = e
+            toggle_SubMenu();
+            if(element.classList.toggle("select")){
+
+                //ad event to table when click on rows will make it to selected
+                modules.tmp_selectRow = tableSelect // make refence to remove evenlistenner
+                document.querySelector("table tbody").addEventListener("click", modules.tmp_selectRow)
+
+                //remove even Table Row EXtened
+                document.querySelector("table tbody").removeEventListener("click", modules.main_tableExtened)
+
+                //Clean rows are Expending
+                modules.main_tableExtened_clean(); //clean all Expaned
+
+            }
+            else {
+                //re-add event table Extaned
+                document.querySelector("table tbody").addEventListener("click", modules.main_tableExtened) 
+
+                //Clean up everything
+                tableSelectCleanUp();
+                document.querySelector("table tbody").removeEventListener("click", modules.tmp_selectRow)
+
+                //Leak memory
+                modules.tmp_selectRow = null;
+            } 
+
+            function tableSelectCleanUp(){
+                document.querySelectorAll("table tbody tr.row-select").forEach((row,i) => row.classList.remove("row-select"));
+            }
+            function tableSelect(e){ //Click on table row
+                e.target.closest("tr").classList.toggle("row-select");
+            }
+            function toggle_SubMenu(){
+                //hide sub-menu of Select
+                document.querySelectorAll(".menu-link.lk-Select").forEach(e => e.classList.toggle("visible"))
+            }
+}
+
+modules.clickMenu_User = function(){
+    //Make menu For User
+    document.querySelector("a.menu-link.link-select").style.display = "none"
+    document.querySelector("a.menu-link.newproduct").style.display = "none"
+    document.querySelector("a.menu-link.pushDataServer").style.display = "none"
+}
+
+// add event click into button Menu
+document.querySelector("#sideNavigation").addEventListener('click', e => modules.clickMenu(e))
+document.querySelector("a.ham-icon").addEventListener("click", () => document.getElementById("sideNavigation").classList.toggle("show"))
+document.querySelector("a.close-btn").addEventListener("click", () => document.getElementById("sideNavigation").classList.toggle("show"))
+
+//menu for User
+modules.clickMenu_User()
+</script>
+
+
+
+<script>
+//***********************************
+//  MAIN PROGAM 
+//***********************************
+db_getDataLocal( () => {
+    main_table_newLoad();
+    //main_table_extened();
+    document.querySelector("table tbody").addEventListener("click", modules.main_tableExtened)
+    main_searching();
+});
+//main_navbar();
+</script>
+
+
+
+<!---
+remove function Navbar
+    main_navbar();
+    main_table_extened();
 -->
