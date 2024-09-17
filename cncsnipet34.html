@@ -2808,6 +2808,12 @@ modules.clickMenu = function(e) {
     // Array of class names to check
     const className = element.textContent
     switch (className) {
+            case "Get Server":
+                        document.getElementById("sideNavigation").classList.toggle("show")
+                        db_remove(() => {
+                                location.reload();
+                        });
+                break;
             case 'Code ID':
                     //Show CODE ID
                     modules.main_table_showIDCODE()
