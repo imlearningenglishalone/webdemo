@@ -1,0 +1,2933 @@
+<!DOCTYPE html><!-- DATA SHEET IN POST.sheet-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes" >
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Document</title>
+    <style>
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+
+}
+body{
+    min-height: 100vh;
+    background-color:rgba(216, 223, 249, 0.955);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main.table {
+    width: 82vw;
+    height: 90vh;
+    background-color: #fff5;
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
+    overflow: hidden;
+
+}
+.table_header {
+    width:100%;
+    height: 10%;
+    background-color: #fff4;
+    padding: .8rem 1rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.table_header .input_group{
+    width: 35%;
+    height: 100%;
+    background-color: #fff5;
+    padding: .8rem 1rem;
+    border-radius: 2rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.table_header .input_group input{
+    width: 100%;
+    padding: 0 .5rem 0 .1rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+.table_header .input_group:hover{
+    width: 45%;
+    background-color: #fff7;
+    box-shadow: 0 .1rem .4rem #0002;
+}
+
+.table_body::-webkit-scrollbar{
+    width: .5rem;
+    height: .5rem;
+}
+.table_body::-webkit-scrollbar-thumb{
+    border-radius: .5rem;
+    background-color: #0004;
+
+    /* visibility: hidden;  */
+    /* Hide */
+    visibility: visible; 
+}
+.table_body:hover::-webkit-scrollbar-thumb{
+    border-radius: .5rem;
+    background-color: #0004;
+    visibility: visible; /* auto Show */
+}
+.table_body {
+    width: 95%;
+    height: 100%;
+    max-height: calc(89% - .8rem);
+    background-color:#fffb;
+    margin: .8rem auto;
+    border-radius: .6rem;
+    overflow-x: auto;
+}
+table {
+    width: 100%;
+}
+table, th, td {
+    border-collapse: collapse;
+    padding: 1rem;  /* make width and Height of TR */
+    text-align: left;
+}
+thead th {
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #d5d1defe;
+}
+thead th {
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #d5d1defe;
+}
+tbody>tr>:nth-child(5){ 
+    white-space: nowrap; /*COnt CODE*/
+    /* background-color:rgba(198, 180, 180, 0.733); */
+}
+
+tbody tr:nth-child(even){ 
+    background-color: #0000000b;
+}
+tbody tr:hover {
+    background-color: #a2bde966;
+}
+td img {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    vertical-align: middle;
+
+}
+p.status_wait {
+    padding: .4rem 1rem;
+    color: #b30021;
+    background-color: #d893a3;
+    border-radius: 2rem;
+    justify-content: center;
+}
+p.status_working {
+    padding: .4rem 1rem;
+    color: #6f5b03;
+    background-color: #dfc863;
+    border-radius: 2rem;
+    justify-content: center;
+}
+p.status_next {
+    padding: .4rem 1rem;
+    color: #006b21;
+    background-color: #86e49d;
+    border-radius: 2rem;
+    align-content: center;
+
+}
+p.col1.pending {
+    color: #b30021;
+    background-color: #d893a3;
+}
+p.col1.active {
+    color: #6f5b03;
+    background-color: #dfc863;
+}
+p.col1.next {
+    color: #006b21;
+    background-color: #86e49d;
+}
+p.col1.done {
+    color: #000;
+    background-color:transparent;
+}
+p.col1 {
+    color: #006b21;
+    background-color: #86e49d;
+    padding: .5rem 0 .5rem 0;
+    border-radius: 2rem;
+    text-align: center;
+}
+p.col3{
+    color: #04040454;
+    padding-top: 0.4rem;
+}
+@media (max-width:1000px) {
+    td:not(:first-of-type){
+        min-width: 5rem;
+    }
+    tr td:nth-of-type(2){  
+        min-width: .2rem;
+    }
+}
+
+/* changing width of all colum */
+tr th:nth-child(7){
+    /* Status colum */
+    text-align: center;
+    background-color: #a8c4cf;
+
+}
+tr th:nth-child(4){
+    /* Status colum */
+    text-align: center;
+    background-color: #a8c4cf;
+
+}
+
+
+/* Search animation SHOW HIDE */
+tbody tr {
+    --delay: .1s;
+    transition: .5s ease-in-out var(--delay), background-color 0s;
+}
+tbody tr.hide{
+    opacity: 0;
+    transform: translateY(100%);
+}
+tbody tr.hide *{
+    padding:0 !important;
+    margin: 0;
+    font-size:0;
+    width:0; 
+    transition: .2s ease-in-out .8s;
+}
+tbody tr.hide *{
+    margin: 0 !important;
+    height:0;
+    transition: .2s ease-in-out .4s;
+}
+
+
+/* Make some P col3 Descripttion 
+ INsert P in to td3 descripttion
+*/
+tr td:nth-child(333) p {
+    padding-top: .5rem;
+    padding-left: .5rem;
+    padding-bottom: .5rem;
+    margin-top: .4rem;
+    /* padding: .4rem 1rem; */
+    color: #09537f;
+    background-color: #FBD5F9;
+    border-radius: 2rem;
+    align-content: center;
+}
+tr td:nth-of-type(3) {
+    min-width: 14rem;
+}
+
+/*TABLE insert NEW ROW */
+tbody tr.newRow td {
+    padding-left: 50%; 
+    /* background-color: #d0de9ffe; */
+    background-color: #a2bde966;
+    padding: 0.5rem;
+    /* border-radius: 50%; */
+}
+tbody tr.new_Hide{
+    opacity:0;
+    transform: translateY(100%);
+
+    /* transition: grid-template-rows 500ms; */
+    max-height: fit-content;
+}
+tbody tr.new_Hide *{
+    padding:0 !important;
+    margin:0;
+    font-size:0;
+    transition: .2s ease-in-out .2s;
+    transition-delay: 1s;
+}
+tbody tr.row-select{
+    background-color: #6f5b03; 
+}
+tbody tr.row-select-moved{
+    background-color: #67aa9d;
+}
+/* UL _ LI add new row in table */
+ul {
+    padding: 0;
+    width: 50vw;
+    margin: .5rem .5rem 1rem .5rem;
+    list-style: none;
+    background-color: #f8fcff;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 .4rem .8rem #0005;
+
+  }
+  
+  tr h1 {
+  margin: 0;
+  font-size: 1rem;
+  }
+  
+  .flex-container {
+    padding: 0.8rem 0;
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+li {
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    /* border-bottom: solid 1px red; */
+    padding: 0.5rem;
+    text-align: left;
+ }
+ li:nth-of-type(even){
+    background-color: #d6ebfb;
+}
+li p {
+    width: 60vw;
+    /* background-color: #86e49d; */
+    line-height: 1.5;
+    text-align: left;
+    padding-left: 1rem;
+    white-space: pre; /* textContent \r\n = newline  */
+}
+li h1 {
+    width: 20vw;
+    /* background-color: #86e49d; */
+    line-height: 1.5;
+    text-align: left;
+}
+
+
+/*Align text Center of colum*/
+tr td:not(:nth-of-type(3)):not(:nth-of-type(8)):not(:nth-of-type(9)),
+tr th:not(:nth-of-type(3)):not(:nth-of-type(8)):not(:nth-of-type(9)){
+    text-align: center;
+}
+
+
+/*an vai col trong table
+/*HIDE COLUM 5-GROUPID - it's not necessary*/
+tr th:nth-child(6), td:nth-child(6){
+    display: none;
+}
+
+/*custome media (min-width:300px) and  (orientation: portrait) */
+@media (orientation: portrait){
+    main.table {
+        width: 100vw;
+        height: 100vh;
+    }
+    .table_body {
+        width: 100%;
+        height: 100vh;
+        user-select: none;
+    }
+    body {
+        overscroll-behavior: none; /* prevent scroll on chrome mobile */
+        touch-action: manipulation !important;
+    }
+    /* Hide ALL COl except 1,3 in Mobiphone */
+    tr td:not(:nth-of-type(1)):not(:nth-of-type(3)),
+    tr th:not(:nth-of-type(1)):not(:nth-of-type(3)){
+        display: none;
+    }
+    ul {
+        width: 90vw;
+    }
+    li {
+        width: 90vw;
+        /* background-color: #eaff9c; */
+     
+    }
+
+  }
+
+
+/*Left NAV menu menu*/
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    background-color: #2f655e;
+    overflow-x: hidden;
+    padding-top: 4rem;
+    transition: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    /* font-family: "Bebas Neue"; */
+}
+
+.sidenav a {
+    padding: 0.3rem 1rem; 
+    /* padding: 0.5rem 1rem; */
+    text-decoration: none;
+    color: #bdbdbd;
+    display: block;
+    transition: 0.4s;
+    white-space: nowrap;
+    font-size: 1.5rem;
+}
+
+.sidenav a:hover {
+    color: white;
+    background: #9e9e9e;
+}
+/* Position and style the close button (top right corner) */
+.sidenav .close-btn { /* khong xai cai nay nua */
+    display:block; 
+    position: absolute;
+    top: -1rem;
+    right: 1rem;
+    font-size: 5rem;
+}
+
+.sidenav .close-btn:hover {
+    background: initial;
+    transform: scale(1.2);
+}
+.sidenav .close-btn-checked {
+    background-color: #7b1a23;
+}
+.sidenav a.select {
+    background-color: #7b1a23;
+}
+.sidenav a.visible {
+    display: none;
+}
+
+.sidenav a.lk-Select {
+    background: #402424
+}
+.sidenav.show {
+    width: 250px;
+}
+
+
+/*form Addnew Pannel */
+/*==== ADD NEW PANNEL & ALERT PANNEL ====*/
+/*===== CSS Form addnews pannel && ALERT =====*/
+.ft-modal {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+        z-index: 100;	
+        overflow: auto;
+    position: fixed;
+        visibility: hidden;
+    margin-top: -250px;
+    background: rgba(0,0,0,.8);
+    
+    transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+}
+
+.ft-modal.visible {
+    opacity: 1;
+    margin-top: 0px;
+    visibility: visible;	
+}
+
+.ft-modal-content {
+    width: 92%;
+    padding: 25px;
+    background: #FFF;
+    max-width: 600px;
+    margin: 70px auto;
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.ft-modal-content {font-family: Arial, Helvetica, sans-serif;}
+.ft-modal-content * {box-sizing: border-box}
+/* Full-width input fields */
+.ft-modal-content input[type=text], .divAddnew input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+.ft-modal-content input[type=text]:focus, .divAddnew input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+.ft-modal-content hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+.ft-modal-content button {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    /* width: 100%; */
+    opacity: 0.9;
+}
+
+.ft-modal-content button:hover {
+    opacity:25;
+}
+
+/* Extra styles for the cancel button */
+.ft-modal-content .cancelbtn {
+    padding: 14px 20px;
+    background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.ft-modal-content .cancelbtn,
+.ft-modal-content .signupbtn {
+    float: left;
+    width: 50%;
+}
+
+/* Add padding to container elements */
+.ft-modal-content {
+    padding: 16px;
+}
+
+/* Clear floats */
+.ft-modal-content .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.ft-modal-content .hidden{
+    visibility: hidden;
+}
+
+
+/* Icon Menu Left */
+.topnav1 {
+      display: flex;
+      justify-content: flex-start;
+  }
+
+
+  /* NEWWW - BLOCK CLICK ON SCREEN */
+ .blockClick{
+    position: absolute;
+    z-index: -900;
+    width: 100%;
+    height: 100%;
+ }
+ .blockClick.show{
+    z-index: 100;
+    background-color: #edf1f1c2;
+ }
+
+
+
+ .chbg {
+ background-color: #006b21;
+}
+
+
+
+
+
+
+/*=====================================*/
+/*Menu icon Moving Rows at bottom page*/
+/*====================================*/
+div.a_bottomnav nav.a_bottomnav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    /* background-color: #2f655e; */
+    overflow-x: hidden;
+    padding-top: 4rem;
+    transition: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+div.a_bottomnav nav.a_topnav {
+    /* background-color: #9CCC65; */
+    overflow: hidden;
+    z-index: 9999;
+    bottom: 30px;
+    right: 25px;
+    color: rgb(255, 255, 255);
+
+    /* opacity: 0.6; */
+    transition: 0.3s;
+}
+div.a_bottomnav nav.a_topnav a {
+    margin: 0.5rem 0 0 0;
+    float: left;
+    display: block;
+    padding: 0.2rem;
+    text-decoration: none;
+    z-index: 9999;
+    font-size: 3rem;
+    text-align: center;
+    border-radius: 15px;
+    background-color: #025543;
+}
+div.a_bottomnav nav.a_topnav a:hover, 
+div.a_bottomnav nav.a_topnav a:focus{
+    color: rgb(50, 155, 184);
+    font-size: 3rem;
+    opacity: 1;
+}
+
+div.a_bottomnav.hide{
+    display: none;
+}
+div.a_bottomnav a.ham-icon-up.hide , 
+div.a_bottomnav a.ham-icon-down.hide {
+    display: none;
+}
+div.a_bottomnav a.ham-i.hide {
+    display: none;
+}
+.hide{
+    display: none;
+}
+a:link, a:visited{
+    text-decoration: none;
+    color: #4351e3;
+}
+    </style>
+</head>
+<body>
+
+
+<!-- <style>
+.newSelect-list{
+        position: absolute;
+        z-index: 9999;
+        width: 30% !important;
+}
+</style>
+
+<select size="1" onfocus="this.size = 5" onchange="this.blur()" onblur="this.size = 1; this.blur()">
+    <option selected>--Select--</option>
+    <option value="">Firmiana set table & chairs</option>
+    <option value="">Two</option>
+    <option value="">Three</option>
+    <option value="">Four</option>
+    <option value="">Five</option>
+    <option value="">Six</option>
+    <option value="">Seven</option>
+    <option value="">Eight</option>
+    <option value="">Nine</option>
+    <option value="">Ten</option>
+</select>
+
+<p>&nbsp;</p>
+<br> -->
+
+
+<!-- TEAMPLATES-->
+<main class="table">
+<section class="table_header">
+  <div class="topnav1">
+      <nav id="sideNavigation1" class="topnav">
+          <a class="ham-icon">
+          <svg width="30" height="30">
+              <path d="M0,5 30,5" stroke="#000" stroke-width="5"></path>
+              <path d="M0,14 30,14" stroke="#000" stroke-width="5"></path>
+              <path d="M0,23 30,23" stroke="#000" stroke-width="5"></path>
+          </svg></a>
+      </nav>
+      <h1 style="padding: 0 0 0 0.4rem;">Menu</h1>
+  </div>
+  <div class="input_group">
+      <input type="search" name ="table search" placeholder="search data..."></input>
+  </div>
+</section>
+<section class="table_body">
+  <table>
+      <thead>
+      <th>ID-1</th>
+      <th>Icon-2</th>
+      <th>Description-3</th>
+      <th>Set-4</th>
+      <th>Cont-5</th>
+      <th>Group-1</th>
+      <th>Status</th>
+      <th>the other-7</th>
+      <th>day/time-8</th>
+      </thead>
+      <tbody>
+        <tr><td colspan="9"> Loading ...</td></tr>
+      </tbody>
+  </table>
+</section>
+</main>
+
+
+<!--left Menu-->
+<div id="sideNavigation" class="sidenav">
+    <a class="menu-link close-btn">×</a>
+    <a class="menu-link reload">Get Server</a>
+
+
+    <a class="menu-link link-select">Select</a>
+    <a class="menu-link link-edit lk-Select visible">Modifile</a>
+    <a class="menu-link link-remove lk-Select visible">Remove</a>
+    <a class="menu-link status-active lk-Select visible">Active</a>
+    <a class="menu-link status-pending lk-Select visible">Pending</a>
+    <a class="menu-link status-done lk-Select visible">Done</a>
+    <a class="menu-link status-null lk-Select visible">New</a>
+    <a class="menu-link lk-Select visible">&nbsp</a>
+    <a class="menu-link saveSelect lk-Select visible">Save</a>
+    <br>&nbsp;
+    <a class="menu-link pushDataServer">Post Server</a>
+    <a class="menu-link newproduct">Add New</a>
+    <a class="menu-link CodeID">Code ID</a>
+    <a class="menu-link machine">Machine1</a>
+    <a class="menu-link machine">Machine2</a>
+    <a class="menu-link machine">Machine3</a>
+    <a class="menu-link machine">Machine4</a>
+    <a class="menu-link machine">Machine5</a>
+
+    <br>&nbsp;
+    <a class="menu-link show-all">Show All</a>
+    <a class="menu-link show-active">Show Active</a>
+    <a class="menu-link show-pending">Show Pending</a>
+
+    <br>&nbsp;
+    <a class="menu-link show-Home">Home</a>
+
+    <!-- <a class="menu-link font">font size</a>
+    <a class="menu-link reload">reload</a>
+    <a class="menu-link time">Get Time</a> -->
+    </div>
+
+<!--Form add new-->
+<!--FROM ADD NEW-->
+<noscript>
+    <form class="form_addnew" style="border:0px solid #ccc">
+    <div class="divAddnew ft-modal">
+    <div class="ft-modal-content">
+    <h1>Add New Pannel</h1>
+    <p>Please fill in this form to create an new Pannel.</p>
+    <hr>
+    <label for="in_addid"><b>ID</b></label>
+    <input type="text" autocomplete="off" placeholder="LRD395" id="in_addid" name="in_addid" required>
+
+    <label for="in_part"><b>Part#</b></label>
+    <input pattern="[0-9]*"  autocomplete="off" type="text" placeholder="1,2" id="in_part" name="in_part" >
+
+    <p><b>Pannel</b> <br><br>
+    <input type="radio" id="in_pannel" name="in_pannel" value="1220" checked>
+    <label for="in_pannel">1220</label>
+    <input type="radio" id="in_pannel" name="in_pannel" value="1525">
+    <label for="in_pannel">1525</label>
+    <input type="radio" id="in_pannel" name="in_pannel" value="1830">
+    <label for="in_pannel">1830</label>
+    <input type="radio" id="in_pannel" name="in_pannel" value="other">
+    <label for="in_pannel">other</label>
+    </p>
+    <label for="in_pannelother" class="hidden"><b style="color: #04AA6D">Other Pannel</b></label>
+    <input type="text"  autocomplete="off" placeholder="172x490" id="in_pannelother" name="in_pannelother" class="hidden">
+
+    <label for="in_thickness"><b>Thickness</b></label>
+    <input type="text"  autocomplete="off" placeholder="15" id="in_thickness" name="in_thickness" >
+
+    <label for="in_progam"><b>Part/program</b></label>
+    <input type="text"  autocomplete="off" placeholder="4" id="in_progam" name="in_progam" >
+
+    <label for="in_multiple"><b>multiple x2 x3 x4</b></label>
+    <input type="text"  autocomplete="off" placeholder="1" id="in_multiple" name="in_multiple" >
+
+    <label for="in_insert"><b>Insert Part</b></label>
+    <input type="text"  autocomplete="off" placeholder="3=5,4=1" id="in_insert" name="in_insert" >
+
+    <input type="hidden"  name="action" value="addnewpannel" >
+
+    <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Add more
+    </label>
+    <div class="clearfix">
+    <button type="reset" class="cancelbtn">Cancel</button>
+    <button type="submit" class="signupbtn">Save</button>
+    </div>
+    </div>
+    </div>
+    </form>
+</noscript>
+<noscript class="main_table_extened">
+    <!-- teamplates for EXTENED TR -->
+        <td colspan=9>
+                <ul>
+                <li >
+                    <h1>Cont</h1>
+                    <p contenteditable="true">{s_cont}</p>
+                    <span onclick=spanliPartclick(this,11)>&#x2713;</span> <!-- click to save to colum numbers in DATA-->
+                </li>
+                <li >
+                    <h1>Set</h1>
+                    <p contenteditable="true">{s_set}</p>
+                    <span onclick=spanliPartclick(this,12)>&#x2713;</span>
+                </li>
+                <li >
+                    <h1 onclick="spanliPartclick_pdf('{s_id}')" style="cursor: pointer;">ID</h1> <!-- Links PDF -->
+                    <p contenteditable="true">{s_id}</p>
+                    <span onclick=spanliPartclick_Id(this) data-sid="{s_id}"> &#x2713; </span>
+                </li>
+                <li>
+                <h1>Date</h1><p>{s_date}</p>
+                <span onclick=spanliPartclick(this,14)>&#x2713;</span> 
+            </li>
+                <li>
+                <h1 onclick="modules.ex_partsList(this,'{s_id}')">Parts</h1>
+                <p contenteditable="true">{s_parts}</p>
+                <span class="spanliPartclick" onclick=spanliPartclick(this,3)>&#x2713;</span>
+                </li>
+            </ul>
+            <ul>
+            <li>
+                <h1 onclick="">Finished</h1>
+                <p contenteditable="true">{s_comments}</p>
+                <span onclick=spanliPartclick(this,4)>&#x2713;</span> 
+            </li>
+
+            <li>
+                <h1>M1</h1>
+                <p contenteditable="true">{s_m1}</p>
+                
+                <span onclick=spanliPartclick(this,6)>&#x2713;</span>
+            </li>
+            <li>
+                <h1>M2</h1>
+                <p contenteditable="true">{s_m2}</p>
+                
+                <span onclick=spanliPartclick(this,7)>&#x2713;</span>
+            </li>
+            <li >
+                <h1>M3</h1>
+                <p contenteditable="true">{s_m3}</p>
+                <span onclick=spanliPartclick(this,8)>&#x2713;</span>
+            </li>
+            <li>
+                <h1>M4</h1>
+                <p contenteditable="true">{s_m4}</p>
+                <span onclick=spanliPartclick(this,9)>&#x2713;</span>
+            </li>
+            <li>
+            <h1>M5</h1>
+            <p contenteditable="true">{s_m5}</p>
+            <span onclick=spanliPartclick(this,10)>&#x2713;</span>
+        </li>
+        </ul>
+        <!--Plan machine-->
+        <ul>
+            <li>
+                <!-- <h1 onclick="main_Click_Extended_Machine(this)">Add</h1>
+                <h1 onclick="main_Click_Extended_Machine_View(this)">View</h1>
+                <h1 onclick="main_Click_Extended_Machine_clean(this)">Close</h1> -->
+
+                <h1 onclick="modules.ex_machineAdd(this)">Add</h1>
+                <h1 onclick="modules.ex_machineView(this)">View</h1>
+                <h1 onclick="modules.ex_machineViewDataScript(this)">Dump</h1>
+                <h1 onclick="modules.ex_machineClean(this)">CloseUp</h1>
+                
+                <!-- () => modules.test() -->
+                <!-- <p contenteditable="true">{s_comments}</p>
+                <span onclick=spanliPartclick(this,4)>&#x2713;</span>  -->
+            </li>
+        </li>
+        </ul>
+
+
+        <!--EDIT TEXTAREA-->
+        <ul class="data-script hide" style="text-align: left; padding: 15px;">
+                <div class="data-script" contenteditable="true" style="line-height: 1.5rem; word-spacing: 40px; white-space: pre;">{data-script}</div>
+                <br>
+                <input type="submit" value="Update" onclick="modules.click_datascriptUpdate(this)">       
+        </ul>
+        </td>
+</noscript>
+<noscript class="newproduct">
+    <form class="form_addTable ft-modal"  name="form_addTable" style="border:0px solid #ccc">
+        <div class="divAddTable">
+        <div class="ft-modal-content">
+        <h1>Add New to table1</h1>
+        <p>Please fill in this form to create an new Pannel.</p>
+        <hr>
+        <label for="in_addid"><b>ID</b></label>
+        <input type="text" autocomplete="off" placeholder="LRD395" name="in_addid" required>
+        <label for="in_addset"><b>Set</b></label>
+        <input type="text" autocomplete="off" placeholder="100" name="in_addset" required>
+        <label for="in_addcont"><b>Cont</b></label>
+        <input type="text" autocomplete="off" placeholder="LRD-24-12.." name="in_addcont" required>
+        <label for="in_addfsc"><b>FSC</b></label>
+        <input type="checkbox" name="in_addfsc" >
+
+        <input type="hidden"  name="in_description" value="">
+        <input type="hidden"  name="in_codeId" value="">
+
+        <div class="clearfix">
+          <button type="reset" name="btn_reset" class="cancelbtn">Cancel</button>
+          <button type="submit" name="btn_submit" class="signupbtn">Save</button>
+        </div>
+        </div>
+        </div>
+</form>
+</noscript>
+<noscript class="machineInput">
+    <!-- Teamplates - Show get in put in machine-->
+    <form class="form_addTable ft-modal"  name="form_addTable" style="border:0px solid #ccc">
+        <div class="divAddTable">
+        <div class="ft-modal-content">
+        <h1>Add New to table1</h1>
+        <p>Please fill in this form to create an new Pannel.</p>
+        <hr>
+        <label for="in_addid"><b>ID</b></label>
+        <input type="text" autocomplete="off" placeholder="LRD395" name="in_addid" required>
+        <label for="in_addset"><b>Set</b></label>
+        <input type="text" autocomplete="off" placeholder="100" name="in_addset" required>
+        <label for="in_addcont"><b>Cont</b></label>
+        <input type="text" autocomplete="off" placeholder="LRD-24-12.." name="in_addcont" required>
+        <label for="in_addfsc"><b>FSC</b></label>
+        <input type="checkbox" name="in_addfsc" >
+
+        <input type="hidden"  name="in_description" value="">
+        <input type="hidden"  name="in_codeId" value="">
+
+        <div class="clearfix">
+          <button type="reset" name="btn_reset" class="cancelbtn">Cancel</button>
+          <button type="submit" name="btn_submit" class="signupbtn">Save</button>
+        </div>
+        </div>
+        </div>
+</form>
+</noscript>
+<noscript class="Extended_Machine">
+    <style>
+        div.Extended_Machine input[type="checkbox"]{ 
+            margin-right: 1rem;
+        }
+    </style>
+    <!-- Extended_Machine -->
+    <div class="divAddTable">
+       <div class="ft-modal-content">
+       <h1>Extended_Machine</h1>
+       <p>Extended Click On Machine.</p>
+       <hr>
+       <label><b>Part#</b></label>
+       <input type="text" autocomplete="off" placeholder="1" required>
+       <label><b>Qty</b></label>
+       <input type="text" autocomplete="off" placeholder="100">
+       <input type="text" autocomplete="off" placeholder="minutes">  
+
+       <label><b>M1</b></label>
+       <input type="checkbox" name="in_exMachine" value="M1">
+       <label><b>M2</b></label>
+       <input type="checkbox" name="in_exMachine" value="M2"> 
+       <label><b>M3</b></label>
+       <input type="checkbox" name="in_exMachine" value="M3">
+       <label><b>M4</b></label>
+       <input type="checkbox" name="in_exMachine" value="M4">
+       <label><b>M5</b></label>
+       <input type="checkbox" name="in_exMachine" value="M5">
+
+       <input type="hidden"  name="in_description" value="">
+       <input type="hidden"  name="in_codeId" value="">
+       <p>&nbsp;</p>
+           <div class="clearfix">
+               <button type="reset" name="btn_reset" class="cancelbtn">Cancel</button>
+               <button type="submit" name="btn_submit" class="signupbtn">Save</button>
+           </div>
+       </div>  
+   </div>  
+</noscript>
+<noscript class="Extended_partList">
+ 
+</noscript>
+
+<div class="blockClick"></div>
+<div class="newproduct"></div>
+<div class="Extended_Machine ft-modal"></div>
+
+
+<!--Bottom Icon Moving ROWS-->
+<!--Bottom Icon Moving ROWS-->
+<div class="a_bottomnav hide">
+    <nav class="a_topnav" style="position : fixed; display:block">
+        <a class="ham-icon-up hide"> <b class="ham-up">&#8657;</b></a>
+        <br>
+        <a class="ham-i" style="font-size: 2rem;"> <b class="ham-i">&#10070;</b> </a>
+        <br>
+        <a class="ham-icon-down hide" ><b class="ham-down">&#8659;</b></a>
+      </nav>
+</div> 
+
+
+</body>
+</html>
+<!-- ######## END OF TEAMPLATES HTML ######## -->
+<!-- ######## END OF TEAMPLATES HTML ######## -->
+<!-- ######## END OF TEAMPLATES HTML ######## -->
+<!-- ######## END OF TEAMPLATES HTML ######## -->
+<!-- ######## END OF TEAMPLATES HTML ######## -->
+
+
+
+
+
+<!-- script Menu-link-->
+<script>
+if (!window.indexedDB) {
+  console.log("Sorry! Your browser does not support IndexedDB");
+}
+//https://flaviocopes.com/indexeddb/
+//****** CONFIGS ****//
+const dofun = [];
+
+//POST SCRIPT - POST SHEET
+const URL_SHEETS = "https://script.google.com/macros/s/AKfycbzld7ALZz7aF0uODdI0zarsXJ7ZOWMdnNqlnq3YfcHzw3x2Oz1-mRHD_-zEahG77W-y/exec?";
+//let response = await fetch('https://script.google.com/macros/s/AKfycbzld7ALZz7aF0uODdI0zarsXJ7ZOWMdnNqlnq3YfcHzw3x2Oz1-mRHD_-zEahG77W-y/exec?', {
+
+//********************************
+//  DATABSE FUNCTION
+//********************************
+function db_open (callback){
+       //this function run one time.
+        const request = indexedDB.open("testdb", 1);
+        request.onsuccess = e => {
+                let db = e.target.result
+                let transaction = db.transaction("books", "readwrite");
+                let dbStore = transaction.objectStore("books");
+                callback(dbStore);
+                db.close();
+        };
+
+        //First time Install DB - When you dont have DB
+        request.onupgradeneeded = e => {      
+                let db = e.target.result;
+                db.createObjectStore('books', {keyPath: 'id'});
+                console.log(e.type,"=> books Create sussesfully!")
+        };
+}
+function db_remove(callback){
+        return (() => {
+                indexedDB.deleteDatabase("testdb").onsuccess = (event) => {
+                    console.log("Database deleted successfully");
+                    //console.log(event.result); // should be undefined
+                    callback(event)
+                }
+        })();
+}
+function db_get (name, callback){
+        //db_get("data_pannel2",e => console.log(e.target.result))
+        db_open(db => {
+                //const request = db.get(name);
+                const request = db.getAll(); //get all
+                request.onsuccess = e => callback(e);
+        })
+}
+function db_add (name, array, callback){
+        //db_add("data_pannel",[["lrd395","sdaasdasda"],["lrd411","sdaasdasda"]])
+        const sheet1 = {id: name, value: array};
+        db_open(db => {
+                const request = db.put(sheet1);
+                request.onsuccess = e => callback(e);
+        })
+}
+function db_addArr (array, callback){
+        //db_add("data_pannel",[["lrd395","sdaasdasda"],["lrd411","sdaasdasda"]])
+        const sheet1 = {id: "sheet1", value: array.sheet1},
+            pannel = {id: "pannel", value: array.pannel},
+            code = {id: "code", value: array.code},
+            id = {id: "id", value: array.id};
+        
+        db_open(db => {
+   
+                function putdata(name){
+                    console.log(name ,"Success adding!")
+                    if(name == "sheet1") callback();
+                }
+                db.put(sheet1).onsuccess = () => putdata("sheet1")
+                db.put(pannel).onsuccess = () => putdata("pannel")
+                db.put(code).onsuccess = () => putdata("code")
+                db.put(id).onsuccess = () => putdata("id")
+        })
+}
+
+function db_getDataSV(callback) {
+        //URL NAY CUA POST THU NGHIEM - KO PHAI CUA SHOWONWEB SHEET
+        const baseUrl = URL_SHEETS  // Please set your Web Apps URL.
+        const para = {
+                spreadsheetId: "",  // Please set your Google Spreadsheet ID.
+                sheetName: ""  // Please set the sheet name you want to retrieve the values.
+        };
+
+        console.log("Loading...")
+        const q = new URLSearchParams(para);
+        const url = baseUrl + "?" + q;
+        const connectSever = async () => {
+            const response = await fetch(url)
+            const result = await response.json();
+            const data = result; // result.sheet1, result.pannel, result.code, result.id 
+
+            console.log("LoadJSON ALL DONE!");
+            callback(data); 
+            
+        }
+        connectSever();
+}
+function db_getDataSaveLocal( callback ){
+            const saveDataLocal = (data) => {
+                    db_addArr(data,(e) => {
+                        //console.log("all thing are done! -LOCAL DATA has been Create!")
+                        dofun.data_sheet1 = data.sheet1.slice(0);//Clone - copy array to Varible
+                        dofun.data_pannel = data.pannel.slice(0);
+                        dofun.data_code = data.code.slice(0);
+                        dofun.data_id = data.id.slice(0);
+                        console.log("getDataSaveLocal:: dofun.data_sheet")
+                        callback();
+                    })
+            }
+            db_getDataSV(saveDataLocal);
+}
+function db_getDataLocal(callback){
+            db_get("sheet1, Pannel", e => {
+                let datalocal = e.target.result;
+                if(!datalocal.length) return (() =>{
+                        console.log("getDataLocal:: Not Found Data in LOCAL")
+                        db_getDataSaveLocal( () => {
+                            callback();
+                        })
+                        
+                })();
+                //dofun.data_sheet1Header = 
+                dofun.data_sheet1 = datalocal.find(( {id} ) => id == "sheet1").value.slice(0);
+                dofun.data_pannel = datalocal.find(( {id} ) => id == "pannel").value.slice(0);
+                dofun.data_code = datalocal.find(( {id} ) => id == "code").value.slice(0);
+                dofun.data_id = datalocal.find(( {id} ) => id == "id").value.slice(0);
+
+                console.log("getDataLocal:: dofun.data_sheet1")
+                callback();
+            })
+}
+function db_dataLocalUpdate(callback){
+            db_add("sheet1", dofun.data_sheet1, e => {
+                console.log("db_dataLocalUpdate:: dofun.data_sheet has been update!")
+                callback();
+            })
+}
+
+
+
+
+//***********************************
+//  FUNCTION OF MAIN PROGRAM
+//***********************************
+function main_navbar(){
+    
+    return;
+
+    // dofun.navbar_click = navbar_Click
+    // dofun.navbar_addEvent = navbar_addEvent
+    return (() => {
+        document.querySelector(".sidenav").addEventListener("click",navbar_Click);
+        document.querySelector("a.ham-icon").addEventListener("click", () => document.getElementById("sideNavigation").classList.toggle("show"));
+        document.querySelector("a.close-btn").addEventListener("click", () => document.getElementById("sideNavigation").classList.toggle("show"))
+        console.log("main:nabar")
+    })();
+
+    function tableSelect(e){ //Click on table row
+        e.target.closest("tr").classList.toggle("row-select");
+    }
+    function tableSelectCleanUp(){
+        document.querySelectorAll("table tbody tr.row-select").forEach((row,i) => row.classList.remove("row-select"));
+    }
+    function tableRemove(){ //find row by select and remove from id
+
+        const data_sheet1 = dofun.data_sheet1;
+        let valuesToRemove = []; //list of value to remove base on table and row id
+
+            document.querySelectorAll("table tbody tr.row-select").forEach(row =>{
+                console.log(row.rowIndex)
+                let rowId = row.rowIndex; //get ID of table
+                let id = parseInt(row.dataset.key);
+
+                    let value = data_sheet1[id]; //find item by id
+                    valuesToRemove.push(value); //push in to a list
+                    
+            });
+        if(valuesToRemove.length < 1) return console.log("nothing to remove") 
+
+        let new_sheet1 = data_sheet1.filter(item =>  !valuesToRemove.includes(item))
+        db_add ("sheet1", new_sheet1, () => {
+                console.log("sheet1 has been update!");
+                setTimeout(() => location.reload(),200)
+            })
+    }
+    function update_status(status){
+            let valuesToChange = []; //list of value to remove base on table and row id
+            document.querySelectorAll("table tbody tr.row-select").forEach(row =>{
+                let id = row.rowIndex; //get ID of table
+                let data_id = id - 1;
+                    valuesToChange.push(data_id); //push in to a list
+            });
+
+
+            if(valuesToChange.length < 1) return console.log("nothing select") 
+
+            let dataSelect = [];
+            valuesToChange.filter(item =>{
+                dataSelect.push(document.data_sheet1[item]) 
+
+                document.data_sheet1[item][5]= status
+
+            })
+
+
+
+            // console.log [valuesToChange,dataSelect];
+
+            //save to local Srtore
+            let new_sheet1 = document.data_sheet1;
+            new_sheet1.unshift(document.data_sheet1_header);
+            console.log(new_sheet1);
+
+            localStorage.removeItem("data_sheet1");
+            document.querySelector(".blockClick").classList.toggle("show");
+            localStorage.setItem('data_sheet1', JSON.stringify(new_sheet1));
+            setTimeout(() => location.reload(),2000) //delay 
+            //setTimeout(() => document.querySelector(".blockClick").classList.toggle("show"),2000) //delay
+
+        
+    }
+    function navbar_Click(e){ //Swich Click
+            //let cls = e.target.classList;
+            let elementClick = e.target.classList;
+            let nav = e.currentTarget.classList
+
+            //console.log("Navbar::",elementClick[1])
+            switch(elementClick[1]) {
+            case "close-btn":
+
+            break;
+            case "newproduct":
+                nav.toggle("show");
+                //getclass('form[name=form_addTable]', "show");
+                //make teamplates
+                form_addTable()
+
+            break;
+            case "link-remove":
+                    console.log("edit remove table")
+                    tableRemove();
+            break;
+            case "link-select    111111":
+
+                    //push function to Temp
+                    modules.main_tableExtened_clean(); //clean all expaned
+                    dofun.tableSelectCleanUp = tableSelectCleanUp; //clean row choice color
+                    //dofun.update_status = update_status; 
+                    if(elementClick.toggle("select")){
+                            dofun.tableSelect = tableSelect
+                            document.querySelector("table tbody").addEventListener("click",dofun.tableSelect)
+                            
+                            //document.querySelector(".menu-link.link-edit").classList.toggle("visible")
+                            //document.querySelector(".menu-link.link-remove").classList.toggle("visible")
+
+                            document.querySelectorAll(".menu-link.lk-Select").forEach(e => e.classList.toggle("visible"))
+                    } 
+                    else{
+                            document.querySelector("table tbody").removeEventListener("click",dofun.tableSelect)
+                           
+                            document.querySelectorAll(".menu-link.lk-Select").forEach(e => e.classList.toggle("visible"))
+
+                            //document.querySelector(".menu-link.link-edit").classList.toggle("visible")
+                            //document.querySelector(".menu-link.link-remove").classList.toggle("visible")
+                            
+                            dofun.tableSelectCleanUp();
+
+                            //remove temp function
+                            delete dofun.tableSelectCleanUp
+                            delete dofun.tableSelect
+                            delete dofun.update_status 
+                    }
+                    nav.toggle("show");
+            break;
+            case "reload":
+                        db_remove(() => {
+                                location.reload();
+                        });
+                        return;
+            break;
+            case "saveSelect":
+                        console.log("db_dataLocalUpdate - After Select")
+                        //update_dataServer();
+                        db_dataLocalUpdate(e => {
+                            location.reload();
+                        })
+ 
+                        return;
+            break;
+            case "pushDataServer":
+                    main_table_sendServer();
+
+            break;
+            case "status-active":
+            case "status-pending":
+            case "status-done":
+            case "status-null":
+                        main_table_statusRow(elementClick[1].replace('status-',''), tableSelectCleanUp)
+                        nav.toggle("show")
+                break;
+            case "show-all":
+            case "show-active":
+            case "show-pending":
+                        //main_showStatusTb(elementClick[1].replace('show-',''))
+                        //nav.toggle("show")
+                break;
+            case "CodeID":
+                        //modules.main_table_showIDCODE();
+                        //nav.toggle("show")
+                break;
+            case "machine":
+                        //modules.main_table_showMACHINES(parseInt( e.target.textContent.slice(-1) ));
+                        //nav.toggle("show")
+                break;
+            default:
+                //console.log("nothing happen")
+            }//end-Swich
+    }//end-func
+}
+function main_table_newLoad(callback){
+
+        const dFrag = document.createDocumentFragment(); 
+        dofun.data_sheet1.forEach((col , key) =>{
+
+            if(key < 1) return; //Next loop - Skip this loop - We don't want Header
+
+            let text = `<p class="col1 ${col[5]}">${col[0]}</p>`;
+            let text2 = `${col[2]}<p class="col3">${col[11]}</p><p class="col3">${col[12]}</p>`;
+
+            //let text7 = col[4] == "" ? col[3] : `${col[3]}<p class="col3">${col[4]}</p>`;
+
+            const new_sort = (text) => {
+                if(!text) return;
+                let string = text.toString().split(",")
+                const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+                return string.sort(collator.compare).join(",")
+            }
+            let partdo = new_sort(col[3])
+            
+            //make text Show on colum7
+            const split_commentvalue = (text) => {
+                    if(!text) return "";
+                    let text_output = [];
+                    let news_comment = JSON.parse(text)
+                        news_comment.data.forEach(e => {
+                                let part = e[0]
+                                text_output.push(part)
+                        })
+
+                        //Remove duplicate values
+                        let uniqueArray = text_output.filter(function(item, pos) {
+                            return text_output.indexOf(item) == pos;
+                        })
+                        const new_sort = (text) => {
+                            let string = text //.toString().split(",")
+                            const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+                            return string.sort(collator.compare).join(",")
+                        }
+                        //uniqueArray.sort().join(",")
+                    return new_sort(uniqueArray)
+            }
+            let text7 = split_commentvalue(col[4])
+
+
+
+
+            let tr = document.createElement('tr');
+                tr.dataset.key = key;
+                tr.innerHTML =`
+                <td>${text}</td> 
+                <td>${col[1]}</td>
+                <td>${text2}</td>
+                <td>${col[12]}</td>
+                <td>${col[11]}</td>
+                <td>${col[13]}</td>
+                <td>${col[5]}</td>
+                <td><p class="col3">${partdo}</p><p>${text7}</p></td>
+                <td>${col[14]}</td> `;
+            dFrag.appendChild(tr);
+               
+        });
+        document.querySelector("table tbody tr") 
+            && document.querySelector("table tbody tr").remove(); // remove first tr loadding
+        document.querySelector("table tbody").appendChild(dFrag);
+
+        //callback();
+}
+function main_table_extened(){
+        dofun.table_expaned = table_insertTR;
+        dofun.table_expaned_clean = table_expaned_clean;
+        document.querySelector("table tbody").addEventListener("click",(e) => dofun.table_expaned(e))
+
+        function table_expaned_clean(){
+                    setTimeout(() => document.querySelectorAll("table tbody tr.newRow").forEach((row,i) => row.remove()) ,500);
+        }
+        function table_insertTR(e){
+
+
+            if(!!dofun.tableSelect) return (()=> { 
+                    console.log("Youre in SelectMode")
+                    dofun.table_expaned_clean();
+                })()
+
+            let tr = e.target.closest("tr"); // let row_id = tr.rowIndex;
+            let next_element = tr.nextElementSibling;
+
+            if(next_element.classList.contains("newRow")){
+                next_element.classList.toggle("new_Hide");
+                return dofun.table_expaned_clean()
+            } 
+            if(tr.classList.contains("newRow")) return console.log("nothing happen");
+
+            let parent = tr;
+            let id = parseInt(parent.dataset.key)
+
+
+            // let s_set = tr.children[3].textContent
+            // let s_cont = tr.children[4].textContent
+            // let s_id = tr.children[1].textContent
+            // let s_date = tr.children[8].textContent
+            // let s_parts = tr.children[7].textContent
+            // let s_rowId = tr.children[5].textContent
+            //let s_uuid = tr.children[8].textContent
+
+            let s_set = dofun.data_sheet1[id][12]
+            let s_cont = dofun.data_sheet1[id][11]
+            let s_id = dofun.data_sheet1[id][1]
+
+            let s_date = main_getbacktime(dofun.data_sheet1[id][14])
+            let s_parts = dofun.data_sheet1[id][3]
+
+            let s_comments = dofun.data_sheet1[id][4]
+            let s_m1 = dofun.data_sheet1[id][6]
+            let s_m2 = dofun.data_sheet1[id][7]
+            let s_m3 = dofun.data_sheet1[id][8]
+            let s_m4 = dofun.data_sheet1[id][9]
+            let s_m5 = dofun.data_sheet1[id][10]
+
+            //Machines Expaned -Show what part you're have done
+            const split_commentvalue = (text) => {
+                    if(!text) return "";
+                    let text_output = [];
+                    let news_comment = JSON.parse(text)
+
+
+
+
+
+
+            //UNlock this to see what have done when Extention tr open        
+                    let ss_m1 = [],
+                        ss_m2 = [],
+                        ss_m3 = [],
+                        ss_m4 = [],
+                        ss_m5 = []
+
+                        news_comment.data.forEach(e => {
+                                //console.log(e)
+                                let part = e[0],
+                                    qty = e[1],
+                                    machines = e[3];
+
+                                text_output.push(part)
+                               // part = (qty =="") ? part : part +"/"+ qty
+
+                                let maachine = machines.split(",")
+                                    maachine.forEach(m => {
+
+                                        if (m == "M1")  ss_m1.push(part) 
+                                        if (m == "M2")  ss_m2.push(part) 
+                                        if (m == "M3")  ss_m3.push(part) 
+                                        if (m == "M4")  ss_m4.push(part) 
+                                        if (m == "M5")  ss_m5.push(part) 
+                                    })
+                        })
+            //UNlock this to see what have done when Extention tr open    
+                        // s_m1 = ss_m1.join(",")
+                        // s_m2 = ss_m2.join(",")
+                        // s_m3 = ss_m3.join(",")
+                        // s_m4 = ss_m4.join(",")
+                        // s_m5 = ss_m5.join(",")
+            //UNlock this to see what have done when Extention tr open    
+
+
+
+
+                        //Remove duplicate values
+                        let uniqueArray = text_output.filter(function(item, pos) {
+                            return text_output.indexOf(item) == pos;
+                        })
+
+                        //SORT String by NUMBER
+                        const new_sort = (text) => {
+                                let string = text //.toString().split(",")
+                                const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+                                return string.sort(collator.compare).join(",")
+                        }
+                    return new_sort(uniqueArray)
+            }
+            s_comments = split_commentvalue(s_comments);
+            
+            
+
+            //add new one
+            let newRow = document.createElement("tr")
+                newRow.setAttribute("Class","newRow new_Hide");
+                newRow.dataset.key = id;
+
+
+
+            //add data-script 
+            //let divDataScript = modules.extened_row(id)
+
+
+            //get teamplates 
+            let text = document.querySelector("NOSCRIPT.main_table_extened").textContent; //document.getElementsByTagName("noscript")[1].textContent;
+            let newtxt = text.replace(/{s_cont}/, s_cont)
+                            .replace(/{s_set}/, s_set)
+                            .replace(/{s_id}/g, s_id)
+                            .replace(/{s_date}/, s_date)
+                            .replace(/{s_parts}/, s_parts)
+                            .replace(/{s_comments}/, s_comments)
+                            .replace(/{s_m1}/, s_m1)
+                            .replace(/{s_m2}/, s_m2)
+                            .replace(/{s_m3}/, s_m3)
+                            .replace(/{s_m4}/, s_m4)
+                            .replace(/{s_m5}/, s_m5)
+
+                          // .replace(/{data-script}/, divDataScript)
+
+
+                newRow.innerHTML = newtxt;
+
+
+                //insert HTML 
+                // modules.extened_row
+                //add data-script 
+                newRow.querySelector("div.data-script").innerHTML = modules.extened_row(id)
+
+
+            document.querySelector("table tbody").insertBefore(newRow,tr.nextElementSibling);
+            setTimeout(() => newRow.classList.remove("new_Hide"),100)
+
+
+
+
+
+
+            //add s_comment to textarea
+
+           // let divDataScript = dofun.data_sheet1[id][4].slice(0)
+                    //divDataScript = JSON.parse(divDataScript)
+
+                   // divDataScript = divDataScript.toString();
+                    // divDataScript.data.sort()
+                    // divDataScript.data.forEach( e => {
+                    //             //ae += e + "\r\n";
+                    //             ae.push(e.join(",-") + "\n");
+                    //         })
+                    //         ae.join("-")
+            //document.querySelector("ul.data-script .data-script").setAttribute('style', 'white-space: pre;');
+            //document.querySelector("ul.data-script div.data-script").textContent = divDataScript //.replace("/\],/","\r\n");
+
+
+        }
+}
+function main_table_statusRow(status, callback){
+        let state = status || "";
+        document.querySelectorAll("table tbody tr.row-select").forEach(row => {
+            row.cells[0].firstElementChild.className = "col1 " + state;
+            let id = row.dataset.key
+                dofun.data_sheet1[id][5] = state;
+        });
+        return callback();
+}
+function main_table_sendServer(){
+
+
+            dofun.data_sheet1.shift(); //remove Header
+            dofun.data_code.shift(); //remove Header
+            dofun.data_id.shift(); //remove Header
+
+            let jdata = {sheet1: dofun.data_sheet1, code: dofun.data_code, id: dofun.data_id}
+            //let jdata = {sheet1: dofun.data_sheet1}
+            let data = JSON.stringify( jdata )
+
+            console.log("Post Data to server...");
+
+            const showMessage = (message, type = 'success') => {
+
+                    console.log(type, message);
+                    //return;
+                    
+                    //just for view
+                    //let data = JSON.parse(message);
+                    // let row = JSON.parse(data.row)
+                    // console.log(row)
+                    // document.a = row;
+
+            };
+            const subscribe = async () => {
+                    try {
+                            //post sheet thu nghiem
+                            let response = await fetch(URL_SHEETS, {
+
+                                redirect: "follow",
+                                mode: "cors",
+                                method: "POST",
+                                body: data,
+                                headers: {
+                                    "Content-Type": "text/plain;charset=utf-8",
+                                }
+                        });
+                        const result = await response.text(); //res.text()
+                        showMessage(result)
+
+                        //disable for view
+                        setTimeout(() => location.reload(), 200)
+
+                    } catch (error) {
+                        showMessage(error.message, 'error1');
+                    }
+                };
+            //post 
+            subscribe();
+}
+function main_searching() {
+    const search = document.querySelector("div.input_group input[type=search]"),
+    table_rows = document.querySelectorAll("tbody tr");
+
+
+
+    const cleanNewRows = e => {
+         document.querySelectorAll("tbody tr.newRow").forEach(row => row.remove())
+    }
+    search.addEventListener('click',cleanNewRows);
+
+
+    search.addEventListener('input',searchTable);
+    function searchTable(){
+        table_rows.forEach( (row, i) => {
+
+            //console.log({row});
+           // console.log(row.cells[6].textContent); //search Status
+
+
+           let table_data = row.textContent.toString().toLowerCase();  //Search ALL rows table
+           //let table_data = row.cells[6].textContent.toString().toLowerCase();       //search Only Cells[6] status
+
+                search_data = search.value.toString().toLowerCase();
+                // console.log(table_data.indexOf(search_data))
+                row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+                row.style.setProperty('--delay', i/25 + 's')
+        } )
+    }
+}
+function main_showStatusTb(a) {
+
+    let arrays = [undefined, null, "active", "pending", "done", "null"];  
+    let hide_arrays = arrays.filter(item => item != a); //make new array to hide - except a
+    hide_arrays  = a == "all" ? [] : hide_arrays //a == SHow mean not hide anything
+
+    let table_rows = document.querySelectorAll("tbody tr");
+    table_rows.forEach( (row, i) => {
+            let status = row.cells[0].firstElementChild.classList[1];
+            row.classList.toggle('hide', hide_arrays.indexOf(status) !== -1 );
+    })
+
+}
+function form_addTable(e){ 
+        console.log("form_addTable...")
+
+        let form = {};
+        let data = {};   //data.code data.id data.pannel data.sheet1
+        db_get("get all data", (e) => {
+            e.target.result.forEach(item => data[item.id] = item.value); //set data sql
+            showform();
+        })
+
+
+    function showform(){ //get teamplate
+
+        //get ID if Select CODE-ID TABLE
+
+
+        document.querySelector("DIV.newproduct").innerHTML = document.querySelector("NOSCRIPT.newproduct").innerHTML
+        form = getclass('DIV.newproduct FORM[name=form_addTable]',"show");
+        form.elements.in_addcont 
+        form.elements.in_addfsc
+
+        if(!!modules.form_addTable_ID) {  //CLICK ADD FROM LIST 
+            form.elements.in_addid.value = modules.form_addTable_ID[0]
+            form.elements.in_description.value = modules.form_addTable_ID[1]
+
+            form.elements.in_addid.previousElementSibling.textContent = modules.form_addTable_ID[1] //label
+            form.elements.in_addid.previousElementSibling.style = "font-weight: bold;"
+            modules.form_addTable_ID = null;
+        }
+
+        form.elements.in_addset
+
+        form.elements.in_codeId
+        form.elements.btn_reset
+        form.elements.btn_submit
+
+        //remove event
+        form.elements.btn_reset.addEventListener("click",(e) => { 
+            getclass("DIV.newproduct FORM[name=form_addTable]","hide");
+            
+            //remove all event
+            form.elements.in_addid.removeEventListener("keyup" , event_newkeyup)
+            form.removeEventListener("submit", event_newSubmit)
+
+        },{once : true});
+        //add event
+        form.elements.in_addid.addEventListener("keyup" , event_newkeyup)
+        form.addEventListener('submit', event_newSubmit)  
+    }
+
+    function event_newkeyup(e){
+
+            const data_code = data.code
+            const data_id = data.id;
+            const search_name = e => data_id.find(item => e.toString().toLowerCase() == item[0].toString().toLowerCase());
+            const search_code = e => data_code.find(item => e.toString().toLowerCase() == item[0].toString().toLowerCase());
+
+            let id = e.target.value;
+
+            let input_id = search_code(id);
+
+            let title_desc = form.querySelector("div.newproduct label[for=in_addid]")
+            let hidden_desc = form.elements.in_description
+            let hidden_codeId = form.elements.in_codeId
+
+            let in_name = null;
+            if(input_id) {
+                in_name =  search_name(input_id[1])  // get information form CODE TABLE - to GET colum2 it a REAL ID
+                //console.log(in_name)
+
+                hidden_desc.value = in_name[1]; //put name into hiden input
+                hidden_codeId.value = in_name[0]; //put name into hiden input
+
+                //label of input 0,1,2
+                form[0].previousElementSibling.firstElementChild.innerText = "ID: " + in_name[0] +" - " +in_name[1];
+                form[1].previousElementSibling.firstElementChild.innerText = "Set"
+                form[2].previousElementSibling.firstElementChild.innerText = "Cont"
+
+                form.elements.in_addset.placeholder='100';
+                form.elements.in_addcont.placeholder='LRD-24-17';
+                form.elements.btn_submit.disabled = false
+                form.elements.btn_submit.innerText = "AddNew"
+
+                console.log(search_name(input_id[0]))
+
+                form[1].onkeyup = function(){};
+                
+            }else{
+                //funtion of input[1] elemt
+                form[1].onkeyup = function() {
+                    
+                    let id = this.value
+                    let labels = this.previousElementSibling.firstElementChild
+
+                    const search_name = e => data_id.find(item => e.toString().toLowerCase() == item[0].toString().toLowerCase());
+                    let in_name =  search_name(this.value) 
+                    if(in_name !== undefined){
+                        console.log(in_name) 
+                        labels.textContent = `ID: ${in_name[0]} - ${in_name[1]}`;
+
+                        //hide input Description don't needed
+                        this.nextElementSibling.style.display ="none";
+                        this.nextElementSibling.nextElementSibling.style.display ="none";
+                        this.nextElementSibling.nextElementSibling.value = "Null";
+                    } 
+                    else {
+                        
+                        labels.textContent = `ID`; 
+                        //hide input Description don't needed
+                         this.nextElementSibling.style.display ="block";
+                        this.nextElementSibling.nextElementSibling.style.display ="block";
+                        this.nextElementSibling.nextElementSibling.value = "";
+                    }
+
+                }
+                //GET label of input 0,1,2  - form[0] is input[0]
+                form[0].previousElementSibling.firstElementChild.innerText = "Create a new CODE"
+                form[1].previousElementSibling.firstElementChild.innerText = "ID"
+                form[2].previousElementSibling.firstElementChild.innerText = "Name of it"
+
+                form.elements.in_addset.placeholder='Put ID';
+                form.elements.in_addcont.placeholder='Description';
+                form.elements.btn_submit.innerText = "NewCode"
+                                                
+
+                //console.log({form})
+                //form.elements.btn_submit.disabled = true
+                //if it not exits Addnew CODE ID NAME -PANNEL
+
+                // form.elements.in_makenewCode = form.elements.in_addid.value
+                // form.elements.in_makenewId = form.elements.in_addset.value
+                // form.elements.in_makenewIdname = form.elements.in_addcont.value
+                // form.elements.btn_submit.innerText = "NewCode"
+                // form.elements.in_addset.placeholder='Put ID';
+                // form.elements.in_addcont.placeholder='Description';
+
+                //console.log("disable Submit",form.elements)
+            }
+
+        }
+    function event_newSubmit(e){            //Add new
+                e.preventDefault();
+
+                let el = e.target.elements
+                let element = {};
+
+                if(el.btn_submit.innerText =="NewCode"){
+
+                    element.in_makenewCode = form.elements.in_addid.value
+                    element.in_makenewId = form.elements.in_addset.value
+                    element.in_makenewIdname = form.elements.in_addcont.value
+                    console.log(element)
+
+
+                    //const data_id = data.id;
+                    const data_id = data.id;
+                    const data_code = data.code;
+
+                    const search_name = e => data_id.find(item => e.toString().toLowerCase() == item[0].toString().toLowerCase());
+                    let in_name = search_name(element.in_makenewId)  //if ID not found = undefined
+
+                    //add new here
+                    const search_code = e => data_code.find(item => e.toString().toLowerCase() == item[0].toString().toLowerCase());
+                    let in_code = search_code(element.in_makenewCode)  //if CODE not found = undefined
+                   
+                
+                    // let in_idd = in_name == undefined ? in_name : in_name[0];
+                    // console.log("in name",in_idd, "in code",in_code)
+                    // return
+
+                    if(in_code == undefined){   //Create new CODE - ID
+                            
+                            let saveAlldone = (e) => console.log(e) 
+                            //Add new to ID
+                            if(in_name == undefined){   
+
+                                let header2 = data.id.shift(); //remove header and put it into header
+                                    data.id.unshift(header2, [element.in_makenewId, element.in_makenewIdname, null])
+                                    db_add("id", data.id, () => saveAlldone("id"))
+                            }
+
+                            let header = data.code.shift(); //remove header and put it into header
+                                data.code.unshift(header, [element.in_makenewCode, element.in_makenewId])
+                                db_add("code", data.code, () => saveAlldone("code"))
+                    } 
+                    form.elements.btn_reset.click();
+
+
+                    // if(in_name){
+                    //         console.log(in_name)
+                    //         let header = data.code.shift();  //remove header and put it into header
+
+                    //         data.code.unshift(header, [
+                    //             element.in_makenewCode,
+                    //             element.in_makenewId])
+
+                    //         db_add("code", data.code, () => {
+                    //                 console.log(data.code)
+                    //                 console.log("Save data done..")
+                    //                 //document.location.reload();
+                    //         })
+
+                    //         if(!!in_name){
+                    //                 let header2 = data.id.shift();  //remove header and put it into header
+
+                    //                 data.id.unshift(header2, [
+                    //                     element.in_makenewCode,
+                    //                     element.in_makenewId])
+
+                    //                 db_add("id", data.id, () => {
+                    //                         console.log(data.id)
+                    //                         console.log("Save data done..")
+                    //                         //document.location.reload();
+                    //                 })
+                    //         }
+
+
+                    //         form.elements.btn_reset.click();
+                    //  } 
+
+                    return
+                }
+
+                element.addid = el.in_addid.value.toString().toUpperCase();
+                element.addcont  = el.in_addcont.value.replace(/\s/g, "-").toUpperCase();
+                element.addfsc = el.in_addfsc.value
+                element.addset = el.in_addset.value
+                element.description = el.in_description.value
+                element.codeId = el.in_codeId.value
+
+                let tr = document.createElement("tr");
+                    tr.innerHTML = `<td>${element.addid}</td> 
+                                    <td>${element.codeId}</td>
+                                    <td>${element.description}</td>
+                                    <td>${element.addset}</td>
+                                    <td>${element.addcont}</td>
+                                    <td>${element.addid}</td>
+                                    <td>wait</td>
+                                    <td>7</td>
+                                    <td>8</td>
+                                    `;
+                let tb = document.querySelector("table tbody");
+                    tb.insertBefore(tr,tb.firstElementChild);
+                form.reset();
+
+                let header = data.sheet1.shift();  //remove header and put it into header
+                    element.time = Date.now();
+                    element.searchid = window.crypto.randomUUID(); // make UID to it.
+
+                    data.sheet1.unshift(header, [
+                                element.addid,
+                                element.codeId,  
+                                element.description, null, null, null, null, null, null, null, null, 
+                                element.addcont, element.addset, element.searchid, element.time])
+                 //db_add (name, array, callback)
+                 db_add("sheet1", data.sheet1, () => {
+                        console.log(data.sheet1)
+                        console.log("Save data done..")
+                        document.location.reload();
+                 })
+                // e.currentTarget.removeEventListener("submit",event_newSubmit)
+                form.elements.btn_reset.click();
+    }
+
+}
+function getclass(e,hide){
+    if(hide == "show") {
+      document.querySelector(e).classList.add("visible"); //Show
+      document.body.classList.add(".disable-scroll")
+    }
+    else if(hide == "hide") {
+      document.querySelector(e).classList.remove("visible"); // hide
+      document.body.classList.remove(".disable-scroll")
+    }
+    return document.querySelector(e);
+}
+function main_uuid(){   //Generate Unique ID 
+  let randoms = (len, chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz') => [...Array(len)].map(() => chars.charAt(Math.floor(Math.random() * chars.length))).join('') + Date.now();
+  return randoms(6);
+}
+
+
+
+//Extened TR Modifile edit
+//change / ADD Parts you did.
+function spanliPartclick(e, f){
+
+    let parent = e.closest("tr").previousElementSibling;
+    let id = parseInt(parent.dataset.key)
+    
+    let newValue = e.previousElementSibling.innerText //click what save that   //e.previousElementSibling.textContent
+       
+    dofun.data_sheet1[id][f] = newValue;
+    dofun.data_sheet1[id][14] = f == 14 ? Date.now() : dofun.data_sheet1[id][14];
+   // dofun.data_sheet1[id][14] = Date.now();
+    dofun.data_sheet1[id][13] = !dofun.data_sheet1[id][13] ? window.crypto.randomUUID() : dofun.data_sheet1[id][13];
+
+    // console.log(dofun.data_sheet1[id])
+    //parent.click();
+    // transition: opacity 0.25s, display 0.25s;
+    
+    document.getElementsByTagName("main")[0].style.display = "none";
+
+        db_add ("sheet1", dofun.data_sheet1, () => {
+                console.log("sheet1 has been update!");
+                //setTimeout(() => location.reload(),200)
+                //alert(id)
+                document.getElementsByTagName("main")[0].style.display = "block";
+            })
+            
+}
+
+function spanliPartclick_Id(e){
+
+    let code = e.dataset.sid
+    const data_id = dofun.data_id;
+            //make func
+            //const search_name = e => data_id.find(item => e.toString().toLowerCase() == item[0].toString().toLowerCase());
+    
+                let elemen1 = e.parentElement.firstElementChild;
+                let etext = elemen1.nextElementSibling.textContent;
+
+                if(etext != e.dataset.sid) {
+
+                    const search_index = e => data_id.findIndex(item => e.toString().toLowerCase() == item[0].toString().toLowerCase());
+                    let id_index =  search_index(code)  // get information form CODE TABLE - to GET colum2 it a REAL ID
+
+                    // console.log(dofun.data_id[id_index])
+
+                    //elemen1.firstElementChild.innerHTML = "<A HREF='" + etext +"' target='_blank'>ID</a>";
+                    dofun.data_id[id_index][2] = etext;
+
+                    db_add ("id", dofun.data_id, () => {
+                        console.log("id has been update!");
+                        //setTimeout(() => location.reload(),200)
+                        document.getElementsByTagName("main")[0].style.display = "block";
+                    })
+                    //change back value to Col2 
+                    e.previousElementSibling.innerHTML = e.dataset.sid
+                }
+                // e.classList.toggle("st_active");
+
+}
+function spanliPartclick_pdf(e){
+        let code = e;
+        const data_id = dofun.data_id;
+        const search_id = e => data_id.find(item => e.toString().toLowerCase() == item[0].toString().toLowerCase());
+        let id_index =  search_id(code)  // get information form CODE TABLE - to GET colum2 it a REAL ID
+        console.log(id_index)
+       window.open(id_index[2])
+}
+
+function main_getbacktime(dateNow){
+    //let date_now = Date.now(); //1712923948000
+
+    let ts = new Date(dateNow); //date_now
+
+        ts.toLocaleDateString(); // 4/12/2024
+        ts.toLocaleTimeString(); // 5:12:29 AM
+        ts.toLocaleString(); //   4/12/2024, 5:12:29 AM
+        ts.toString(); // Fri Apr 12 2024 05:12:29 GMT-0700 (Pacific Daylight Time)
+        ts.toTimeString(); //05:12:29 GMT-0700 (Pacific Daylight Time)
+        ts.toUTCString(); // Fri, 12 Apr 2024 12:12:29 GMT
+
+        return ts.toLocaleDateString(); //  4/12/2024
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const modules = {
+    mylog: [],
+    movingId: [],
+    ex_machineClean : function(e) {
+        let parrent = e.closest("td");
+        let tr = parseInt(e.closest("tr").previousElementSibling.dataset.key) //id
+ 
+        e.closest("tr").classList.toggle("new_Hide");
+        setTimeout(() => document.querySelectorAll("table tbody tr.newRow").forEach((row,i) => row.remove()), 500)
+        e.closest("tr").previousElementSibling.focus()
+        
+        // let el_posTop = e.closest("tr").previousElementSibling.offsetTop
+        // document.querySelector(".table_body").scrollTop = el_posTop+200;
+
+    },
+    ex_machineView : function(e) {
+        let parrent = e.closest("td");
+        let tr = parseInt(e.closest("tr").previousElementSibling.dataset.key) //id
+        
+
+        if(e.textContent == "Back") {
+
+            let mmachine = e => parrent.children[1].children[e].children[1] // document.querry TD > UL 1 > P 
+                mmachine(1).textContent = dofun.data_sheet1[tr][6]
+                mmachine(2).textContent = dofun.data_sheet1[tr][7]
+                mmachine(3).textContent = dofun.data_sheet1[tr][8]
+                mmachine(4).textContent = dofun.data_sheet1[tr][9]
+                mmachine(5).textContent = dofun.data_sheet1[tr][10]
+
+                e.textContent = "View"
+
+            return;
+        }
+
+        //textContent = view
+        let ojb = dofun.data_sheet1[tr][4].slice(); //copy data from array
+
+        if(typeof(ojb) != "string" ||  ojb =="") return console.log("No data")
+
+            ojb = JSON.parse(ojb)
+
+            let machines = [[],[],[],[],[]]
+            let machines_fn = (number , value) => machines[number].push(value)
+            
+            ojb.data.forEach(el => {
+                let part = el[0],
+                    //content = el[1],
+                    qty = (el[1].length == 0) ? `` : `  ${el[1]} pcs`, 
+                    time = (el[2].length == 0) ? `` : `  ${el[2]} min`,
+                    machine = el[3],
+                    date = main_getbacktime(el[4]),
+                    combines = part + "  " + main_getbacktime(date) + time + qty +"\r\n"
+                
+                 if(machine == "M1")      machines_fn(0, combines)
+                 else if(machine == "M2") machines_fn(1, combines)
+                 else if(machine == "M3") machines_fn(2, combines)
+                 else if(machine == "M4") machines_fn(3, combines)
+                 else if(machine == "M5") machines_fn(4, combines)
+            });
+            
+            //console.log(machines[0].join(""))
+            let mmachine = e => parrent.children[1].children[e].children[1] // document.querry TD > UL 1 > P 
+                mmachine(1).textContent = machines[0].join("")
+                mmachine(2).textContent = machines[1].join("")
+                mmachine(3).textContent = machines[2].join("")
+                mmachine(4).textContent = machines[3].join("")
+                mmachine(5).textContent = machines[4].join("")
+            e.textContent = "Back"
+    },
+    ex_machineAdd : function(e) {
+        let parent = e.closest("tr").previousElementSibling;
+        let id = parseInt(parent.dataset.key)
+
+        //BUILD TEAMPLE HTML
+        let teamplate = document.querySelector("NOSCRIPT.Extended_Machine").textContent;
+        document.querySelector("DIV.Extended_Machine").innerHTML = teamplate;
+
+        //SELECT DOM -ELEMENTS
+        const div = document.querySelector("DIV.Extended_Machine")
+        const cancelbtn = div.querySelector("BUTTON.cancelbtn")
+        const submitbtn = div.querySelector("BUTTON.signupbtn")
+        
+        //Show DIV HTML
+        div.classList.toggle("visible")
+
+        //SUBMIT BTN FUNCTION
+        const submitbtn_fn = (e) => {
+            let machines = [];
+                let input = div.querySelectorAll("input");
+                let checkbox = div.querySelectorAll('input[type="checkbox"]:checked')
+
+                if(input[0].value == "") return alert("Part ?")
+                if(checkbox.length < 1) return alert("machine ?")
+
+                checkbox.forEach(e => machines.push(e.value))
+
+                let machine = machines.join()
+                let makeojb2 = { 
+                        data: []
+                }
+                
+                if(!dofun.data_sheet1[id][4]) { //If it empty
+                    makeojb2.data.push([input[0].value, input[1].value, input[2].value , machine , Date.now()]) //Part, qty,time,machine
+                    dofun.data_sheet1[id][4] = makeojb2
+                }
+                else{
+                    if(typeof(dofun.data_sheet1[id][4]) == "string")
+                    dofun.data_sheet1[id][4] = JSON.parse(dofun.data_sheet1[id][4])
+                    dofun.data_sheet1[id][4].data.push([input[0].value, input[1].value, input[2].value , machine , Date.now()])
+                }
+                dofun.data_sheet1[id][4] = JSON.stringify(dofun.data_sheet1[id][4])
+
+                document.querySelector("DIV.blockClick").classList.toggle("show")
+
+                db_add ("sheet1", dofun.data_sheet1, () => {
+                    console.log("sheet1 has been update!"); 
+                    cancelbtn.click(); 
+                    document.querySelector("DIV.blockClick").classList.toggle("show")
+                })
+        }
+    
+        //DOM ADD EVENT
+        cancelbtn.addEventListener("click", e => {
+            submitbtn.removeEventListener("click", submitbtn_fn)
+            div.classList.toggle("visible")
+            div.innerHTML = "";
+        }, {once : true})
+
+        submitbtn.addEventListener("click", submitbtn_fn) 
+    },
+    test: function(e){
+        // console.log("hi")
+    },
+    ex_partsList : function(e, id){
+        let title = `
+                    <li>
+                    <h1 contenteditable="true">Part</h1>
+                    <h1 contenteditable="true">Qty</h1>
+                    <h1 contenteditable="true">Time</h1>
+                    <h1 contenteditable="true">Extra</h1>
+                    <span>&nbsp;&nbsp;</span> 
+                    </li>
+                `;
+        let teamplate = `
+            <li>
+            <h1 contenteditable="true">0</h1>
+            <h1 contenteditable="true">10</h1>
+            <h1 contenteditable="true">8</h1>
+            <h1 contenteditable="true">9</h1>
+            <span onclick=spanliPartclick(this,4)>&#x2713;</span> 
+            </li>
+        `;
+
+                
+                // <p contenteditable="true">{s_comments}</p>
+                //     <span onclick=spanliPartclick(this,4)>&#x2713;</span> 
+
+        let parrent = e.offsetParent
+        
+        let el = document.createElement("ul")
+                el.innerHTML = title;       
+        let el1 = document.createElement("li")
+                el1.innerHTML = teamplate;
+        el.appendChild(el1)
+        parrent.appendChild(el)
+        // console.log(parrent)
+        // console.log({e})
+
+
+    },
+    moveUp:function(el){
+
+                let insert = modules.moveToRowId
+                let rows = document.querySelectorAll("table tbody tr")
+                
+                //get rowIndex has been put in modules.movingId before
+                modules.movingId.forEach(id => insert.before(rows[id-1]))
+
+                //reset array;
+                modules.movingId.length = 0;
+                this.moveSaveData()
+    },
+    moveDown:function(el){
+
+               let insert = modules.moveToRowId
+                let rows = document.querySelectorAll("table tbody tr")
+                
+                //loop in list
+                modules.movingId.forEach(id => insert.after(rows[id-1]))
+
+                //reset array;
+                modules.movingId.length = 0;
+                this.moveSaveData()
+    },
+    moveStart:function(){
+
+        let rows = document.querySelectorAll("tbody tr.row-select");
+        let id = this.movingId;
+
+        //store RowIndex in to the list THIS OJB
+        rows.forEach(e =>{
+            id.push(e.rowIndex)
+
+            console.log(e.classList)
+            e.classList.toggle("row-select")
+        })
+        //update DB
+        return rows;
+        
+    },
+    moveSaveData: function() {
+
+            //this function give an array of list id (indexs = [1,3,4,5,6]) new ID you have ordered. //How to Reorder Elements of an Array
+
+
+            let array = dofun.data_sheet1.slice(0); //copy array
+            //let header = dofun.data_sheet1.slice(0 , 1) //a shallow copy Header
+
+            //get indexes
+            let indexes = [0]; //index start by [0] keep header
+            document.querySelectorAll("table tbody tr").forEach(e => indexes.push(e.dataset.key))
+
+            //reorder array by indexes
+            let new_sheet1 = indexes.map(function(index) {
+                return (array[index]);
+            });
+
+            //save to INDEXDB
+            db_add ("sheet1", new_sheet1, () => {
+                console.log("sheet1 has been update!");
+                setTimeout(() => location.reload(),500)
+            })
+    },
+    event_longPress: function (element, callback) {
+                
+
+                element = document.querySelector("table tbody")//only add event here
+                callback = this.event_longPress_callback
+
+
+                let timer;
+                element.addEventListener('touchstart', (e) => { 
+                    let newe = e;
+                    timer = setTimeout(() => {
+                        timer = null;
+                        callback(newe);
+                    }, 500);
+                });
+            
+                function cancel() {
+                    clearTimeout(timer);
+                }
+            
+                element.addEventListener('touchend', cancel);
+                element.addEventListener('touchmove', cancel);
+
+    },
+    event_longPress_callback: function (e) {
+            if(!dofun.tableSelect) return console.log("this feature only inselect mode")
+            
+            let selected_rows = modules.moveStart();
+                if(selected_rows.length == 0) return console.log("at least 1 rows have to select.")
+            
+            //showUp Icon
+            document.querySelector("div.a_bottomnav").classList.toggle("hide")
+            document.querySelector("div.a_bottomnav nav a.ham-icon-up").classList.toggle("hide")
+            document.querySelector("div.a_bottomnav nav a.ham-icon-down").classList.toggle("hide")
+
+            //get tr to moving on. 
+            modules.moveToRowId = e.changedTouches[0].target.closest("tr")
+            
+            //event when click On button bottom right on screen
+            const event_click_nav = e => {
+                    let action = e.target.classList
+                    if (action == "ham-up") modules.moveUp()
+                    else if (action == "ham-down") modules.moveDown()
+                    else {
+                            document.querySelector("div.a_bottomnav nav a.ham-i").classList.toggle("hide")
+                            document.querySelector("div.a_bottomnav nav a.ham-icon-up").classList.toggle("hide")
+                            document.querySelector("div.a_bottomnav nav a.ham-icon-down").classList.toggle("hide")
+                    } 
+            }
+            document.querySelector("div.a_bottomnav nav.a_topnav").addEventListener("click",e => event_click_nav(e))
+
+
+            //select mode
+            function main_table_selectMode(e) {
+                e.target.closest("tr").classList.toggle("row-select");
+            }
+            //enable slect mode  
+            dofun.tableSelect = true;
+            document.querySelector("table tbody").addEventListener("click", main_table_selectMode)
+            console.log("Select rows to move")
+            
+    },
+    extened_row: function(id) {
+                 //table tbody tr - mo rong -extention
+
+            if(!dofun.data_sheet1[id][4]) return null
+            //add data-script 
+            let divDataScript = dofun.data_sheet1[id][4].slice(0)
+
+            let datatime = JSON.parse(divDataScript)
+
+            const sort_string = (text) => {
+                let string = text.toString().split(",")
+                const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+                return string.sort(collator.compare).join(",")
+            }
+            //let sort = sort_string(datatime.data)
+
+
+            let tmp_array = [];
+            let new_array = datatime.data.forEach( (e, k)=> {
+                            tmp_array.push([ e[0] , k ]) 
+            })
+
+            let output = "Part Min Machines \r\n \r\n";
+            let allArray = [];
+
+            let output2 = "";
+
+            //make new time and machine
+            let times = datatime.data.sort((a, b) => a[0] - b[0]);  //sort by col1
+
+                times.forEach(e => {
+                        let part = e[0].length < 2 ? "0"+ e[0] : e[0],
+                            qty = !e[1] ? "00" : e[1],
+                            time = !e[2] ? "00" : e[2],
+                            machine = e[3],
+                            date = e[4];
+
+                        // let array = [];
+                        //     array.push([part, time, machine])
+
+                            allArray.push([part, time, machine])
+                            output += [part, time, machine].join(" ") + "\r\n"
+
+                            output2 +=`<span>${part} ${qty} ${time} ${machine} ${date}</span><br>`;
+
+                })
+            return output2
+
+    },
+    click_datascriptUpdate: function(e){
+            // extened_row Button CLICK call this Function
+           // console.log({e})
+            let content = e.offsetParent.lastElementChild.querySelectorAll("span")
+            let new_ojb = {
+                data: []
+            }
+                content.forEach(e => {
+                    let array =  e.textContent.split(" ")
+                        array[4] = parseInt(array[4])
+                    new_ojb.data.push(array)
+                })
+
+                console.log(new_ojb)
+            console.log(e.offsetParent.closest("tr"))
+            let id = parseInt(e.offsetParent.closest("tr").dataset.key)
+
+            dofun.data_sheet1[id][4] = JSON.stringify(new_ojb)
+
+            document.querySelector("DIV.blockClick").classList.toggle("show")
+            db_add("sheet1", dofun.data_sheet1, () => {
+                console.log("sheet1 has been update!"); 
+                document.querySelector("DIV.blockClick").classList.toggle("show")
+            })
+
+
+    },
+    ex_machineViewDataScript: function(e){
+        e.offsetParent.lastElementChild.classList.toggle("hide")
+    },
+}
+//add event listenner Touch Press
+modules.event_longPress();
+
+
+
+
+
+
+modules.main_table_showIDCODE = function() {
+
+
+        //Make list of ID
+        const codeSheet = (id) =>{
+            const data_code = dofun.data_code
+            let array = [];
+            const search_name = e => data_code.filter(item => {
+                        if(e.toString().toLowerCase() == item[1].toString().toLowerCase()){
+                            array.push(item[0])
+                        }
+            })
+            search_name(id)
+            //console.log(array)
+            if(array.length == 0 ) console.log(id, "khong tim thay!")
+        return array
+    }
+
+
+    //modifile function event listenner 
+    modules.main_tableExtened_show = function (e){
+
+            let tr = e.target.closest("tr");
+        
+            let next_element = tr.nextElementSibling;
+            if(next_element && next_element.classList.contains("newRow")){
+                next_element.classList.toggle("new_Hide");
+                return modules.main_tableExtened_clean()
+            } 
+            if(tr.classList.contains("newRow")) return console.log("nothing happen");
+
+            let newRow = document.createElement("tr")
+                newRow.setAttribute("Class","newRow new_Hide");
+
+                
+                let keycode = tr.cells[0].textContent
+                let list = codeSheet(keycode)
+
+                let newLi = list.map(item => `<li><p>${item}</p><span onclick="modules.form_addTable(this)">&#x2713;</span></li>`).join("")
+
+
+                //function
+                modules.form_addTable = (e) => {
+
+                    let tr = e.closest("tr").previousElementSibling,
+                        id = tr.cells[0].textContent, //title
+                        title = tr.cells[2].textContent,
+                        code = e.previousElementSibling.textContent
+
+                    let element = e.offsetParent.lastElementChild
+                        element.style.display ="block";
+                        element.children[0].children[1].textContent = title.trim()
+                        element.children[1].children[1].textContent = code.trim()
+                        element.children[2].children[1].textContent = id.trim()
+                }
+                modules.form_addTable_btnCLick = (e) => {
+                        e.style.display = "none";
+                        let data = dofun.data_sheet1
+                        if("li-btn-cancel" == e.className) return e.closest("ul").style.display ="none";
+                        
+                        let element = e.closest("ul"),
+                            title = element.children[0].children[1].textContent.trim() ,
+                            code =  element.children[1].children[1].textContent.trim() ,
+                            id =    element.children[2].children[1].textContent.trim() ,
+                            set =   element.children[3].children[1].textContent.trim() ,
+                            cont =  element.children[4].children[1].textContent.trim() ,
+                            time =  Date.now(),
+                            searchid = window.crypto.randomUUID(); // make UID to it.
+
+
+                        let array = [code, id, title,
+                                    null, null, null, null, null, null, null, null, 
+                                    cont, set, searchid, time, null, null];
+
+                        let header = data.shift();
+                        let new_sheet1 =  [header, array].concat(data);
+                        
+
+                            db_add("sheet1", new_sheet1, () => {
+                                    console.log("Save data done..")
+                                    document.location.reload();
+                            })
+
+                }
+
+                //newRow
+                newRow.innerHTML =`<td colspan=9> 
+                        <ul>
+                            ${newLi}
+                        </ul>
+                        <ul class="hide">
+                            <li><h1>Title</h1><p contenteditable="true"></p></li>
+                            <li><h1>Code</h1><p contenteditable="true"></p></li>
+                            <li><h1>ID</h1><p contenteditable="true"></p></li>
+                            <li><h1>QTY</h1><p contenteditable="true"></p></li>
+                            <li><h1>Cont</h1><p contenteditable="true"></p></li>
+                            <li><h1></h1><p><input type=button value="Cancel" class="li-btn-cancel" onclick="modules.form_addTable_btnCLick(this)"> <input type=button value="Add New" class="li-btn-addnew" onclick="modules.form_addTable_btnCLick(this)"></p></li>
+                        </ul>
+                    </td>`;
+
+                document.querySelector("table tbody").insertBefore(newRow,tr.nextElementSibling);
+                setTimeout(() => newRow.classList.remove("new_Hide"),100)
+
+
+    }
+    
+
+    //print TR ROWS TO TABLE
+    let table =  document.querySelector("table tbody");
+        table.innerHTML = "";
+            const dFrag = document.createDocumentFragment(); 
+                    dofun.data_id.forEach((col , key) =>{
+                        if(key > 0 ) {
+                                let tr = document.createElement('tr');
+                                    tr.dataset.key = key;
+                                        let alink = `<a href="${col[2]}" target="_blank">  ${col[1]} </a>`;
+                                            alink = !col[2] ? col[1] : alink
+
+                                        tr.innerHTML = `<td>${col[0]}</td> <td></td> <td> ${alink} </td> <td colspan=8 style="text-align: left;"> ${codeSheet(col[0])} </td>`;
+                                            dFrag.appendChild(tr);
+                        }
+
+                    })
+                    table.appendChild(dFrag);
+
+    //ADD searching input
+    main_searching()
+    
+
+    //sort table
+    const tbsort = () => {
+            const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+            const comparer = (idx, asc) => (a, b) => ((v1, v2) => 
+            v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+            )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+
+            document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+                    const table = th.closest('table');
+                    const tbody = table.querySelector('tbody');
+                    Array.from(tbody.querySelectorAll('tr'))
+                        .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+                        .forEach(tr => tbody.appendChild(tr) );
+            })));
+    }
+    tbsort();
+}
+modules.form_addTable = (e) => {  /// khogn xai xoa ham nay
+    let name = e.closest("tr").previousElementSibling.cells[2].textContent.trim()
+    let id = e.previousElementSibling.textContent.trim()
+    modules.form_addTable_ID = [id, name]
+    form_addTable()
+    //cheack again
+
+}
+
+
+
+
+
+
+
+modules.main_table_showMACHINES = function(e) {
+        let list = [6,6,7,8,9,10]
+        let machin = list[e]
+        if([1,2,3,4,5].indexOf(e) < 0) return console.log("Id machine have tobe 1,2,3,4,5")
+        //print TR ROWS TO TABLE
+        let table =  document.querySelector("table tbody");
+        table.innerHTML = "";
+            const dFrag = document.createDocumentFragment(); 
+                    dofun.data_sheet1.forEach((col , key) =>{
+
+
+                        if(key > 0 && !!col[machin]) { //check if key is title , or not empty
+                                let tr = document.createElement('tr');
+                                    tr.dataset.key = key;
+                                        // let alink = `<a href="${col[2]}" target="_blank">  ${col[1]} </a>`;
+                                        //     alink = !col[2] ? col[1] : alink
+                                        let text = `<p class="col1 ${col[5]}">${col[0]}</p>`;
+
+                                        tr.innerHTML = `<td>${text}  </td> <td></td> <td> ${col[machin]}  <p class=col3>   ${col[2]} </p>  </td> <td colspan=8 style="text-align: left;"> <!-- something -> </td>`;
+                                            dFrag.appendChild(tr);
+                        }
+
+                    })
+                    table.appendChild(dFrag);
+                    //document.querySelector("table thead tr th:nth-child(3)").textContent = "Machine-" & machin
+                    document.getElementsByTagName("th")[2].textContent = "Machine-" + e
+
+}
+
+
+</script>
+<!---
+************
+Add new     
+    modules.main_table_showMACHINES  // Show Machines Plan , Machine 1 ,2 , 3 , 4, 5
+
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+modules.main_tableExtened = e =>  modules.main_tableExtened_show(e)
+modules.main_tableExtened_show = function(e) {
+        //Show extened Row when Click on Table get more infomation
+            let tr = e.target.closest("tr"); // let row_id = tr.rowIndex;
+            let next_element = tr.nextElementSibling;
+
+            if(next_element.classList.contains("newRow")){
+                next_element.classList.toggle("new_Hide");
+                return modules.main_tableExtened_clean()
+            } 
+            if(tr.classList.contains("newRow")) return console.log("nothing happen");
+
+            let parent = tr;
+            let id = parseInt(parent.dataset.key)
+
+            let s_set = dofun.data_sheet1[id][12]
+            let s_cont = dofun.data_sheet1[id][11]
+            let s_id = dofun.data_sheet1[id][1]
+
+            let s_date = main_getbacktime(dofun.data_sheet1[id][14])
+            let s_parts = dofun.data_sheet1[id][3]
+
+            let s_comments = dofun.data_sheet1[id][4]
+            let s_m1 = dofun.data_sheet1[id][6]
+            let s_m2 = dofun.data_sheet1[id][7]
+            let s_m3 = dofun.data_sheet1[id][8]
+            let s_m4 = dofun.data_sheet1[id][9]
+            let s_m5 = dofun.data_sheet1[id][10]
+
+            //Machines Expaned -Show what part you're have done
+            const split_commentvalue = (text) => {
+                    if(!text) return "";
+                    let text_output = [];
+                    let news_comment = JSON.parse(text)
+
+            //UNlock this to see what have done when Extention tr open        
+                    let ss_m1 = [],
+                        ss_m2 = [],
+                        ss_m3 = [],
+                        ss_m4 = [],
+                        ss_m5 = []
+
+                        news_comment.data.forEach(e => {
+                                //console.log(e)
+                                let part = e[0],
+                                    qty = e[1],
+                                    machines = e[3];
+
+                                text_output.push(part)
+                               // part = (qty =="") ? part : part +"/"+ qty
+
+                                let maachine = machines.split(",")
+                                    maachine.forEach(m => {
+
+                                        if (m == "M1")  ss_m1.push(part) 
+                                        if (m == "M2")  ss_m2.push(part) 
+                                        if (m == "M3")  ss_m3.push(part) 
+                                        if (m == "M4")  ss_m4.push(part) 
+                                        if (m == "M5")  ss_m5.push(part) 
+                                    })
+                        })
+            //UNlock this to see what have done when Extention tr open    
+                        // s_m1 = ss_m1.join(",")
+                        // s_m2 = ss_m2.join(",")
+                        // s_m3 = ss_m3.join(",")
+                        // s_m4 = ss_m4.join(",")
+                        // s_m5 = ss_m5.join(",")
+            //UNlock this to see what have done when Extention tr open    
+
+                        //Remove duplicate values
+                        let uniqueArray = text_output.filter(function(item, pos) {
+                            return text_output.indexOf(item) == pos;
+                        })
+
+                        //SORT String by NUMBER
+                        const new_sort = (text) => {
+                                let string = text //.toString().split(",")
+                                const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+                                return string.sort(collator.compare).join(",")
+                        }
+                    return new_sort(uniqueArray)
+            }
+            s_comments = split_commentvalue(s_comments);
+            
+            //add new one
+            let newRow = document.createElement("tr")
+                newRow.setAttribute("Class","newRow new_Hide");
+                newRow.dataset.key = id;
+
+            //get teamplates 
+            let text = document.querySelector("NOSCRIPT.main_table_extened").textContent; //document.getElementsByTagName("noscript")[1].textContent;
+            let newtxt = text.replace(/{s_cont}/, s_cont)
+                            .replace(/{s_set}/, s_set)
+                            .replace(/{s_id}/g, s_id)
+                            .replace(/{s_date}/, s_date)
+                            .replace(/{s_parts}/, s_parts)
+                            .replace(/{s_comments}/, s_comments)
+                            .replace(/{s_m1}/, s_m1)
+                            .replace(/{s_m2}/, s_m2)
+                            .replace(/{s_m3}/, s_m3)
+                            .replace(/{s_m4}/, s_m4)
+                            .replace(/{s_m5}/, s_m5)
+
+                          // .replace(/{data-script}/, divDataScript)
+
+                newRow.innerHTML = newtxt;
+
+                //insert HTML 
+                // modules.extened_row
+                //add data-script 
+                newRow.querySelector("div.data-script").innerHTML = modules.extened_row(id)
+
+            document.querySelector("table tbody").insertBefore(newRow,tr.nextElementSibling);
+            setTimeout(() => newRow.classList.remove("new_Hide"),100)
+}
+modules.main_tableExtened_clean = function() {
+    setTimeout(() => document.querySelectorAll("table tbody tr.newRow").forEach((row,i) => row.remove()) ,500);
+}
+
+modules.clickMenu = function(e) {
+     // Check if the clicked element is the target (or contains specific classes)
+    const element = e.target;
+
+    // Array of class names to check
+    const className = element.textContent
+    switch (className) {
+
+            case "Get Server":
+                        document.getElementById("sideNavigation").classList.toggle("show")
+                        db_remove(() => {
+                                location.reload();
+                        });
+                break;
+
+            case 'Code ID':
+                    //Show CODE ID
+                    modules.main_table_showIDCODE()
+                break;
+            case 'Select':
+                    //Click on mode Select
+                    modules.clickMenu_selectMode(element)
+                break;
+            case 'Machine1':
+            case 'Machine2':
+            case 'Machine3':
+            case 'Machine4':
+            case 'Machine5':
+                    //Machines..
+                    modules.main_table_showMACHINES(parseInt(className.slice(-1) ))
+                break;
+            case 'Show All':
+            case 'Show Active':
+            case 'Show Pending':
+                    //doing..
+                    main_showStatusTb(className.replace('Show ','').toString().toLowerCase())
+            break;
+            case 'Home':
+                    //doing.. ×
+                    location.reload();
+            break;
+            case '×':
+                    //close - ×
+                   //document.getElementById("sideNavigation").classList.toggle("show")
+            break;
+            default:
+                console.log('No matching action found');
+    }
+    //Hide menu
+    element.classList.toggle("show")
+}
+modules.clickMenu_selectMode = function(e){
+
+            const element = e
+            toggle_SubMenu();
+            if(element.classList.toggle("select")){
+
+                //ad event to table when click on rows will make it to selected
+                modules.tmp_selectRow = tableSelect // make refence to remove evenlistenner
+                document.querySelector("table tbody").addEventListener("click", modules.tmp_selectRow)
+
+                //remove even Table Row EXtened
+                document.querySelector("table tbody").removeEventListener("click", modules.main_tableExtened)
+
+                //Clean rows are Expending
+                modules.main_tableExtened_clean(); //clean all Expaned
+
+            }
+            else {
+                //re-add event table Extaned
+                document.querySelector("table tbody").addEventListener("click", modules.main_tableExtened) 
+
+                //Clean up everything
+                tableSelectCleanUp();
+                document.querySelector("table tbody").removeEventListener("click", modules.tmp_selectRow)
+
+                //Leak memory
+                modules.tmp_selectRow = null;
+            } 
+
+            function tableSelectCleanUp(){
+                document.querySelectorAll("table tbody tr.row-select").forEach((row,i) => row.classList.remove("row-select"));
+            }
+            function tableSelect(e){ //Click on table row
+                e.target.closest("tr").classList.toggle("row-select");
+            }
+            function toggle_SubMenu(){
+                //hide sub-menu of Select
+                document.querySelectorAll(".menu-link.lk-Select").forEach(e => e.classList.toggle("visible"))
+            }
+}
+
+modules.clickMenu_User = function(){
+    //Make menu For User
+    document.querySelector("a.menu-link.link-select").style.display = "none"
+    document.querySelector("a.menu-link.newproduct").style.display = "none"
+    document.querySelector("a.menu-link.pushDataServer").style.display = "none"
+}
+
+// add event click into button Menu
+document.querySelector("#sideNavigation").addEventListener('click', e => modules.clickMenu(e))
+document.querySelector("a.ham-icon").addEventListener("click", () => document.getElementById("sideNavigation").classList.toggle("show"))
+document.querySelector("a.close-btn").addEventListener("click", () => document.getElementById("sideNavigation").classList.toggle("show"))
+
+//menu for User
+//modules.clickMenu_User()
+</script>
+
+
+
+<script>
+//***********************************
+//  MAIN PROGAM 
+//***********************************
+db_getDataLocal( () => {
+    main_table_newLoad();
+    //main_table_extened();
+    document.querySelector("table tbody").addEventListener("click", modules.main_tableExtened)
+    main_searching();
+});
+//main_navbar();
+</script>
+
+
+
+<!---
+remove function Navbar
+    main_navbar();
+    main_table_extened();
+-->
