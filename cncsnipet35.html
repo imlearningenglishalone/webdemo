@@ -1,1 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 
+    
+</head>
+<body>
+
+<!--left Menu-->
+<div id="sideNavigation" class="sidenav">
+    <a class="menu-link close-btn">×</a>
+    <a class="menu-link reload">Get Server</a>
+    <a class="menu-link link-select">Select</a>
+    <a class="menu-link link-edit lk-Select visible">Modifile</a>
+    <a class="menu-link link-remove lk-Select visible">Remove</a>
+    <a class="menu-link status-active lk-Select visible">Active</a>
+    <a class="menu-link status-pending lk-Select visible">Pending</a>
+    <a class="menu-link status-done lk-Select visible">Done</a>
+    <a class="menu-link status-null lk-Select visible">New</a>
+    <a class="menu-link lk-Select visible">&nbsp</a>
+    <a class="menu-link saveSelect lk-Select visible">Save</a>
+    <br>&nbsp;
+    <a class="menu-link pushDataServer">Post Server</a>
+    <a class="menu-link newproduct">Add New</a>
+    <a class="menu-link CodeID">Code ID</a>
+    <a class="menu-link machine">Machine1</a>
+    <a class="menu-link machine">Machine2</a>
+    <a class="menu-link machine">Machine3</a>
+    <a class="menu-link machine">Machine4</a>
+    <a class="menu-link machine">Machine5</a>
+
+    <br>&nbsp;
+    <a class="menu-link show-all">Show All</a>
+    <a class="menu-link show-active">Show Active</a>
+    <a class="menu-link show-pending">Show Pending</a>
+
+    <br>&nbsp;
+    <a class="menu-link show-Home">Home</a>
+</div>
+
+<!-- Main TABLE -->
+<main class="table">
+    <section class="table_header">
+      <div class="topnav1">
+          <nav id="sideNavigation1" class="topnav">
+              <a class="ham-icon">
+              <svg width="30" height="30">
+                  <path d="M0,5 30,5" stroke="#000" stroke-width="5"></path>
+                  <path d="M0,14 30,14" stroke="#000" stroke-width="5"></path>
+                  <path d="M0,23 30,23" stroke="#000" stroke-width="5"></path>
+              </svg></a>
+          </nav>
+          <h1 style="padding: 0 0 0 0.4rem;">Menu</h1>
+      </div>
+      <div class="input_group">
+          <input type="search" name ="table search" placeholder="search data..."></input>
+      </div>
+    </section>
+    <section class="table_body">
+      <table>
+          <thead>
+          <th>ID-1</th>
+          <th>Icon-2</th>
+          <th>Description-3</th>
+          <th>Set-4</th>
+          <th>Cont-5</th>
+          <th>Group-1</th>
+          <th>Status</th>
+          <th>the other-7</th>
+          <th>day/time-8</th>
+          </thead>
+          <tbody>
+            <tr><td colspan="9"> Loading ...</td></tr>
+          </tbody>
+      </table>
+    </section>
+</main>
+
+
+
+
+<!--FROM ADD NEW-->
+<noscript>
+    <form class="form_addnew" style="border:0px solid #ccc">
+    <div class="divAddnew ft-modal">
+    <div class="ft-modal-content">
+    <h1>Add New Pannel</h1>
+    <p>Please fill in this form to create an new Pannel.</p>
+    <hr>
+    <label for="in_addid"><b>ID</b></label>
+    <input type="text" autocomplete="off" placeholder="LRD395" id="in_addid" name="in_addid" required>
+
+    <label for="in_part"><b>Part#</b></label>
+    <input pattern="[0-9]*"  autocomplete="off" type="text" placeholder="1,2" id="in_part" name="in_part" >
+
+    <p><b>Pannel</b> <br><br>
+    <input type="radio" id="in_pannel" name="in_pannel" value="1220" checked>
+    <label for="in_pannel">1220</label>
+    <input type="radio" id="in_pannel" name="in_pannel" value="1525">
+    <label for="in_pannel">1525</label>
+    <input type="radio" id="in_pannel" name="in_pannel" value="1830">
+    <label for="in_pannel">1830</label>
+    <input type="radio" id="in_pannel" name="in_pannel" value="other">
+    <label for="in_pannel">other</label>
+    </p>
+    <label for="in_pannelother" class="hidden"><b style="color: #04AA6D">Other Pannel</b></label>
+    <input type="text"  autocomplete="off" placeholder="172x490" id="in_pannelother" name="in_pannelother" class="hidden">
+
+    <label for="in_thickness"><b>Thickness</b></label>
+    <input type="text"  autocomplete="off" placeholder="15" id="in_thickness" name="in_thickness" >
+
+    <label for="in_progam"><b>Part/program</b></label>
+    <input type="text"  autocomplete="off" placeholder="4" id="in_progam" name="in_progam" >
+
+    <label for="in_multiple"><b>multiple x2 x3 x4</b></label>
+    <input type="text"  autocomplete="off" placeholder="1" id="in_multiple" name="in_multiple" >
+
+    <label for="in_insert"><b>Insert Part</b></label>
+    <input type="text"  autocomplete="off" placeholder="3=5,4=1" id="in_insert" name="in_insert" >
+
+    <input type="hidden"  name="action" value="addnewpannel" >
+
+    <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Add more
+    </label>
+    <div class="clearfix">
+    <button type="reset" class="cancelbtn">Cancel</button>
+    <button type="submit" class="signupbtn">Save</button>
+    </div>
+    </div>
+    </div>
+    </form>
+</noscript>
+<noscript class="main_table_extened">
+    <!-- teamplates for EXTENED TR -->
+        <td colspan=9>
+                <ul>
+                <li >
+                    <h1>Cont</h1>
+                    <p contenteditable="true">{s_cont}</p>
+                    <span onclick=spanliPartclick(this,11)>&#x2713;</span> <!-- click to save to colum numbers in DATA-->
+                </li>
+                <li >
+                    <h1>Set</h1>
+                    <p contenteditable="true">{s_set}</p>
+                    <span onclick=spanliPartclick(this,12)>&#x2713;</span>
+                </li>
+                <li >
+                    <h1 onclick="spanliPartclick_pdf('{s_id}')" style="cursor: pointer;">ID</h1> <!-- Links PDF -->
+                    <p contenteditable="true">{s_id}</p>
+                    <span onclick=spanliPartclick_Id(this) data-sid="{s_id}"> &#x2713; </span>
+                </li>
+                <li>
+                <h1>Date</h1><p>{s_date}</p>
+                <span onclick=spanliPartclick(this,14)>&#x2713;</span> 
+            </li>
+                <li>
+                <h1 onclick="modules.ex_partsList(this,'{s_id}')">Parts</h1>
+                <p contenteditable="true">{s_parts}</p>
+                <span class="spanliPartclick" onclick=spanliPartclick(this,3)>&#x2713;</span>
+                </li>
+            </ul>
+            <ul>
+            <li>
+                <h1 onclick="">Finished</h1>
+                <p contenteditable="true">{s_comments}</p>
+                <span onclick=spanliPartclick(this,4)>&#x2713;</span> 
+            </li>
+
+            <li>
+                <h1>M1</h1>
+                <p contenteditable="true">{s_m1}</p>
+                
+                <span onclick=spanliPartclick(this,6)>&#x2713;</span>
+            </li>
+            <li>
+                <h1>M2</h1>
+                <p contenteditable="true">{s_m2}</p>
+                
+                <span onclick=spanliPartclick(this,7)>&#x2713;</span>
+            </li>
+            <li >
+                <h1>M3</h1>
+                <p contenteditable="true">{s_m3}</p>
+                <span onclick=spanliPartclick(this,8)>&#x2713;</span>
+            </li>
+            <li>
+                <h1>M4</h1>
+                <p contenteditable="true">{s_m4}</p>
+                <span onclick=spanliPartclick(this,9)>&#x2713;</span>
+            </li>
+            <li>
+            <h1>M5</h1>
+            <p contenteditable="true">{s_m5}</p>
+            <span onclick=spanliPartclick(this,10)>&#x2713;</span>
+        </li>
+        </ul>
+        <!--Plan machine-->
+        <ul>
+            <li>
+                <!-- <h1 onclick="main_Click_Extended_Machine(this)">Add</h1>
+                <h1 onclick="main_Click_Extended_Machine_View(this)">View</h1>
+                <h1 onclick="main_Click_Extended_Machine_clean(this)">Close</h1> -->
+
+                <h1 onclick="modules.ex_machineAdd(this)">Add</h1>
+                <h1 onclick="modules.ex_machineView(this)">View</h1>
+                <h1 onclick="modules.ex_machineViewDataScript(this)">Dump</h1>
+                <h1 onclick="modules.ex_machineClean(this)">CloseUp</h1>
+                
+                <!-- () => modules.test() -->
+                <!-- <p contenteditable="true">{s_comments}</p>
+                <span onclick=spanliPartclick(this,4)>&#x2713;</span>  -->
+            </li>
+        </li>
+        </ul>
+
+
+        <!--EDIT TEXTAREA-->
+        <ul class="data-script hide" style="text-align: left; padding: 15px;">
+                <div class="data-script" contenteditable="true" style="line-height: 1.5rem; word-spacing: 40px; white-space: pre;">{data-script}</div>
+                <br>
+                <input type="submit" value="Update" onclick="modules.click_datascriptUpdate(this)">       
+        </ul>
+        </td>
+</noscript>
+<noscript class="newproduct">
+    <form class="form_addTable ft-modal"  name="form_addTable" style="border:0px solid #ccc">
+        <div class="divAddTable">
+        <div class="ft-modal-content">
+        <h1>Add New to table1</h1>
+        <p>Please fill in this form to create an new Pannel.</p>
+        <hr>
+        <label for="in_addid"><b>ID</b></label>
+        <input type="text" autocomplete="off" placeholder="LRD395" name="in_addid" required>
+        <label for="in_addset"><b>Set</b></label>
+        <input type="text" autocomplete="off" placeholder="100" name="in_addset" required>
+        <label for="in_addcont"><b>Cont</b></label>
+        <input type="text" autocomplete="off" placeholder="LRD-24-12.." name="in_addcont" required>
+        <label for="in_addfsc"><b>FSC</b></label>
+        <input type="checkbox" name="in_addfsc" >
+
+        <input type="hidden"  name="in_description" value="">
+        <input type="hidden"  name="in_codeId" value="">
+
+        <div class="clearfix">
+          <button type="reset" name="btn_reset" class="cancelbtn">Cancel</button>
+          <button type="submit" name="btn_submit" class="signupbtn">Save</button>
+        </div>
+        </div>
+        </div>
+</form>
+</noscript>
+<noscript class="machineInput">
+    <!-- Teamplates - Show get in put in machine-->
+    <form class="form_addTable ft-modal"  name="form_addTable" style="border:0px solid #ccc">
+        <div class="divAddTable">
+        <div class="ft-modal-content">
+        <h1>Add New to table1</h1>
+        <p>Please fill in this form to create an new Pannel.</p>
+        <hr>
+        <label for="in_addid"><b>ID</b></label>
+        <input type="text" autocomplete="off" placeholder="LRD395" name="in_addid" required>
+        <label for="in_addset"><b>Set</b></label>
+        <input type="text" autocomplete="off" placeholder="100" name="in_addset" required>
+        <label for="in_addcont"><b>Cont</b></label>
+        <input type="text" autocomplete="off" placeholder="LRD-24-12.." name="in_addcont" required>
+        <label for="in_addfsc"><b>FSC</b></label>
+        <input type="checkbox" name="in_addfsc" >
+
+        <input type="hidden"  name="in_description" value="">
+        <input type="hidden"  name="in_codeId" value="">
+
+        <div class="clearfix">
+          <button type="reset" name="btn_reset" class="cancelbtn">Cancel</button>
+          <button type="submit" name="btn_submit" class="signupbtn">Save</button>
+        </div>
+        </div>
+        </div>
+</form>
+</noscript>
+<noscript class="Extended_Machine">
+    <style>
+        div.Extended_Machine input[type="checkbox"]{ 
+            margin-right: 1rem;
+        }
+    </style>
+    <!-- Extended_Machine -->
+    <div class="divAddTable">
+       <div class="ft-modal-content">
+       <h1>Machine - {s_title}</h1>
+       <p>Add infomation</p>
+       <hr>
+       <label><b>Part#</b></label>
+       <input type="text" autocomplete="off" placeholder="1" required>
+       <label><b>Qty</b></label>
+       <input type="text" autocomplete="off" placeholder="100">
+       <input type="text" autocomplete="off" placeholder="minutes">  
+       <input type="hidden" name="in_machine" value="{s_title}" autocomplete="off" placeholder="minutes"> 
+       <!-- <label><b>M1</b></label>
+       <input type="checkbox" name="in_exMachine" value="M1">
+       <label><b>M2</b></label>
+       <input type="checkbox" name="in_exMachine" value="M2"> 
+       <label><b>M3</b></label>
+       <input type="checkbox" name="in_exMachine" value="M3">
+       <label><b>M4</b></label>
+       <input type="checkbox" name="in_exMachine" value="M4">
+       <label><b>M5</b></label>
+       <input type="checkbox" name="in_exMachine" value="M5"> -->
+
+       <input type="hidden"  name="in_description" value="">
+       <input type="hidden"  name="in_codeId" value="">
+       <p>&nbsp;</p>
+           <div class="clearfix">
+               <button type="reset" name="btn_reset" class="cancelbtn">Cancel</button>
+               <button type="submit" name="btn_submit" class="signupbtn">Save</button>
+           </div>
+       </div>  
+   </div>  
+</noscript>
+<noscript class="Extended_partList">
+ 
+</noscript>
+
+<div class="blockClick"></div>
+<div class="newproduct"></div>
+
+<!-- Place will put the form submit M1,2,3,5-->
+<div class="Extended_Machine ft-modal"></div> 
+
+
+<!--Bottom Icon Moving ROWS-->
+<!--Bottom Icon Moving ROWS-->
+<div class="a_bottomnav hide">
+    <nav class="a_topnav" style="position : fixed; display:block">
+        <a class="ham-icon-up hide"> <b class="ham-up">&#8657;</b></a>
+        <br>
+        <a class="ham-i" style="font-size: 2rem;"> <b class="ham-i">&#10070;</b> </a>
+        <br>
+        <a class="ham-icon-down hide" ><b class="ham-down">&#8659;</b></a>
+      </nav>
+</div> 
+
+
+
+
+<!-- Button of DEVTOOLS-->
+<div id="btn_devtools" class="btn_devtools hide"> 
+    <button id="clear-cache">Clear Cache & Reload</button> 
+    <br><br><button id="cache-again" disabled>Cache Resources</button>
+    <br><br><button id="updateSW" disabled>Update ServiceWorker</button>
+    <br><br><button id="load-producid">Load productID</button>
+    <br><br><button id="load-sheet1">Load Sheet1</button>
+    <br><br><button id="setup-table">Setup Table</button> 
+    <button id="write-sheet1-into-db" >shet1db</button>
+</div>
+
+<!-- teamplates for EXTENED TR // main_tableExtened-->
+<script type="text/template" id="template-extenedTR">
+        <td colspan=9>
+                <ul>
+                <li >
+                    <h1>Cont</h1>
+                    <p contenteditable="true">{s_cont}</p>
+                    <span>&#x2713;</span> <!-- click to save to colum numbers in DATA-->
+                </li>
+                <li >
+                    <h1>Set</h1>
+                    <p contenteditable="true">{s_set}</p>
+                    <span>&#x2713;</span>
+                </li>
+                <li >
+                    <h1 style="cursor: pointer;">ID</h1> <!-- Links PDF -->
+                    <p contenteditable="true">{s_id}</p>
+                    <span data-sid="{s_id}"> &#x2713; </span>
+                </li>
+                <li>
+                <h1>Date</h1><p>{s_date}</p>
+                <span>&#x2713;</span> 
+            </li>
+                <li>
+                <h1>Parts</h1>
+                <p contenteditable="true">{s_parts}</p>
+                <span class="spanliPartclick">&#x2713;</span>
+                </li>
+            </ul>
+            
+            <ul>
+            <li>
+                <h1 onclick="">Finished</h1>
+                <p contenteditable="true">{s_comments}</p>
+                <span>&#x2713;</span> 
+            </li>
+
+            <li>
+                <h1>M1</h1>
+                <p contenteditable="true">{s_m1}</p>
+                
+                <span>&#x2713;</span>
+            </li>
+            <li>
+                <h1>M2</h1>
+                <p contenteditable="true">{s_m2}</p>
+                
+                <span>&#x2713;</span>
+            </li>
+            <li >
+                <h1>M3</h1>
+                <p contenteditable="true">{s_m3}</p>
+                <span>&#x2713;</span>
+            </li>
+            <li>
+                <h1>M4</h1>
+                <p contenteditable="true">{s_m4}</p>
+                <span>&#x2713;</span>
+            </li>
+            <li>
+            <h1>M5</h1>
+            <p contenteditable="true">{s_m5}</p>
+            <span>&#x2713;</span>
+        </li>
+        </ul>
+        <!--Plan machine-->
+        <ul class=bottom-Menu>
+            <li>
+                <h1></h1>
+                <h1>View</h1>
+                <h1>Close</h1>
+                <h1>Update</h1>
+            </li>
+        </li>
+        </ul>
+
+
+        </td>
+</script>
+
+<!-- teamplates for EXTENED % form add machine-->
+<script type="text/template" id="template-form-add-machine">
+    <style>
+        div.Extended_Machine input[type="checkbox"]{ 
+            margin-right: 1rem;
+        }
+    </style>
+    <!-- Extended_Machine -->
+    <div class="divAddTable">
+       <div class="ft-modal-content">
+       <h1>Machine - {s_title}</h1>
+       <p>Add more infomation</p>
+       <hr>
+       <label><b>Part#</b></label>
+       <input type="text" autocomplete="off" placeholder="1" required>
+       <label><b>Qty</b></label>
+       <input type="text" autocomplete="off" placeholder="100">
+       <input type="text" autocomplete="off" placeholder="minutes">  
+       <input type="hidden" name="in_machine" value="{s_title}" autocomplete="off" placeholder="minutes"> 
+       <!-- <label><b>M1</b></label>
+       <input type="checkbox" name="in_exMachine" value="M1">
+       <label><b>M2</b></label>
+       <input type="checkbox" name="in_exMachine" value="M2"> 
+       <label><b>M3</b></label>
+       <input type="checkbox" name="in_exMachine" value="M3">
+       <label><b>M4</b></label>
+       <input type="checkbox" name="in_exMachine" value="M4">
+       <label><b>M5</b></label>
+       <input type="checkbox" name="in_exMachine" value="M5"> -->
+
+       <input type="hidden"  name="in_description" value="">
+       <input type="hidden"  name="in_codeId" value="">
+       <p>&nbsp;</p>
+           <div class="clearfix">
+               <button type="reset" name="btn_reset" class="cancelbtn">Cancel</button>
+               <button type="submit" name="btn_submit" class="signupbtn">Save</button>
+           </div>
+       </div>  
+   </div>  
+</script>
+
+<script type="text/template" id="template-extenedTR1">
+    <td colspan=9>
+            <ul>
+            <li >
+                <h1>Cont</h1>
+                <p contenteditable="true">{s_cont}</p>
+                <span onclick=spanliPartclick(this,11)>&#x2713;</span> <!-- click to save to colum numbers in DATA-->
+            </li>
+            <li >
+                <h1>Set</h1>
+                <p contenteditable="true">{s_set}</p>
+                <span onclick=spanliPartclick(this,12)>&#x2713;</span>
+            </li>
+            <li >
+                <h1 onclick="spanliPartclick_pdf('{s_id}')" style="cursor: pointer;">ID</h1> <!-- Links PDF -->
+                <p contenteditable="true">{s_id}</p>
+                <span onclick=spanliPartclick_Id(this) data-sid="{s_id}"> &#x2713; </span>
+            </li>
+            <li>
+            <h1>Date</h1><p>{s_date}</p>
+            <span onclick=spanliPartclick(this,14)>&#x2713;</span> 
+        </li>
+            <li>
+            <h1 onclick="modules.ex_partsList(this,'{s_id}')">Parts</h1>
+            <p contenteditable="true">{s_parts}</p>
+            <span class="spanliPartclick" onclick=spanliPartclick(this,3)>&#x2713;</span>
+            </li>
+        </ul>
+        
+        <ul>
+        <li>
+            <h1 onclick="">Finished</h1>
+            <p contenteditable="true">{s_comments}</p>
+            <span onclick=spanliPartclick(this,4)>&#x2713;</span> 
+        </li>
+
+        <li>
+            <h1>M1</h1>
+            <p contenteditable="true">{s_m1}</p>
+            
+            <span onclick=spanliPartclick(this,6)>&#x2713;</span>
+        </li>
+        <li>
+            <h1>M2</h1>
+            <p contenteditable="true">{s_m2}</p>
+            
+            <span onclick=spanliPartclick(this,7)>&#x2713;</span>
+        </li>
+        <li >
+            <h1>M3</h1>
+            <p contenteditable="true">{s_m3}</p>
+            <span onclick=spanliPartclick(this,8)>&#x2713;</span>
+        </li>
+        <li>
+            <h1>M4</h1>
+            <p contenteditable="true">{s_m4}</p>
+            <span onclick=spanliPartclick(this,9)>&#x2713;</span>
+        </li>
+        <li>
+        <h1>M5</h1>
+        <p contenteditable="true">{s_m5}</p>
+        <span onclick=spanliPartclick(this,10)>&#x2713;</span>
+    </li>
+    </ul>
+    <!--Plan machine-->
+    <ul>
+        <li>
+            <!-- <h1 onclick="main_Click_Extended_Machine(this)">Add</h1>
+            <h1 onclick="main_Click_Extended_Machine_View(this)">View</h1>
+            <h1 onclick="main_Click_Extended_Machine_clean(this)">Close</h1> -->
+
+            <h1 onclick="modules.ex_machineAdd(this)">Add</h1>
+            <h1 onclick="modules.ex_machineView(this)">View</h1>
+            <h1 onclick="modules.ex_machineViewDataScript(this)">Dump</h1>
+            <h1 class="Ex-Machine-SaveUpdate">Update</h1>
+            
+            <!-- () => modules.test() -->
+            <!-- <p contenteditable="true">{s_comments}</p>
+            <span onclick=spanliPartclick(this,4)>&#x2713;</span>  -->
+        </li>
+    </li>
+    </ul>
+
+
+    <!--EDIT TEXTAREA-->
+    <ul class="data-script hide" style="text-align: left; padding: 15px;">
+            <div class="data-script" contenteditable="true" style="line-height: 1.5rem; word-spacing: 40px; white-space: pre;">{data-script}</div>
+            <br>
+            <input type="submit" value="Update" onclick="modules.click_datascriptUpdate(this)">       
+    </ul>
+    </td>
+</script>
+
+
+</body>
+     <script src="app.js"></script>
+</html>
