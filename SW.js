@@ -7,7 +7,7 @@ const OFFLINE_URL = "/offline.html"; // Fallback page when offline
 // Files to cache for offline access
 const ASSETS_TO_CACHE = [
     '/',
-    '/index.html',
+    '/cncsnipet35.html',
     '/app.js',
     '/style.css',
     'https://script.google.com/macros/s/AKfycbyKZHUQlDqoAEHMw8IqU81Ys-mjE4ihGSJXlfYZheSl-6ZqIgRoN6giXQvxWNHbhr3M/exec?name=script', 
