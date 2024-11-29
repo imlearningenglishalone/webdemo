@@ -16,8 +16,17 @@
       border: none;
     }
   </style>
+  <script>
+    function appendRandomParam() {
+      var iframe = document.getElementById('myIframe');
+      var baseUrl = "https://docs.google.com/forms/d/e/1FAIpQdsdLSdUmSOHk1fh25_pzVH1mq_wSOoZFBtMWCeb1J8xajZZlw9d-Q/viewform?embedded=true";
+      var randomParam = "&times=" + new Date().getTime();
+      iframe.src = baseUrl + randomParam;
+    }
+    window.onload = appendRandomParam;
+  </script>
 </head>
 <body>
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdUmSOHk1fh25_pzVH1mq_wSOoZFBtMWCeb1J8xajZZlw9d-Q/viewform?embedded=true"></iframe>
+  <iframe id="myIframe" src=""></iframe>
 </body>
 </html>
