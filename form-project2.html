@@ -19,8 +19,8 @@
   <script>
     function appendRandomParam() {
       var iframe = document.getElementById('myIframe');
-      var baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdUmSOHk1fh25_pzVH1mq_wSOoZFBtMWCeb1J8xajZZlw9d-Q/viewform?embedded=true";
-      var randomParam = "&times" + new Date().getTime();
+      var baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdUmSOHk1fh25_pzVH1mq_wSOoZFBtMWCeb1J8xajZZlw9d-Q/viewform?embedded=true&t";
+      var randomParam = "t" + new Date().getTime();
       iframe.src = baseUrl + randomParam;
     }
     window.onload = appendRandomParam;
