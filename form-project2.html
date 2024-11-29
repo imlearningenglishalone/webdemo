@@ -24,6 +24,18 @@
       iframe.src = baseUrl + randomParam;
     }
     window.onload = appendRandomParam;
+
+
+var load = 0;
+document.getElementById('gform').onload = function(){
+    /*Execute on every reload on iFrame*/
+    load++;
+    if(load > 1){
+        /*Second reload is a submit*/
+        document.location = "https://www.google.com/search?q=thanks&tbm=isch";
+    }
+}
+    
   </script>
 </head>
 <body>
