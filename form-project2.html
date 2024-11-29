@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+  <script>
+    function runOnPageLoad() {
+      // Your custom script here
+      alert('This script runs when the page is opened!');
+    }
+  </script>
+</head>
+<body onload="runOnPageLoad()">
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdUmSOHk1fh25_pzVH1mq_wSOoZFBtMWCeb1J8xajZZlw9d-Q/viewform?embedded=true"></iframe>
+</body>
+</html>
