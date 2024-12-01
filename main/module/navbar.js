@@ -162,7 +162,7 @@ function main_table_statusRow(status, callback){
 
         row.cells[2].firstElementChild.className = "title" + " "+ state;
         let id = row.dataset.key
-        dofun.data_sheet1[id][5] = state;
+        dofun.data_sheet1[id][3] = state;
     });
 
 
