@@ -3,7 +3,7 @@
 //********************************
 function db_open (callback){
        //this function run one time.
-        const request = indexedDB.open("testdb", 1);
+        const request = indexedDB.open("maintenance", 1);
         request.onsuccess = e => {
                 let db = e.target.result
                 let transaction = db.transaction("books", "readwrite");
@@ -21,7 +21,7 @@ function db_open (callback){
 }
 function db_remove(callback){
         return (() => {
-                indexedDB.deleteDatabase("testdb").onsuccess = (event) => {
+                indexedDB.deleteDatabase("maintenance").onsuccess = (event) => {
                     console.log("Database deleted successfully");
                     //console.log(event.result); // should be undefined
                     callback(event)
