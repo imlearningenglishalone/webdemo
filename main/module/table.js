@@ -50,7 +50,9 @@ function table() {
                 } return fullText; 
         }
         let vlcol3 = shortenText(col[2],25)
-            vlcol3 = `<span class="title ${col[5]}">${col[1]}</span><p class=col3></p><p><span class="col3A">${vlcol3}</span> <span class="col3B hidden">${col[2]}</span> </p>`;
+
+            
+            vlcol3 = `<span class="title ${col[3]}">${col[1]}</span><p class=col3></p><p><span class="col3A">${vlcol3}</span> <span class="col3B hidden">${col[2]}</span> </p>`;
 
         let tr = document.createElement('tr');
             tr.dataset.key = key;
