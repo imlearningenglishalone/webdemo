@@ -40,7 +40,7 @@ function table() {
 
             return `${day}/${month}/${year}`;
         }
-        let vlcol1 = `<p class="col1 ${col[5]}">${value_col1(col[0])}</p>`;
+        let vlcol1 = `<p class="col1 ${col[3]}">${value_col1(col[0])}</p>`;
 
 
         // cut terxt content short
@@ -51,7 +51,6 @@ function table() {
         }
         let vlcol3 = shortenText(col[2],25)
 
-            
             vlcol3 = `<span class="title ${col[3]}">${col[1]}</span><p class=col3></p><p><span class="col3A">${vlcol3}</span> <span class="col3B hidden">${col[2]}</span> </p>`;
 
         let tr = document.createElement('tr');
