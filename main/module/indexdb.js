@@ -141,3 +141,58 @@ document.addEventListener('data-db', function(e) {
 });
 
 
+
+
+function main_table_sendServer(){
+
+    dofun.data_sheet1.shift(); //remove Header
+    // dofun.data_code.shift(); //remove Header
+    // dofun.data_id.shift(); //remove Header
+
+    let jdata = {sheet1: dofun.data_sheet1, sheet2: []}
+    //let jdata = {sheet1: dofun.data_sheet1}
+    let data = JSON.stringify( jdata )
+
+    console.log("Post Data to server...");
+
+    const showMessage = (message, type = 'success') => {
+
+            console.log(type, message);
+            //return;
+            
+            //just for view
+            //let data = JSON.parse(message);
+            // let row = JSON.parse(data.row)
+            // console.log(row)
+            // document.a = row;
+
+    };
+    const subscribe = async () => {
+            try {
+                    //post sheet thu nghiem
+                    let response = await fetch(URL_SHEETS, {
+
+                        redirect: "follow",
+                        mode: "cors",
+                        method: "POST",
+                        body: data,
+                        headers: {
+                            "Content-Type": "text/plain;charset=utf-8",
+                        }
+                });
+                const result = await response.text(); //res.text()
+                showMessage(result)
+
+                //disable for view
+                setTimeout(() => location.reload(), 200)
+
+            } catch (error) {
+                showMessage(error.message, 'error1');
+            }
+        };
+    //post 
+    subscribe();
+}
+
+
+
