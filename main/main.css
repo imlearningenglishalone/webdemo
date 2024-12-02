@@ -177,7 +177,7 @@ p.col3{
 .col3B.hidden, .col3A.hidden{
     display: none;
 }
-.title.active {
+.title.active, .title.pending {
     font-weight: 700;
 }
 .title.done{
