@@ -40,7 +40,7 @@ function table() {
 
             return `${day}/${month}/${year}`;
         }
-        let vlcol1 = `<p class="col1 ${col[3]}">${value_col1(col[0])}</p>`;
+        let vlcol1 = `<p class="col1 ${col[3]}">${col[0]}</p>`;
 
 
         // cut terxt content short
