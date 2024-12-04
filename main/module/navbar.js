@@ -146,6 +146,11 @@ export function main_navbar(){
                         main_showStatusTb(elementClick[1].replace('show-',''))
                         nav.toggle("show")
                 break;
+
+            case "newproduct":
+                    window.open("https://docs.google.com/forms/d/e/1FAIpQLSc7nPxmygLjrypyCYW7DUTB8zLSYRkiqU-UpNcFMxw0BnBZ9w/viewform", "_blank");
+                    nav.toggle("show")
+            break;
             default:
                 console.log("nothing happen")
             }//end-Swich
