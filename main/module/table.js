@@ -25,12 +25,6 @@ function table() {
         }
         let partdo = new_sort(col[3])
         
-        //make text Show on colum7
-        let text7 = col[4]
-
-
-
-
         //convert date to short it
         let value_col1 = (isoDateString) => {
             const date = new Date(isoDateString);
@@ -50,8 +44,11 @@ function table() {
                 } return fullText; 
         }
         let vlcol3 = shortenText(col[2],25)
-
-            vlcol3 = `<span class="title ${col[3]}">${col[1]}</span><p class=col3></p><p><span class="col3A">${vlcol3}</span> <span class="col3B hidden">${col[2]}</span> </p>`;
+            col[4] = String(col[4])
+        let vlcol4 = col[4].replace(/\n/g, "<br>");
+            vlcol3 = `<span class="title ${col[3]}">${col[1]}</span><p class=col3></p><p><span class="col3A">${vlcol3}</span> <span class="col3B hidden">${col[2]} <br> ${vlcol4}</span> </p>`;
+        //make text Show on colum7
+        let text7 = col[4].replace(/\n/g, "<br>")
 
         let tr = document.createElement('tr');
             tr.dataset.key = key;

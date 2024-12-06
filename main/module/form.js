@@ -5,7 +5,7 @@ async function loadTemplate(url) {
 } 
 async function renderUser() {
     const template = await loadTemplate('module/form.html');
-    const userHtml = template.replace('{{name}}', 'Alice').replace('{{email}}', 'alice@example.com');
+    const userHtml = template.replace('{{name}}', 'Note').replace('{{email}}', 'alice@example.com');
    
     // Create a new element
     const newElement = document.createElement('div');
@@ -26,27 +26,28 @@ export async function theform() {
     event.preventDefault(); // Prevent actual form submission
 
 
-        // Your custom logic here
-        console.log("Form submitted!");
+    let formq = event.target
+    let textValue = formq[0].value
+    document.querySelectorAll("table tbody tr.row-select").forEach(row => {
+        let id = row.dataset.key
+        dofun.data_sheet1[id][4] += "\n -"+ getFormattedDateTime() + " \n " + textValue;
+    });
+
+    function getFormattedDateTime() {
+        var now = new Date();
         
-        // You can also access form data like this
-        var formData = new FormData(event.target);
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
-
-        }
-
-        // document.querySelectorAll("table tbody tr.row-select").forEach(row => {
-
-        //     row.cells[2].firstElementChild.className = "title" + " "+ state;
-        //     let id = row.dataset.key
-        //     dofun.data_sheet1[id][3] = state;
-        // });
-
-
-
-    //hideForm();
-    //document.querySelector("a.menu-link.saveSelect").click()
+        var month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+        var day = now.getDate().toString().padStart(2, '0');
+        var year = now.getFullYear().toString().slice(-2); // Get last two digits of the year
+        
+        var hours = now.getHours().toString().padStart(2, '0');
+        var minutes = now.getMinutes().toString().padStart(2, '0');
+        
+        return `${day}/${month}/${year} : ${hours}:${minutes}`;
+      }
+    //save 
+    hideForm();
+    document.querySelector("a.menu-link.saveSelect").click()
   });
 
   hideForm();
@@ -62,10 +63,18 @@ function hideForm() {
     }, 500); // Wait for the transition to complete
 }
 function showForm(){
-         if (formContainer.classList.contains('hidden')) {
-              formContainer.classList.remove('hidden');
-              formContainer.style.display = 'block';
-          }
+
+    //check selected
+    if(document.querySelectorAll("table tbody tr.row-select").length === 0) {
+        console.log("no thing select")
+        return 
+    }
+
+    if (formContainer.classList.contains('hidden')) {
+        formContainer.classList.remove('hidden');
+        formContainer.style.display = 'block';
+
+    }
 }
 document.addEventListener('navbar', function(e) {
     if('pending' === e.detail.message){

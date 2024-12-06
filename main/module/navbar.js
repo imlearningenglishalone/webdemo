@@ -150,6 +150,10 @@ export function main_navbar(){
                     window.open("https://forms.gle/2ywFY8V5kUKPiKqn9", '_blank');
                     nav.toggle("show")
             break;
+            case "sheetView":
+                window.open("https://docs.google.com/spreadsheets/d/1W_UFhw1CHzIvITqErDy4LGA4ZZExaqlEry2vCMXUAjM/edit?gid=210637880#gid=210637880", '_blank');
+                nav.toggle("show")
+            break; 
             default:
                 console.log("nothing happen")
             }//end-Swich

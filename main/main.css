@@ -148,8 +148,10 @@ p.col1.pending {
     background-color: #d893a3;
 }
 p.col1.active {
-    color: #6f5b03;
-    background-color: #dfc863;
+    /* color: #6f5b03; */
+    /* background-color: #dfc863; */
+    color: #006b21;
+    background-color: #86e49d;
 }
 p.col1.next {
     color: #006b21;
@@ -162,7 +164,7 @@ p.col1.done {
 p.col1 {
     /* color: #006b21;
     background-color: #86e49d; */
-    padding: .5rem 0 .5rem 0;
+    padding: .5rem 0.9rem .5rem 0.9rem;
     border-radius: 2rem;
     text-align: center;
 }
@@ -173,14 +175,26 @@ p.col3{
 /* shorten text content and expand it on click - SPAN -COLUM3 title - TD 3 */
 .col3A, .col3B {
     color: #04040475;
+    width: 450px;
+    word-wrap: break-word;
+    display:inline-block;
+    
 }
 .col3B.hidden, .col3A.hidden{
-    display: none;
+    /* display: none; */
+    visibility: hidden;
 }
 .title.active {
+    cursor: pointer;
+    font-weight: 700;
+    
+}
+.title.pending {
+    cursor: pointer;
     font-weight: 700;
 }
 .title.done{
+    cursor: pointer;
     font-weight: 400;
 }
 
@@ -339,9 +353,20 @@ tr th:not(:nth-of-type(3)):not(:nth-of-type(8)):not(:nth-of-type(9)){
 
 /*an vai col trong table
 /*HIDE COLUM 5-GROUPID - it's not necessary*/
-tr th:nth-child(6), td:nth-child(6){
+tr  th:nth-child(4), td:nth-child(4), 
+    th:nth-child(5), td:nth-child(5), 
+    th:nth-child(6), td:nth-child(6),
+    th:nth-child(7), td:nth-child(7),
+    th:nth-child(9), td:nth-child(9){
     display: none;
 }
+
+td:nth-of-type(1) {
+    width: 120px; /* Set the width for the third <td> */
+    word-wrap: break-word; /* Ensure text wraps */
+    white-space: normal; /* Allow text to wrap normally */
+    overflow: hidden; /* Hide overflow text */
+  }
 
 /*custome media (min-width:300px) and  (orientation: portrait) */
 @media (orientation: portrait){
@@ -371,7 +396,10 @@ tr th:nth-child(6), td:nth-child(6){
         /* background-color: #eaff9c; */
      
     }
-
+    .col3A, .col3B {
+        /* col3 -mobile */
+           width: 100%;
+    }
   }
 
 
@@ -436,111 +464,6 @@ tr th:nth-child(6), td:nth-child(6){
 }
 
 
-/*form Addnew Pannel */
-/*==== ADD NEW PANNEL & ALERT PANNEL ====*/
-/*===== CSS Form addnews pannel && ALERT =====*/
-.ft-modal {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-        z-index: 100;	
-        overflow: auto;
-    position: fixed;
-        visibility: hidden;
-    margin-top: -250px;
-    background: rgba(0,0,0,.8);
-    
-    transition: all .3s ease-in-out;
-    -moz-transition: all .3s ease-in-out;
-    -webkit-transition: all .3s ease-in-out;
-}
-
-.ft-modal.visible {
-    opacity: 1;
-    margin-top: 0px;
-    visibility: visible;	
-}
-
-.ft-modal-content {
-    width: 92%;
-    padding: 25px;
-    background: #FFF;
-    max-width: 600px;
-    margin: 70px auto;
-    position: relative;
-    border-radius: 8px;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-}
-
-.ft-modal-content {font-family: Arial, Helvetica, sans-serif;}
-.ft-modal-content * {box-sizing: border-box}
-/* Full-width input fields */
-.ft-modal-content input[type=text], .divAddnew input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-}
-
-.ft-modal-content input[type=text]:focus, .divAddnew input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-}
-
-.ft-modal-content hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-}
-
-/* Set a style for all buttons */
-.ft-modal-content button {
-    background-color: #04AA6D;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    /* width: 100%; */
-    opacity: 0.9;
-}
-
-.ft-modal-content button:hover {
-    opacity:25;
-}
-
-/* Extra styles for the cancel button */
-.ft-modal-content .cancelbtn {
-    padding: 14px 20px;
-    background-color: #f44336;
-}
-
-/* Float cancel and signup buttons and add an equal width */
-.ft-modal-content .cancelbtn,
-.ft-modal-content .signupbtn {
-    float: left;
-    width: 50%;
-}
-
-/* Add padding to container elements */
-.ft-modal-content {
-    padding: 16px;
-}
-
-/* Clear floats */
-.ft-modal-content .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-.ft-modal-content .hidden{
-    visibility: hidden;
-}
-
-
 /* Icon Menu Left */
 .topnav1 {
       display: flex;
@@ -560,15 +483,9 @@ tr th:nth-child(6), td:nth-child(6){
     background-color: #edf1f1c2;
  }
 
-
-
  .chbg {
  background-color: #006b21;
 }
-
-
-
-
 
 
 /*=====================================*/
