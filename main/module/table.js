@@ -32,7 +32,7 @@ function table() {
         let vlcol3 = shortenText(col[2],25)
             col[4] = String(col[4])
         let vlcol4 = col[4].replace(/\n\s*-(\d{2}\/\d{2}\/\d{2} : \d{2}:\d{2})\s*\n\s*(.*)/g, '<li>-$1 <span class=subtitle>$2</span></li>');
-            vlcol3 = `<span class="title ${col[3]}">${col[1]}</span><p class=col3></p><p><span class="col3A">${vlcol3}</span> 
+            vlcol3 = `<span class="title ${col[3]}">${col[1]}</span><p class=col3>${vlcol1}</p><p><span class="col3A">${vlcol3}</span> 
                             <span class="col3B hidden">
                                 ${col[2]} <br>
 

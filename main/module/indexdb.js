@@ -129,60 +129,6 @@ function deleteAllIndexedDB() {
 }
 
 
-function main_table_sendServer(){
-
-    dofun.data_sheet1.shift(); //remove Header
-    //dofun.data_sheet2.shift(); //remove Header
-
-    let jdata = {sheet1: dofun.data_sheet1, sheet2: "dofun.data_sheet2"}
-    //let jdata = {sheet1: dofun.data_sheet1}
-    let data = JSON.stringify( jdata )
-
-    console.log("Post Data to server...");
-
-    const showMessage = (message, type = 'success') => {
-
-            console.log(type, message);
-            //return;
-            
-            //just for view
-            //let data = JSON.parse(message);
-            // let row = JSON.parse(data.row)
-            // console.log(row)
-            // document.a = row;
-
-    };
-    const subscribe = async () => {
-            try {
-                    //post sheet thu nghiem
-                    let response = await fetch(URL_SHEETS, {
-
-                        redirect: "follow",
-                        mode: "cors",
-                        method: "POST",
-                        body: data,
-                        headers: {
-                            "Content-Type": "text/plain;charset=utf-8",
-                        }
-                });
-                const result = await response.text(); //res.text()
-                showMessage(result)
-
-                //disable for view
-                setTimeout(() => location.reload(), 200)
-
-            } catch (error) {
-                showMessage(error.message, 'error1');
-            }
-        };
-    //post 
-    subscribe();
-}
-
-
-
-
-
 //check if connection to get update
 function getNewUpdate(){
     if (navigator.onLine) {
@@ -217,3 +163,19 @@ document.addEventListener('data-db', function(e) {
 });
 
 
+
+
+
+
+function getFormattedDateTime() {
+    var now = new Date();
+    
+    var month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+    var day = now.getDate().toString().padStart(2, '0');
+    var year = now.getFullYear().toString().slice(-2); // Get last two digits of the year
+    
+    var hours = now.getHours().toString().padStart(2, '0');
+    var minutes = now.getMinutes().toString().padStart(2, '0');
+    
+    return `${day}/${month}/${year} : ${hours}:${minutes}`;
+}

@@ -172,6 +172,9 @@ function main_table_statusRow(status, callback){
         row.cells[2].firstElementChild.className = "title" + " "+ state;
         let id = row.dataset.key
         dofun.data_sheet1[id][3] = state;
+
+        if(status === "done") dofun.data_sheet1[id][4] += "\n -"+ getFormattedDateTime() + " \n Hoàn thành "
+        dofun.data_sheet1[id][7] = getFormattedDateTime(); //Update last edit
     });
 
 
@@ -209,6 +212,68 @@ function eventTringger(message){
 
 
 
+// function putDataArray(e) {
+//     var lock = LockService.getScriptLock();
+//     try {
+//       if (lock.tryLock(30000)) { // Try to get the lock, timeout after 30 seconds
+//         // Critical section
+//         let anew = e.postData.contents;
+//         let data = JSON.parse(e.postData.contents);
+//         let sheet1 = data.sheet1;
+//         sheet1.shift();
+//         sheet1.reverse();
+//         var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Sheet1');
+//         sheet.getRange(2, 1, sheet1.length, sheet1[0].length).setValues(sheet1);
+//         let response = JSON.stringify({ 'result': 'success1', 'row': anew });
+//         return ContentService.createTextOutput(response).setMimeType(ContentService.MimeType.JSON);
+//       } else {
+//         // Return busy status if lock couldn't be obtained
+//         return ContentService.createTextOutput(JSON.stringify({ 'result': 'busy' })).setMimeType(ContentService.MimeType.JSON);
+//       }
+//     } catch (error) {
+//       return ContentService.createTextOutput("Error: " + error.message).setMimeType(ContentService.MimeType.TEXT);
+//     } finally {
+//       lock.releaseLock(); // Always release the lock
+//     }
+//   }
+  
+
+
+  
+async function sendData() {
+    const url = URL_SHEETS; // Replace with your web app URL
+
+    dofun.data_sheet1.shift(); //remove Header
+    let data = {sheet1: dofun.data_sheet1, sheet2: "dofun.data_sheet2"}
+
+    const options = {
+      method: 'POST',
+      headers: {
+        // 'Content-Type': 'application/json' - google error 
+        'Content-Type': 'text/plain;charset=utf-8'      
+    },
+      body: JSON.stringify(data),
+      redirect: "follow",
+      mode: 'cors' // Enable CORS
+    };
+  
+    try {
+      let response = await fetch(url, options);
+      let result = await response.json();
+  
+      if (result.result === 'busy') {
+        console.log('Server is busy. Retrying...');
+        setTimeout(() => sendData(data), 5000); // Retry after 5 seconds
+      } else if (result.result === 'error') {
+        console.error('Error from server:', result.message);
+      } else {
+        console.log('Data submitted successfully:', result);
+      }
+    } catch (error) {
+      console.error('Error submitting data:', error);
+    }
+  }
+  
 
 
 
@@ -242,7 +307,8 @@ export function new_navbar(){
         danglam: function(e){ this.eshow(e),  main_table_statusRow("pending", tableSelectCleanUp) },
         chualam: function(e){ this.eshow(e),  main_table_statusRow("active", tableSelectCleanUp) },
         
-        tailen: function(e) { this.eshow(e), main_table_sendServer() },
+        tailen: function(e) { this.eshow(e), sendData() },  //main_table_sendServer()
+        //tailen: function(e) { this.eshow(e), main_table_sendServer() },  //main_table_sendServer()
         addnew: function (e){ this.eshow(e), window.open("https://forms.gle/2ywFY8V5kUKPiKqn9", '_blank')},
         sheet: function (e){ this.eshow(e), window.open("https://docs.google.com/spreadsheets/d/1W_UFhw1CHzIvITqErDy4LGA4ZZExaqlEry2vCMXUAjM/edit?gid=210637880#gid=210637880", '_blank')}
       };
@@ -252,9 +318,9 @@ export function new_navbar(){
     const navbarConfig = [
         { "name": "Cập nhật", "event": "update" },
 
-        { "name": "Xong", "event": "xong" },
-        { "name": "Dang Lam", "event": "danglam" },
-        { "name": "Chua lam", "event": "chualam" },
+        { "name": "- Đã Xong", "event": "xong" },
+        { "name": "- Đang làm", "event": "danglam" },
+        { "name": "- Chưa làm", "event": "chualam" },
 
         { "name": "Tải lên", "event": "tailen" },
         { "name": "Add New", "event": "addnew" },
