@@ -49,19 +49,46 @@
 </section>
 </main>
 <!-- MENU -->
+   <style>
+    .li-event-list ul {
+      padding: 0px;
+      margin: 0px;
+      position: relative;
+      list-style-type: none;
+    }
+    .li-event-list ul::before {
+      content: "";
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: -5px;
+      border-left: 0px dotted gray; /* Adjust border style */
+      height: 100%;
+    }
+    .li-event-list ul li {
+      margin: 10px 0; /* Reduce margin between list items */
+      padding: 0px;
+      position: relative;
+      z-index: 1;
+      color: gray;
+    }
+    .li-event-list ul li .subtitle {
+      display: block;
+      color: black;
+      padding-left: 8px; /* Adjust padding to align with the border */
+    }
+  </style>
 <div id="sideNavigation" class="sidenav">
     <a class="menu-link close-btn">×</a>
-    <a class="menu-link reload">Làm mới</a>
+    <!-- <a class="menu-link reload">Làm mới</a>
 
     <a class="menu-link link-select">Trạng thái</a>
-    <!--
-    <a class="menu-link link-edit lk-Select visible">Modifile</a>
-    <a class="menu-link link-remove lk-Select visible">Remove</a>
-    -->
+
     <a class="menu-link status-active lk-Select visible">Chưa làm</a>
     <a class="menu-link status-pending lk-Select visible">Trì hoãn</a>
     <a class="menu-link status-done lk-Select visible">Xong</a>
-    <!-- <a class="menu-link status-null lk-Select visible">New</a> -->
+
+
     <a class="menu-link lk-Select visible">&nbsp</a>
     <a class="menu-link saveSelect lk-Select visible">Lưu lại</a>
     <br>&nbsp;
@@ -72,7 +99,11 @@
     <br>&nbsp;
     <a class="menu-link show-all">Show All</a>
     <a class="menu-link show-active">Show Active</a>
-    <a class="menu-link show-pending">Show Pending</a>
+    <a class="menu-link show-pending">Show Pending</a> -->
+
+    <a class="menu-link status-active lk-Select visible">Chưa làm</a>
+    <a class="menu-link status-pending lk-Select visible">Trì hoãn</a>
+    <a class="menu-link status-done lk-Select visible">Xong</a>
 </div>
 
 <div class="blockClick"></div>

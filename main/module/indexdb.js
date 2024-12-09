@@ -183,6 +183,27 @@ function main_table_sendServer(){
 
 
 
+//check if connection to get update
+function getNewUpdate(){
+    if (navigator.onLine) {
+
+        const saveDataLocal = (data) => {
+            db_addArr(data,(e) => {
+                dofun.data_sheet1 = data.sheet1.slice(0);//Clone - copy array to Varible
+                console.log("getDataSaveLocal:: dofun check data")
+                eventTringger("ready")
+            })
+        }
+        db_getDataSV(saveDataLocal);
+        
+     return;
+    }
+    db_getDataLocal()
+
+        //db_remove(() => eventTringger("connectServer") );
+}
+
+
 // Create a CustomEvent with additional data
 function eventTringger(message){
     const event = new CustomEvent('data-db', { detail: { message: message }});

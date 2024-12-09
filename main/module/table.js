@@ -3,39 +3,25 @@
 export function main_table(){
     table();
     searching();
+
+    dofun.reloadTable = function(){
+        table();
+    }
 }
 
 function table() {
 
-    const dFrag = document.createDocumentFragment(); 
+    const domFrag = document.createDocumentFragment(); 
+    const tablebody = document.querySelector("table tbody");
+    document.querySelectorAll("table tbody tr").forEach(row => {
+        row.remove();
+    })
+
     dofun.data_sheet1.forEach((col , key) =>{
 
         if(key < 1) return; //Next loop - Skip this loop - We don't want Header
 
-        let text = `<p class="col1 ${col[5]}">${col[0]}</p>`;
-        let text2 = `${col[1]}<p class="col3">${col[0]}</p><p class="col3">${col[2]}</p>`;
-
-        //let text7 = col[4] == "" ? col[3] : `${col[3]}<p class="col3">${col[4]}</p>`;
-
-        const new_sort = (text) => {
-            if(!text) return;
-            let string = text.toString().split(",")
-            const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
-            return string.sort(collator.compare).join(",")
-        }
-        let partdo = new_sort(col[3])
-        
-        //convert date to short it
-        let value_col1 = (isoDateString) => {
-            const date = new Date(isoDateString);
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
-            const year = String(date.getFullYear()).slice(-2); // Get the last two digits of the year
-
-            return `${day}/${month}/${year}`;
-        }
-        let vlcol1 = `<p class="col1 ${col[3]}">${col[0]}</p>`;
-
+        let vlcol1 = `<p class="col1 ${col[3]}">${convertSODate(col[0])}</p>`;
 
         // cut terxt content short
         function shortenText(fullText, maxLength){ 
@@ -45,10 +31,20 @@ function table() {
         }
         let vlcol3 = shortenText(col[2],25)
             col[4] = String(col[4])
-        let vlcol4 = col[4].replace(/\n/g, "<br>");
-            vlcol3 = `<span class="title ${col[3]}">${col[1]}</span><p class=col3></p><p><span class="col3A">${vlcol3}</span> <span class="col3B hidden">${col[2]} <br> ${vlcol4}</span> </p>`;
+        let vlcol4 = col[4].replace(/\n\s*-(\d{2}\/\d{2}\/\d{2} : \d{2}:\d{2})\s*\n\s*(.*)/g, '<li>-$1 <span class=subtitle>$2</span></li>');
+            vlcol3 = `<span class="title ${col[3]}">${col[1]}</span><p class=col3></p><p><span class="col3A">${vlcol3}</span> 
+                            <span class="col3B hidden">
+                                ${col[2]} <br>
+
+                            <div class="li-event-list hidden">
+                            <ul>
+                               ${vlcol4} 
+                            </ul>
+                            </div>
+                                
+                                </span> </p>`;
         //make text Show on colum7
-        let text7 = col[4].replace(/\n/g, "<br>")
+        let text7 = `<div class="li-event-list"><ul>${vlcol4}</ul></div>`
 
         let tr = document.createElement('tr');
             tr.dataset.key = key;
@@ -60,24 +56,23 @@ function table() {
             <td>${col[11]}</td>
             <td>${col[13]}</td>
             <td>${col[5]}</td>
-            <td><p class="col3">${partdo}</p><p>${text7}</p></td>
+            <td><p class="col3">${text7}</td>
             <td>${col[14]}</td> `;
-        dFrag.appendChild(tr);
+        domFrag.appendChild(tr);
            
     });
-    document.querySelector("table tbody tr") 
-        && document.querySelector("table tbody tr").remove(); // remove first tr loadding
-    document.querySelector("table tbody").appendChild(dFrag);
 
-    document.querySelector("table tbody").addEventListener("click",function(e){
-        const td = e.target.closest('td')
-
-        //if(e.target.closest("td") && td.cellIndex === 2){ 
-        if(e.target.classList.contains("title")){ 
-            td.querySelector(".col3B").classList.toggle("hidden")
-            td.querySelector(".col3A").classList.toggle("hidden")
-         }
-    })
+    tablebody.removeEventListener("click",showMoreDetail)
+    tablebody.addEventListener("click",showMoreDetail)
+    tablebody.appendChild(domFrag);
+}
+function showMoreDetail(e){
+    const td = e.target.closest('td')
+    if(e.target.classList.contains("title")){ 
+        td.querySelector(".col3B").classList.toggle("hidden")
+        td.querySelector(".li-event-list").classList.toggle("hidden")
+        td.querySelector(".col3A").classList.toggle("hidden")
+     }
 }
 function searching() {
     const search = document.querySelector("div.input_group input[type=search]"),
@@ -144,4 +139,36 @@ function removeVietnameseDiacritics(str) {
 
     return str.split('').map(char => map[char] || char).join('');
 }
+
+
+
+
+function isISODateString(dateString) {
+    // Regular expression for ISO date format - chekc if  ISO format 2024-12-06T23:53:39.000Z
+    const isoRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/;
+    return isoRegex.test(dateString);
+  }
+  
+  function convertSODate(dateString) {
+    if (isISODateString(dateString)) {
+      const date = new Date(dateString);
+      const day = String(date.getUTCDate()).padStart(2, '0');
+      const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+      const year = date.getUTCFullYear();
+      const hours = String(date.getUTCHours()).padStart(2, '0');
+      const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+      const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+  
+      return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    } else {
+        return dateString.replace(/-/g, '/');
+        console.log("not find")
+    }
+  }
+  
+  // Example usage
+//   const isoDateString = "2024-12-06T23:53:39.000Z";
+//   const formattedDate = convertToDesiredFormat(isoDateString);
+//   console.log(formattedDate); // Output: 06/12/2024 23:53:39
+  
 

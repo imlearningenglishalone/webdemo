@@ -1,6 +1,7 @@
 // main.js
+import { ini_longPress } from './longpress.js'; 
 import { theform } from './form.js';
-import { main_navbar } from './navbar.js';
+import { main_navbar, new_navbar} from './navbar.js';
 import { main_table } from './table.js';
 
 if (!window.indexedDB) {
@@ -19,9 +20,14 @@ window.URL_SHEETS = "https://script.google.com/macros/s/AKfycbzkpMUMJ__-gStK6hab
 // }
 
 document.addEventListener('DOMContentLoaded', () => {
-    main_navbar()
+    // main_navbar()
+    new_navbar()
     theform()
-    db_getDataLocal()
+    
+    getNewUpdate();
+    //db_getDataLocal()
+
+    ini_longPress();
 });
 document.addEventListener('data-db', function(e) {
     let evt = e.detail.message
@@ -29,3 +35,11 @@ document.addEventListener('data-db', function(e) {
         main_table();
     }
 });
+
+
+
+
+
+
+
+

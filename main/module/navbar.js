@@ -1,4 +1,7 @@
 export function main_navbar(){
+
+    return
+
     // dofun.navbar_click = navbar_Click
     // dofun.navbar_addEvent = navbar_addEvent
     return (() => {
@@ -115,16 +118,14 @@ export function main_navbar(){
                     nav.toggle("show");
             break;
             case "reload":
-                        db_remove(() => {
-                                location.reload();
-                        });
+                        db_remove(() => { location.reload(); });
                         return;
                 break;
             case "saveSelect":
                         console.log("db_dataLocalUpdate - After Select")
                         //update_dataServer();
                         db_dataLocalUpdate(e => {
-                            location.reload();
+                            //location.reload();
                         })
  
                         return;
@@ -181,7 +182,9 @@ function main_table_statusRow(status, callback){
     }
     else{
         //auto save and reload
-        document.querySelector("a.menu-link.saveSelect").click()
+        //document.querySelector("a.menu-link.saveSelect").click()
+        tableSelectCleanUp();
+        dofun.reloadTable()
     }
     
 
@@ -200,3 +203,87 @@ function eventTringger(message){
 //         console.log("doing sonething new product")
 //      }
 // });
+
+
+
+
+
+
+
+
+
+
+/***********************************
+  1.Create element and insert into  "sideNavigation"
+    
+    const navbar = document.getElementById("sideNavigation");
+    const anchor = document.createElement('a');
+    navbar.appendChild(anchor);
+
+  2.Make a function and affter that connect function dofun
+
+    EXample:
+    function abc (){}
+    dofun.navabr.abc
+  
+************************************/ 
+function tableSelectCleanUp(){
+    document.querySelectorAll("table tbody tr.row-select").forEach((row,i) => row.classList.remove("row-select"));
+}
+export function new_navbar(){
+
+      // Custom event handlers object
+      const navbarFuntion = {
+        eshow: function (e){
+            e.currentTarget.classList.toggle("show")
+        },
+        update: function(e){ this.eshow(e), db_remove(() => { location.reload(); }) },
+        xong: function(e){ this.eshow(e),  main_table_statusRow("done", tableSelectCleanUp) },
+        danglam: function(e){ this.eshow(e),  main_table_statusRow("pending", tableSelectCleanUp) },
+        chualam: function(e){ this.eshow(e),  main_table_statusRow("active", tableSelectCleanUp) },
+        
+        tailen: function(e) { this.eshow(e), main_table_sendServer() },
+        addnew: function (e){ this.eshow(e), window.open("https://forms.gle/2ywFY8V5kUKPiKqn9", '_blank')},
+        sheet: function (e){ this.eshow(e), window.open("https://docs.google.com/spreadsheets/d/1W_UFhw1CHzIvITqErDy4LGA4ZZExaqlEry2vCMXUAjM/edit?gid=210637880#gid=210637880", '_blank')}
+      };
+      //publich
+      dofun.navbar = navbarFuntion
+
+    const navbarConfig = [
+        { "name": "Cập nhật", "event": "update" },
+
+        { "name": "Xong", "event": "xong" },
+        { "name": "Dang Lam", "event": "danglam" },
+        { "name": "Chua lam", "event": "chualam" },
+
+        { "name": "Tải lên", "event": "tailen" },
+        { "name": "Add New", "event": "addnew" },
+        { "name": "Sheet", "event": "sheet" }
+      ];
+    
+    //Event listenner     
+    const navbar = document.getElementById("sideNavigation");
+    document.querySelector("a.ham-icon").addEventListener("click", () => navbar.classList.toggle("show"));
+    document.querySelector("a.close-btn").addEventListener("click", () => navbar.classList.toggle("show"))
+
+    //add A html link
+      navbarConfig.forEach(item => {
+        const anchor = document.createElement('a');
+        //anchor.href = "#"; // Prevent default link behavior
+        anchor.textContent = item.name;
+        anchor.dataset.event = item.event; // Store the event name in a data attribute
+        navbar.appendChild(anchor);
+      });
+
+      // Single event listener to handle all click events within the navbar
+      navbar.addEventListener('click', (event) => {
+        if (event.target.tagName === 'A') {
+          const eventName = event.target.dataset.event;
+          if (navbarFuntion[eventName]) {
+            navbarFuntion[eventName](event);
+          }
+        }
+      });
+
+}
+
