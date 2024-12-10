@@ -258,6 +258,9 @@ async function sendData() {
     };
   
     try {
+
+      hideshowtable()
+
       let response = await fetch(url, options);
       let result = await response.json();
   
@@ -268,10 +271,17 @@ async function sendData() {
         console.error('Error from server:', result.message);
       } else {
         console.log('Data submitted successfully:', result);
+        hideshowtable()
       }
     } catch (error) {
       console.error('Error submitting data:', error);
     }
+
+    //funtion hide show table
+    function hideshowtable(){
+      document.querySelector("table tbody").classList.toggle("hidden")
+    }
+
   }
   
 
