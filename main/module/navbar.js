@@ -243,7 +243,7 @@ function eventTringger(message){
 async function sendData() {
     const url = URL_SHEETS; // Replace with your web app URL
 
-    dofun.data_sheet1.shift(); //remove Header
+    //dofun.data_sheet1.shift(); //remove Header
     let data = {sheet1: dofun.data_sheet1, sheet2: "dofun.data_sheet2"}
 
     const options = {
