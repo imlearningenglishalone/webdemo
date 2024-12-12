@@ -1,0 +1,36 @@
+@echo off
+echo Unjoining the domain...
+wmic computersystem where name="%computername%" call joindomainorworkgroup name="WORKGROUP"
+
+echo Forcing Group Policy update...
+gpupdate /force
+
+echo Deleting Group Policy registry keys...
+reg delete "HKLM\Software\Policies\Microsoft" /f
+reg delete "HKCU\Software\Policies\Microsoft" /f
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Group Policy Objects" /f
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies" /f
+
+echo Clearing Group Policy cache...
+rmdir /s /q "%windir%\System32\GroupPolicy"
+rmdir /s /q "%windir%\System32\GroupPolicyUsers"
+
+echo Restarting the computer...
+shutdown /r /t 0
+
+echo Done!
+
+
+
+
+
+
+Unjoins the domain and joins a workgroup named "WORKGROUP".
+
+Forces a Group Policy update to apply any changes and remove policies.
+
+Deletes specific registry keys related to Group Policy.
+
+Clears the Group Policy cache by removing the GroupPolicy and GroupPolicyUsers directories.
+
+Restarts the computer to apply all changes.
