@@ -35,18 +35,28 @@ export async function theform() {
     document.querySelectorAll("table tbody tr.row-select").forEach(row => {
         let id = row.dataset.key
 
-        if(textValue.length !== 0){}
+        if(textValue.length !== 0){
+
+            dofun.data_sheet1[id].push(Number(id)+1); //put number of row
+            
+        }
         dofun.data_sheet1[id][4] += "\n -"+ getFormattedDateTime() + " \n " + textValue;
         row.classList.toggle('row-select')
+
+        //post server
+        document.querySelector('a[data-event="tailen"]').click()
     });
     
-    //render lai table
-    dofun.reloadTable()
+    // //render lai table
+    // dofun.reloadTable()
     
     //save 
     hideForm();
     db_dataLocalUpdate(e => {
         console.log("save it")
+
+        // dofun.reloadTable()
+        
     })
 
   });

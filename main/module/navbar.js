@@ -271,7 +271,11 @@ async function sendData() {
         console.error('Error from server:', result.message);
       } else {
         console.log('Data submitted successfully:', result);
-        hideshowtable()
+        
+        //hideshowtable()
+        //reload page
+        document.querySelector('a[data-event="update"]').click()
+
       }
     } catch (error) {
       console.error('Error submitting data:', error);
@@ -317,7 +321,7 @@ export function new_navbar(){
         danglam: function(e){ this.eshow(e),  main_table_statusRow("pending", tableSelectCleanUp) },
         chualam: function(e){ this.eshow(e),  main_table_statusRow("active", tableSelectCleanUp) },
         
-        tailen: function(e) { this.eshow(e), sendData() },  //main_table_sendServer()
+        tailen: function(e) { sendData() },  //main_table_sendServer()
         //tailen: function(e) { this.eshow(e), main_table_sendServer() },  //main_table_sendServer()
         addnew: function (e){ this.eshow(e), window.open("https://forms.gle/2ywFY8V5kUKPiKqn9", '_blank')},
         sheet: function (e){ this.eshow(e), window.open("https://docs.google.com/spreadsheets/d/1W_UFhw1CHzIvITqErDy4LGA4ZZExaqlEry2vCMXUAjM/edit?gid=210637880#gid=210637880", '_blank')}
@@ -348,6 +352,8 @@ export function new_navbar(){
         //anchor.href = "#"; // Prevent default link behavior
         anchor.textContent = item.name;
         anchor.dataset.event = item.event; // Store the event name in a data attribute
+
+        if("tailen" == item.event) anchor.style.display = "none" //hide this button
         navbar.appendChild(anchor);
       });
 

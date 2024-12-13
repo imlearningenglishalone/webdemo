@@ -8,63 +8,57 @@ export function main_table(){
         table();
     }
 }
+//data loop
+function table(array) {
 
-function table() {
-
-    const domFrag = document.createDocumentFragment(); 
-    const tablebody = document.querySelector("table tbody");
-    document.querySelectorAll("table tbody tr").forEach(row => {
-        row.remove();
-    })
-
-    dofun.data_sheet1.forEach((col , key) =>{
-
-        if(key < 1) return; //Next loop - Skip this loop - We don't want Header
+    array = array || dofun.data_sheet1
+    const domFrag = document.createDocumentFragment();
+    // Iterate over the array from bottom to top
+    for (let i = array.length - 1; i >= 0; i--) {
+        let col = array[i];
+        if (i == 0) break; // Skip the header row
 
         let vlcol1 = `<p class="col1 ${col[3]}">${convertSODate(col[0])}</p>`;
+        let vlcol4 = String(col[4]).replace(/\n\s*-(\d{2}\/\d{2}\/\d{2} : \d{2}:\d{2})\s*\n\s*(.*)/g, '<li>-$1 <span class=subtitle>$2</span></li>');
+        let vlcol3 = shortenText(col[2], 25);
+        vlcol3 = `<span class="title ${col[3]}">${col[1]}</span><p class=col3>${vlcol1}</p><p><span class="col3A">${vlcol3}</span>
+                      <span class="col3B hidden">
+                          ${col[2]} <br>
+                          <div class="li-event-list hidden"><ul>${vlcol4}</ul></div>
+                </span></p>`;
 
-        // cut terxt content short
-        function shortenText(fullText, maxLength){ 
-            if (fullText.length > maxLength) {
-                 return fullText.substring(0, maxLength) + '...'; 
-                } return fullText; 
-        }
-        let vlcol3 = shortenText(col[2],25)
-            col[4] = String(col[4])
-        let vlcol4 = col[4].replace(/\n\s*-(\d{2}\/\d{2}\/\d{2} : \d{2}:\d{2})\s*\n\s*(.*)/g, '<li>-$1 <span class=subtitle>$2</span></li>');
-            vlcol3 = `<span class="title ${col[3]}">${col[1]}</span><p class=col3>${vlcol1}</p><p><span class="col3A">${vlcol3}</span> 
-                            <span class="col3B hidden">
-                                ${col[2]} <br>
-
-                            <div class="li-event-list hidden">
-                            <ul>
-                               ${vlcol4} 
-                            </ul>
-                            </div>
-                                
-                                </span> </p>`;
-        //make text Show on colum7
-        let text7 = `<div class="li-event-list"><ul>${vlcol4}</ul></div>`
-
+        // Create a new table row
         let tr = document.createElement('tr');
-            tr.dataset.key = key;
-            tr.innerHTML =`
-            <td>${vlcol1}</td> 
+        tr.dataset.key = i;
+        tr.innerHTML = `
+            <td>${vlcol1}</td>
             <td>${col[3]}</td>
             <td>${vlcol3}</td>
             <td>${col[12]}</td>
             <td>${col[11]}</td>
             <td>${col[13]}</td>
             <td>${col[5]}</td>
-            <td><p class="col3">${text7}</td>
-            <td>${col[14]}</td> `;
+            <td><p class="col3"><div class="li-event-list"><ul>${vlcol4}</ul></div></td>
+            <td>${col[14]}</td>`;
+        
         domFrag.appendChild(tr);
-           
-    });
+    }
 
+    // Clear existing rows in tbody
+    document.querySelectorAll("table tbody tr").forEach(row => {
+        row.remove();
+    });
+    const tablebody = document.querySelector("table tbody");
     tablebody.removeEventListener("click",showMoreDetail)
     tablebody.addEventListener("click",showMoreDetail)
     tablebody.appendChild(domFrag);
+
+    function shortenText(fullText, maxLength) {
+        if (fullText.length > maxLength) {
+            return fullText.substring(0, maxLength) + '...';
+        }
+        return fullText;
+    }
 }
 function showMoreDetail(e){
     const td = e.target.closest('td')
@@ -171,4 +165,9 @@ function isISODateString(dateString) {
 //   const formattedDate = convertToDesiredFormat(isoDateString);
 //   console.log(formattedDate); // Output: 06/12/2024 23:53:39
   
+
+
+
+
+
 
