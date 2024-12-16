@@ -179,3 +179,29 @@ function getFormattedDateTime() {
     
     return `${day}/${month}/${year} : ${hours}:${minutes}`;
 }
+
+
+
+
+function isISODateString(dateString) {
+    // Regular expression for ISO date format - chekc if  ISO format 2024-12-06T23:53:39.000Z
+    const isoRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/;
+    return isoRegex.test(dateString);
+}
+  
+function convertSODate(dateString) {
+    if (isISODateString(dateString)) {
+      const date = new Date(dateString);
+      const day = String(date.getUTCDate()).padStart(2, '0');
+      const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+      const year = date.getUTCFullYear();
+      const hours = String(date.getUTCHours()).padStart(2, '0');
+      const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+      const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+  
+      return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    } else {
+        return dateString.replace(/-/g, '/');
+        console.log("not find")
+    }
+}

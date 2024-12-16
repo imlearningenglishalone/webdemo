@@ -164,24 +164,40 @@ export function main_navbar(){
 
 
 
-function main_table_statusRow(status, callback){
+async function main_table_statusRow(status, callback){
         
     let state = status || "";
+    let array = [];
     document.querySelectorAll("table tbody tr.row-select").forEach(row => {
 
         row.cells[2].firstElementChild.className = "title" + " "+ state;
         let id = row.dataset.key
+
         dofun.data_sheet1[id][3] = state;
+        
 
         if(status === "done") dofun.data_sheet1[id][4] += "\n -"+ getFormattedDateTime() + " \n Hoàn thành "
         dofun.data_sheet1[id][7] = getFormattedDateTime(); //Update last edit
+
+
+        row.classList.toggle('row-select')
+
+        array = dofun.data_sheet1[id]
+
     });
 
+    //mot lan chi post 1
+    let result = await sendData(array)
+    console.log(result)
+    dofun.reloadTable()
+
+  return;
 
 
-    
+    return
+
     if(state =="pending"){
-        eventTringger("pending")
+        //eventTringger("pending")
     }
     else{
         //auto save and reload
@@ -239,12 +255,15 @@ function eventTringger(message){
   
 
 
-  
-async function sendData() {
+ 
+async function sendData(array) {
+    if(!array) {
+      alert('khong co du lieu de gui di')
+      console.log('khong co du lieu de gui di')
+    }
     const url = URL_SHEETS; // Replace with your web app URL
-
-    //dofun.data_sheet1.shift(); //remove Header
-    let data = {sheet1: dofun.data_sheet1, sheet2: "dofun.data_sheet2"}
+    //let data = {sheet1: dofun.data_sheet1, sheet2: "dofun.data_sheet2"}
+    let data = {sheet1: array}
 
     const options = {
       method: 'POST',
@@ -259,7 +278,7 @@ async function sendData() {
   
     try {
 
-      hideshowtable()
+      // hideshowtable()
 
       let response = await fetch(url, options);
       let result = await response.json();
@@ -267,18 +286,23 @@ async function sendData() {
       if (result.result === 'busy') {
         console.log('Server is busy. Retrying...');
         setTimeout(() => sendData(data), 5000); // Retry after 5 seconds
+        return false
       } else if (result.result === 'error') {
         console.error('Error from server:', result.message);
+        return false
       } else {
         console.log('Data submitted successfully:', result);
         
         //hideshowtable()
         //reload page
-        document.querySelector('a[data-event="update"]').click()
+        //document.querySelector('a[data-event="update"]').click()
+        dofun.data_sheet1 = result.sheet1
+        return true
 
       }
     } catch (error) {
       console.error('Error submitting data:', error);
+      return false
     }
 
     //funtion hide show table
@@ -318,10 +342,15 @@ export function new_navbar(){
         },
         update: function(e){ this.eshow(e), db_remove(() => { location.reload(); }) },
         xong: function(e){ this.eshow(e),  main_table_statusRow("done", tableSelectCleanUp) },
-        danglam: function(e){ this.eshow(e),  main_table_statusRow("pending", tableSelectCleanUp) },
+        danglam: function(e){ this.eshow(e),  main_table_statusRow("pending") },
         chualam: function(e){ this.eshow(e),  main_table_statusRow("active", tableSelectCleanUp) },
         
-        tailen: function(e) { sendData() },  //main_table_sendServer()
+        tailen: async function(array){
+          let result = await sendData(array)
+          console.log(result)
+          dofun.reloadTable()
+          
+        },  //main_table_sendServer()
         //tailen: function(e) { this.eshow(e), main_table_sendServer() },  //main_table_sendServer()
         addnew: function (e){ this.eshow(e), window.open("https://forms.gle/2ywFY8V5kUKPiKqn9", '_blank')},
         sheet: function (e){ this.eshow(e), window.open("https://docs.google.com/spreadsheets/d/1W_UFhw1CHzIvITqErDy4LGA4ZZExaqlEry2vCMXUAjM/edit?gid=210637880#gid=210637880", '_blank')}
@@ -368,4 +397,5 @@ export function new_navbar(){
       });
 
 }
+
 

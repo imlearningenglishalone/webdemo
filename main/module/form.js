@@ -23,43 +23,31 @@ async function renderUser() {
 export async function theform() {
   await renderUser()
 
-  
-
 
   document.getElementById('feedbackForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent actual form submission
 
     let formq = event.target
     let textValue = formq[0].value
-
+    let postData = "";
     document.querySelectorAll("table tbody tr.row-select").forEach(row => {
         let id = row.dataset.key
 
         if(textValue.length !== 0){
-
-            dofun.data_sheet1[id].push(Number(id)+1); //put number of row
-            
+            dofun.data_sheet1[id][4] += "\n -"+ getFormattedDateTime() + " \n " + textValue;   
+            postData = dofun.data_sheet1[id]; //put number of row
         }
-        dofun.data_sheet1[id][4] += "\n -"+ getFormattedDateTime() + " \n " + textValue;
         row.classList.toggle('row-select')
 
-        //post server
-        document.querySelector('a[data-event="tailen"]').click()
     });
-    
-    // //render lai table
-    // dofun.reloadTable()
-    
+       
     //save 
     hideForm();
-    db_dataLocalUpdate(e => {
-        console.log("save it")
-
-        // dofun.reloadTable()
-        
-    })
+    dofun.navbar.tailen(postData)
 
   });
+
+
 
   hideForm();
   navbar_setup();
@@ -129,12 +117,18 @@ function navbar_setup(){
 function longPress_setup(){
 
     function addNote(e){
+
+        //clean all select before add new
+        let last = document.querySelectorAll("table tbody tr.row-select")
+
         let rowId = e.target.closest('[data-key]');
-        rowId.classList.toggle('row-select')
-        //rowId = Number(rowId.dataset.key)
-        
-        //console.log(rowId); 
-        //showForm(rowId)
+        if (rowId){
+            let isSelected = rowId.classList.contains('row-select')
+            last.forEach(row => row.classList.remove("row-select"));
+            
+            if (!isSelected) { rowId.classList.add('row-select'); }
+        }
+
     }
     // push into array and long press will call it
     dofun.longPress.push(addNote)

@@ -16,8 +16,8 @@ function table(array) {
     // Iterate over the array from bottom to top
     for (let i = array.length - 1; i >= 0; i--) {
         let col = array[i];
-        if (i == 0) break; // Skip the header row
-
+        if (i == 0) continue; // Skip the Header
+        
         let vlcol1 = `<p class="col1 ${col[3]}">${convertSODate(col[0])}</p>`;
         let vlcol4 = String(col[4]).replace(/\n\s*-(\d{2}\/\d{2}\/\d{2} : \d{2}:\d{2})\s*\n\s*(.*)/g, '<li>-$1 <span class=subtitle>$2</span></li>');
         let vlcol3 = shortenText(col[2], 25);
@@ -30,6 +30,7 @@ function table(array) {
         // Create a new table row
         let tr = document.createElement('tr');
         tr.dataset.key = i;
+        tr.className = `${col[3]}`
         tr.innerHTML = `
             <td>${vlcol1}</td>
             <td>${col[3]}</td>
@@ -52,6 +53,10 @@ function table(array) {
     tablebody.removeEventListener("click",showMoreDetail)
     tablebody.addEventListener("click",showMoreDetail)
     tablebody.appendChild(domFrag);
+
+    //hidden done
+    //document.querySelectorAll("tr.done").forEach(row => row.classList.toggle("hidden"))
+
 
     function shortenText(fullText, maxLength) {
         if (fullText.length > maxLength) {

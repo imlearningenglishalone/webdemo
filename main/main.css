@@ -160,15 +160,14 @@ p.col1.next {
 }
 p.col1.done {
     color: #696868;
-    background-color: #0000001c;
+    /* background-color: #0000001c; */
 }
 p.col1 {
-    /* color: #006b21;
-    background-color: #86e49d; */
-    padding: .5rem 0.9rem .5rem 0.9rem;
+    padding: .4rem .0rem .4rem 0.4rem;
+    /* padding-left: .5rem; */
     border-radius: 2rem;
-    text-align: center;
-    width: 55%;
+    text-align: left;
+    width:10rem;
 }
 p.col3{
     color: #04040454;
