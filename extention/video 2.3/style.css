@@ -1,0 +1,16 @@
+/* youtube embed- morevideos - xuat hien trong youglish when you pause  - xoa no di*/
+.ytp-expand-pause-overlay .ytp-pause-overlay {
+    top: 5500px !important;
+    display: none !important;
+    width: 1pt !important;
+    height: 1pt !important;
+}
+/* youtube embed- caption */
+.ytp-expand-pause-overlay .caption-window {
+    display: block !important;
+}
+/* youtube-Ads-TOP SEARCH SHOW */
+ytd-ad-slot-renderer {
+    display: none !important;
+    width: 1pt !important;
+}
