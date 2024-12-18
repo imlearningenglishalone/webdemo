@@ -4,21 +4,32 @@ export function main_table(){
     table();
     searching();
 
-    dofun.reloadTable = function(){
-        table();
+    dofun.reloadTable = function(e){
+        table(e);
     }
 }
-//data loop
-function table(array) {
 
-    array = array || dofun.data_sheet1
+
+
+
+//data loop
+function table(arrayShow) {
+
+    //array = array || dofun.data_sheet1
+    let array = dofun.data_sheet1
     const domFrag = document.createDocumentFragment();
+
+    const domFrag_done = document.createDocumentFragment();
+
     // Iterate over the array from bottom to top
     for (let i = array.length - 1; i >= 0; i--) {
         let col = array[i];
         if (i == 0) continue; // Skip the Header
         
         let vlcol1 = `<p class="col1 ${col[3]}">${convertSODate(col[0])}</p>`;
+
+        col[2] = String(col[2]).replace(/\n/g,"<br>")
+            
         let vlcol4 = String(col[4]).replace(/\n\s*-(\d{2}\/\d{2}\/\d{2} : \d{2}:\d{2})\s*\n\s*(.*)/g, '<li>-$1 <span class=subtitle>$2</span></li>');
         let vlcol3 = shortenText(col[2], 25);
         vlcol3 = `<span class="title ${col[3]}">${col[1]}</span><p class=col3>${vlcol1}</p><p><span class="col3A">${vlcol3}</span>
@@ -27,22 +38,24 @@ function table(array) {
                           <div class="li-event-list hidden"><ul>${vlcol4}</ul></div>
                 </span></p>`;
 
-        // Create a new table row
-        let tr = document.createElement('tr');
-        tr.dataset.key = i;
-        tr.className = `${col[3]}`
-        tr.innerHTML = `
-            <td>${vlcol1}</td>
-            <td>${col[3]}</td>
-            <td>${vlcol3}</td>
-            <td>${col[12]}</td>
-            <td>${col[11]}</td>
-            <td>${col[13]}</td>
-            <td>${col[5]}</td>
-            <td><p class="col3"><div class="li-event-list"><ul>${vlcol4}</ul></div></td>
-            <td>${col[14]}</td>`;
-        
-        domFrag.appendChild(tr);
+            // Create a new table row
+            let tr = document.createElement('tr');
+            tr.dataset.key = i;
+            tr.innerHTML = `
+                <td>${vlcol1}</td>
+                <td>${col[3]}</td>
+                <td>${vlcol3}</td>
+                <td>${col[12]}</td>
+                <td>${col[11]}</td>
+                <td>${col[13]}</td>
+                <td>${col[5]}</td>
+                <td><p class="col3"><div class="li-event-list"><ul>${vlcol4}</ul></div></td>
+                <td>${col[14]}</td>`;
+
+        if(col[3] !== "done" )
+            domFrag.appendChild(tr);
+        else
+            domFrag_done.appendChild(tr);
     }
 
     // Clear existing rows in tbody
@@ -53,6 +66,7 @@ function table(array) {
     tablebody.removeEventListener("click",showMoreDetail)
     tablebody.addEventListener("click",showMoreDetail)
     tablebody.appendChild(domFrag);
+    tablebody.appendChild(domFrag_done);
 
     //hidden done
     //document.querySelectorAll("tr.done").forEach(row => row.classList.toggle("hidden"))
@@ -146,9 +160,9 @@ function isISODateString(dateString) {
     // Regular expression for ISO date format - chekc if  ISO format 2024-12-06T23:53:39.000Z
     const isoRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/;
     return isoRegex.test(dateString);
-  }
+}
   
-  function convertSODate(dateString) {
+function convertSODate(dateString) {
     if (isISODateString(dateString)) {
       const date = new Date(dateString);
       const day = String(date.getUTCDate()).padStart(2, '0');
@@ -163,7 +177,7 @@ function isISODateString(dateString) {
         return dateString.replace(/-/g, '/');
         console.log("not find")
     }
-  }
+}
   
   // Example usage
 //   const isoDateString = "2024-12-06T23:53:39.000Z";
