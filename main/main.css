@@ -151,7 +151,7 @@ p.col1.pending {
 p.col1.active {
     /* color: #6f5b03; */
     /* background-color: #dfc863; */
-    color: #006b21;
+    color: #006b21;    
     background-color: #86e49d;
 }
 p.col1.next {
@@ -167,7 +167,7 @@ p.col1 {
     /* padding-left: .5rem; */
     border-radius: 2rem;
     text-align: left;
-    width:10rem;
+    display: inline-block;
 }
 p.col3{
     color: #04040454;
