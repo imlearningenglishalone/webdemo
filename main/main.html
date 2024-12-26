@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="mobile-web-app-capable" content="yes" >
+    <meta name="mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    
+    <title>main</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="module/indexdb.js"></script>
+    <script type="module" src="module/module.js"></script>
+</head>
+<body>
+<!-- TABLE -->
+<main class="table">
+<section class="table_header">
+    <div class="topnav1">
+        <nav id="sideNavigation1" class="topnav">
+            <a class="ham-icon">
+            <svg width="30" height="30">
+                <path d="M0,5 30,5" stroke="#000" stroke-width="5"></path>
+                <path d="M0,14 30,14" stroke="#000" stroke-width="5"></path>
+                <path d="M0,23 30,23" stroke="#000" stroke-width="5"></path>
+            </svg></a>
+        </nav>
+        <h1 style="padding: 0 0 0 0.4rem;">Menu</h1>
+    </div>
+    <div class="input_group">
+        <input type="search" name ="table search" placeholder="search data..."></input>
+    </div>
+</section>
+<section class="table_body">
+    <table>
+        <thead>
+        <th>ID-1</th>
+        <th>Icon-2</th>
+        <th>Description-3</th>
+        <th>Set-4</th>
+        <th>Cont-5</th>
+        <th>Group-1</th>
+        <th>Status</th>
+        <th>the other-7</th>
+        <th>day/time-8</th>
+        </thead>
+        <tbody>
+        <tr><td colspan="9"> Loading ...</td></tr>
+        </tbody>
+    </table>
+</section>
+</main>
+<!-- MENU -->
+   <style>
+    .li-event-list ul {
+      padding: 0px;
+      margin: 0px;
+      position: relative;
+      list-style-type: none;
+    }
+    .li-event-list ul::before {
+      content: "";
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: -5px;
+      border-left: 0px dotted gray; /* Adjust border style */
+      height: 100%;
+    }
+    .li-event-list ul li {
+      margin: 10px 0; /* Reduce margin between list items */
+      padding: 0px;
+      position: relative;
+      z-index: 1;
+      color: gray;
+    }
+    .li-event-list ul li .subtitle {
+      display: block;
+      color: black;
+      padding-left: 8px; /* Adjust padding to align with the border */
+    }
+  </style>
+<div id="sideNavigation" class="sidenav">
+    <a class="menu-link close-btn">×</a>
+    <!-- <a class="menu-link reload">Làm mới</a>
+
+    <a class="menu-link link-select">Trạng thái</a>
+
+    <a class="menu-link status-active lk-Select visible">Chưa làm</a>
+    <a class="menu-link status-pending lk-Select visible">Trì hoãn</a>
+    <a class="menu-link status-done lk-Select visible">Xong</a>
+
+
+    <a class="menu-link lk-Select visible">&nbsp</a>
+    <a class="menu-link saveSelect lk-Select visible">Lưu lại</a>
+    <br>&nbsp;
+    <a class="menu-link pushDataServer">Tải lên</a>
+    <br>&nbsp;
+    <a class="menu-link newproduct">Add New</a>
+    <a class="menu-link sheetView">View Sheet</a>
+    <br>&nbsp;
+    <a class="menu-link show-all">Show All</a>
+    <a class="menu-link show-active">Show Active</a>
+    <a class="menu-link show-pending">Show Pending</a> -->
+
+    <a class="menu-link status-active lk-Select visible">Chưa làm</a>
+    <a class="menu-link status-pending lk-Select visible">Trì hoãn</a>
+    <a class="menu-link status-done lk-Select visible">Xong</a>
+</div>
+
+<div class="blockClick"></div>
+</body>
+<script src="main.js"></script>
+</html>
