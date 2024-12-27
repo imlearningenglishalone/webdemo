@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full View Iframe Example</title>
+    <title>Full View Iframe with Sticky Top Icon</title>
     <style>
         body, html {
             margin: 0;
@@ -16,9 +16,31 @@
             height: 100%;
             border: none;
         }
+        .top-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000; /* Ensure it stays on top */
+        }
     </style>
 </head>
 <body>
     <iframe src="https://docs.google.com/document/d/e/2PACX-1vReQJ7-rwlL_O9tR-srngH65enj2rHW6CIMoQQdWaeUV2dA3RNfpoBJIWyFZDlz915hEUrtOQv34xfn/pub?embedded=true"></iframe>
+    <div class="top-icon" onclick="scrollToTop()">↑</div>
+
+    <script>
+        function scrollToTop() {
+            document.getElementById('main-frame').contentWindow.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
