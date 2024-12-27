@@ -35,13 +35,16 @@
 </head>
 <body>
     <iframe id="main-frame" src="https://docs.google.com/document/d/e/2PACX-1vReQJ7-rwlL_O9tR-srngH65enj2rHW6CIMoQQdWaeUV2dA3RNfpoBJIWyFZDlz915hEUrtOQv34xfn/pub?embedded=true"></iframe>
-    <div class="top-icon" onclick="scrollToTop()">↑</div>
+    <div class="top-icon">↑</div>
 
     <script>
-        function scrollToTop() {
+        function reloadIframe() {
             const iframe = document.getElementById('main-frame'); 
             iframe.src = iframe.src; // This will reload the
         }
+        
+        document.getElementById('top-icon').addEventListener('click', reloadIframe);
+        document.getElementById('top-icon').addEventListener('touchend', reloadIframe);
     </script>
 </body>
 </html>
