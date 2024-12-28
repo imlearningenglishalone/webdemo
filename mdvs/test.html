@@ -34,6 +34,9 @@
             webAppUrl: "AKfycbwXKy3ZwXOyZMxjvUTcw2B0ERg9wH4eLLCSPCc4Bqw1yFw-aIR7eppPCJd9lrOyUUvl" // Replace with the URL of your deployed Google Apps Script web app
         };
 
+        function constructDocUrl(url = '') {
+            return `https://docs.google.com/document/d/e/${config.documentId}/pub?embedded=true${url}`;
+        }
 
         async function fetchToCLinks() {
             const response = await fetch(`https://script.google.com/macros/s/${config.webAppUrl}/exec`);
@@ -52,12 +55,12 @@
 
             // Set the initial src for the iframe
             const iframe = document.getElementById('main-frame');
-            iframe.src = `https://docs.google.com/document/d/e/${config.documentId}/pub?embedded=true`;
+            iframe.src = constructDocUrl();
         }
 
         function loadInIframe(url) {
             const iframe = document.getElementById('main-frame');
-            iframe.src = `https://docs.google.com/document/d/e/${config.documentId}/pub${url}`;
+            iframe.src = constructDocUrl(url);
         }
 
         // Fetch and display the ToC links when the page loads
