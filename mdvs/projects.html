@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDV's PROJECT</title>
+    <title>Google Doc Table of Contents</title>
     <style>
         body, html {
             margin: 0;
@@ -16,35 +16,150 @@
             height: 100%;
             border: none;
         }
-        .top-icon {
-            position: fixed;
-            bottom: 50px;
-            right: 50px;
-            width: 50px;
-            height: 50px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 50px;
-            font-size: 24px;
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 13px 0;
+        }
+        h1 {
+            color: goldenrod;
+        }
+        .toc-link {
+            color: #ffffff;
             cursor: pointer;
-            z-index: 1000; /* Ensure it stays on top */
+            line-height: 1.2;
+        }
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 999;
+            top: 0;
+            left: 0;
+            background-color: #2e2e2ef0;
+            overflow-x: hidden;
+            padding-top: 4rem;
+            transition: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+        ul#toc-list {
+            padding: 0.5rem;
+        }
+        .topnav {
+            background-color: #9ccc6500;
+            overflow: hidden;
+            z-index: 9999;
+            left: 0.5rem;
+            top: 0.5rem;
+        }
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: white;
+        }
+        .loading-message {
+            text-align: center;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <iframe id="main-frame" src="https://docs.google.com/document/d/e/2PACX-1vReQJ7-rwlL_O9tR-srngH65enj2rHW6CIMoQQdWaeUV2dA3RNfpoBJIWyFZDlz915hEUrtOQv34xfn/pub?embedded=true"></iframe>
-    <div class="top-icon">↑</div>
+<div id="sideNavigation" class="sidenav" style="width: 0px;">
+    <h1>Table of Contents</h1>
+    <ul id="toc-list"></ul>
+</div>
+<nav class="topnav" style="position : fixed; display:block">
+  <a class="ham-icon">
+    <svg width="30" height="30">
+        <path d="M0,5 30,5" stroke="#000" stroke-width="5"></path>
+        <path d="M0,14 30,14" stroke="#000" stroke-width="5"></path>
+        <path d="M0,23 30,23" stroke="#000" stroke-width="5"></path>
+    </svg>
+  </a>
+</nav>
+<script>
+function left_menu(event){
+            if(document.getElementById("sideNavigation").style.width == "300px"){
+                  document.getElementById("sideNavigation").style.width = "0";
+                  
+                  return;
+          }
+            document.getElementById("sideNavigation").style.width = "300px";
+            
+          
+        }
+document.querySelector("a.ham-icon").addEventListener("click",function(e) {
+    left_menu(e)
+})
+document.getElementById("sideNavigation").addEventListener("click",function(e) {
+    document.getElementById("sideNavigation").style.width = "0";
+})
+</script>
+
+
+    <div class="loading-container" id="loading-container">
+        <div id="loading-message" class="loading-message">Loading...</div>
+    </div>
+    <iframe id="main-frame" src=""></iframe>
 
     <script>
-        function reloadIframe1() {
-            const iframe = document.getElementById('main-frame'); 
-            iframe.src = iframe.src; // This will reload the
+        const config = {
+            documentId: "2PACX-1vReQJ7-rwlL_O9tR-srngH65enj2rHW6CIMoQQdWaeUV2dA3RNfpoBJIWyFZDlz915hEUrtOQv34xfn", // Only include the document ID here - this file hastobe publich
+            webAppUrl: "AKfycbwXKy3ZwXOyZMxjvUTcw2B0ERg9wH4eLLCSPCc4Bqw1yFw-aIR7eppPCJd9lrOyUUvl" // Replace with the URL of your deployed Google Apps Script web app
+        };
+
+        function constructDocUrl(url = '') {
+            return `https://docs.google.com/document/d/e/${config.documentId}/pub?embedded=true${url}`;
         }
-        
-        document.getElementById('top-icon').addEventListener('click', reloadIframe1);
-        document.getElementById('top-icon').addEventListener('touchend', reloadIframe1);
+
+        async function fetchToCLinks() {
+            const response = await fetch(`https://script.google.com/macros/s/${config.webAppUrl}/exec`);
+            const tocLinks = await response.json();
+
+            const tocList = document.getElementById('toc-list');
+            tocLinks.forEach(link => {
+                const listItem = document.createElement('li');
+                const linkSpan = document.createElement('span');
+                linkSpan.className = 'toc-link';
+                linkSpan.textContent = link.text;
+                linkSpan.onclick = () => loadInIframe(link.url);
+                listItem.appendChild(linkSpan);
+                tocList.appendChild(listItem);
+            });
+
+            if (tocLinks.length > 0) {
+                // Set the initial src for the iframe to the first element of the ToC and show loading message
+                const iframe = document.getElementById('main-frame');
+                iframe.src = constructDocUrl(tocLinks[0].url);
+                showLoadingMessage();
+            }
+            
+        }
+
+        function loadInIframe(url) {
+            const iframe = document.getElementById('main-frame');
+            iframe.src = constructDocUrl(url);
+            showLoadingMessage();
+        }
+        function showLoadingMessage() {
+            const loadingContainer = document.getElementById('loading-container');
+            const iframe = document.getElementById('main-frame');
+            loadingContainer.style.display = 'flex';
+            iframe.style.display = 'none';
+            iframe.onload = () => {
+                loadingContainer.style.display = 'none';
+                iframe.style.display = 'block';
+            };
+        }
+        // Fetch and display the ToC links when the page loads
+        fetchToCLinks();
     </script>
 </body>
 </html>
