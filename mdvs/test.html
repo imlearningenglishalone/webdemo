@@ -53,6 +53,21 @@
             left: 0.5rem;
             top: 0.5rem;
         }
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: white;
+        }
+        .loading-message {
+            text-align: center;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -89,7 +104,9 @@ document.getElementById("sideNavigation").addEventListener("click",function(e) {
 </script>
 
 
-    <div id="loading-message" class="loading-message">Loading...</div>
+    <div class="loading-container" id="loading-container">
+        <div id="loading-message" class="loading-message">Loading...</div>
+    </div>
     <iframe id="main-frame" src=""></iframe>
 
     <script>
