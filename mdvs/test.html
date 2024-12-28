@@ -69,6 +69,9 @@ function left_menu(event){
 document.querySelector("a.ham-icon").addEventListener("click",function(e) {
     left_menu(e)
 })
+document.querySelector("toc-list").addEventListener("click",function(e) {
+    document.getElementById("sideNavigation").style.width = "0";
+})
 </script>
 
 
