@@ -20,6 +20,18 @@
             text-decoration: underline;
             cursor: pointer; /* Make it clear these are clickable */
         }
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 999;
+            top: 0;
+            left: 0;
+            background-color: #2f655e;
+            overflow-x: hidden;
+            padding-top: 4rem;
+            transition: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
         .topnav {
             background-color: #9CCC65;
             overflow: hidden;
@@ -30,6 +42,13 @@
     </style>
 </head>
 <body>
+<div id="sideNavigation" class="sidenav" style="width: 0px;">
+  <a class="close-btn">×</a>
+  <a class="close-btn-time">Get Time</a>
+  <a class="close-btn-pannel">Pannel of</a>
+  <a class="close-btn-search">Clean Search </a>
+    <a class="close-btn-addid">Check Id</a>
+</div>
 <nav class="topnav" style="position : fixed; display:block">
   <a class="ham-icon">
     <svg width="30" height="30">
