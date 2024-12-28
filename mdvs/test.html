@@ -1,1 +1,67 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Doc Table of Contents</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+        .toc-link {
+            color: #007bff;
+            text-decoration: underline;
+            cursor: pointer; /* Make it clear these are clickable */
+        }
+    </style>
+</head>
+<body>
+    <h1>Table of Contents</h1>
+    <ul id="toc-list"></ul>
+
+    <iframe id="main-frame" src="" style="width: 100%; height: 600px; border: none;"></iframe>
+
+    <script>
+        const config = {
+            documentId: "YOUR_PUBLISHED_DOC_ID", // Only include the document ID here
+            webAppUrl: "YOUR_WEB_APP_URL" // Replace with the URL of your deployed Google Apps Script web app
+        };
+
+        async function fetchToCLinks() {
+            const response = await fetch(config.webAppUrl);
+            const tocLinks = await response.json();
+
+            const tocList = document.getElementById('toc-list');
+            tocLinks.forEach(link => {
+                const listItem = document.createElement('li');
+                const linkSpan = document.createElement('span');
+                linkSpan.className = 'toc-link';
+                linkSpan.textContent = link.text;
+                linkSpan.onclick = () => loadInIframe(link.url);
+                listItem.appendChild(linkSpan);
+                tocList.appendChild(listItem);
+            });
+
+            // Set the initial src for the iframe
+            const iframe = document.getElementById('main-frame');
+            iframe.src = `https://docs.google.com/document/d/e/${config.documentId}/pub?embedded=true`;
+        }
+
+        function loadInIframe(url) {
+            const iframe = document.getElementById('main-frame');
+            iframe.src = `https://docs.google.com/document/d/e/${config.documentId}/pub${url}`;
+        }
+
+        // Fetch and display the ToC links when the page loads
+        fetchToCLinks();
+    </script>
+</body>
+</html>
