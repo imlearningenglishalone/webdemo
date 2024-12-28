@@ -58,7 +58,23 @@
     </svg>
   </a>
 </nav>
+<script>
+function left_menu(event){
+            if(document.getElementById("sideNavigation").style.width == "200px"){
+                  document.getElementById("sideNavigation").style.width = "0";
+                  
+                  return;
+          }
+            document.getElementById("sideNavigation").style.width = "200px";
+            
+          
+        }
+document.querySelector("a.ham-icon").addEventListener("click",function(e) {
+    
+})
+</script>
 
+    
     
     <h1>Table of Contents</h1>
     <ul id="toc-list"></ul>
