@@ -20,9 +20,27 @@
             text-decoration: underline;
             cursor: pointer; /* Make it clear these are clickable */
         }
+        .topnav {
+            background-color: #9CCC65;
+            overflow: hidden;
+            z-index: 9999;
+            bottom: 30px;
+            right: 25px;
+        }
     </style>
 </head>
 <body>
+<nav class="topnav" style="position : fixed; display:block">
+  <a class="ham-icon">
+    <svg width="30" height="30">
+        <path d="M0,5 30,5" stroke="#000" stroke-width="5"></path>
+        <path d="M0,14 30,14" stroke="#000" stroke-width="5"></path>
+        <path d="M0,23 30,23" stroke="#000" stroke-width="5"></path>
+    </svg>
+  </a>
+</nav>
+
+    
     <h1>Table of Contents</h1>
     <ul id="toc-list"></ul>
 
