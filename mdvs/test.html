@@ -89,7 +89,7 @@ document.getElementById("sideNavigation").addEventListener("click",function(e) {
 </script>
 
 
-
+    <div id="loading-message" class="loading-message">Loading...</div>
     <iframe id="main-frame" src=""></iframe>
 
     <script>
@@ -120,13 +120,24 @@ document.getElementById("sideNavigation").addEventListener("click",function(e) {
             // Set the initial src for the iframe
             const iframe = document.getElementById('main-frame');
             iframe.src = constructDocUrl();
+            showLoadingMessage();
         }
 
         function loadInIframe(url) {
             const iframe = document.getElementById('main-frame');
             iframe.src = constructDocUrl(url);
+            showLoadingMessage();
         }
-
+        function showLoadingMessage() {
+            const loadingMessage = document.getElementById('loading-message');
+            const iframe = document.getElementById('main-frame');
+            loadingMessage.style.display = 'block';
+            iframe.style.display = 'none';
+            iframe.onload = () => {
+                loadingMessage.style.display = 'none';
+                iframe.style.display = 'block';
+            };
+        }
         // Fetch and display the ToC links when the page loads
         fetchToCLinks();
     </script>
