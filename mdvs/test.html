@@ -146,12 +146,12 @@ document.getElementById("sideNavigation").addEventListener("click",function(e) {
             showLoadingMessage();
         }
         function showLoadingMessage() {
-            const loadingMessage = document.getElementById('loading-message');
+            const loadingContainer = document.getElementById('loading-container');
             const iframe = document.getElementById('main-frame');
-            loadingMessage.style.display = 'block';
+            loadingContainer.style.display = 'flex';
             iframe.style.display = 'none';
             iframe.onload = () => {
-                loadingMessage.style.display = 'none';
+                loadingContainer.style.display = 'none';
                 iframe.style.display = 'block';
             };
         }
