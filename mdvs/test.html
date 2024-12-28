@@ -134,10 +134,17 @@ document.getElementById("sideNavigation").addEventListener("click",function(e) {
                 tocList.appendChild(listItem);
             });
 
-            // Set the initial src for the iframe
-            const iframe = document.getElementById('main-frame');
-            iframe.src = constructDocUrl();
-            showLoadingMessage();
+            if (tocLinks.length > 0) {
+                // Set the initial src for the iframe to the first element of the ToC and show loading message
+                const iframe = document.getElementById('main-frame');
+                iframe.src = constructDocUrl(tocLinks[0].url);
+                showLoadingMessage();
+            }
+            
+            // // Set the initial src for the iframe
+            // const iframe = document.getElementById('main-frame');
+            // iframe.src = constructDocUrl();
+            // showLoadingMessage();
         }
 
         function loadInIframe(url) {
