@@ -10,7 +10,7 @@
  <button onclick="syncAll()">🔄 Sync Everything</button>
   <script>
 async function syncAll() {
-  log('🔁 Starting full sync...');
+  console.log('🔁 Starting full sync...');
   const db = await dbPromise;
 
   // Step 1: Send any offline messages to the server
@@ -19,9 +19,9 @@ async function syncAll() {
     try {
       await sendToServer(msg);
       await db.delete('messages', msg.id);
-      log(`✅ Synced offline message: ${msg.message}`);
+      console.log(`✅ Synced offline message: ${msg.message}`);
     } catch (err) {
-      log(`❌ Failed to sync: ${msg.message}`);
+      console.log(`❌ Failed to sync: ${msg.message}`);
     }
   }
 
@@ -39,14 +39,13 @@ async function syncAll() {
       await store.put({ id: row[0], message: row[1], timestamp: row[2] });
     }
 
-    log(`📥 Pulled ${serverData.length} messages from server`);
+    console.log(`📥 Pulled ${serverData.length} messages from server`);
   } catch (err) {
-    log('❌ Could not fetch server data');
+    console.log('❌ Could not fetch server data');
     console.error(err);
   }
 
-  log('✅ Full sync complete!');
+  console.log('✅ Full sync complete!');
 }
-
   </script>
 </body>
