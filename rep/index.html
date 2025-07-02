@@ -1,2 +1,31 @@
+<html>
+    <head>
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#2196f3" />
+
+    
+  </head>
+<body>
+  <script>
+    async function reloadAndSyncAll() {
+  const db = await dbPromise;
+  const allMessages = await db.getAll('messages');
+
+  if (allMessages.length === 0) {
+    log('📭 No offline messages to sync.');
+    return;
+  }
+
+  log(`🔄 Syncing ${allMessages.length} saved message(s)...`);
+  for (const msg of allMessages) {
+    try {
+      await sendToServer(msg);
+      await db.delete('messages', msg.id);
+      log(`✅ Synced & removed: ${msg.message}`);
+    } catch (err) {
+      log(`❌ Failed to sync message: ${msg.message}`);
+    }
+  }
+}
+  </script>
+</body>
