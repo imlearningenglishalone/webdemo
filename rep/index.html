@@ -6,26 +6,47 @@
     
   </head>
 <body>
+
+ <button onclick="syncAll()">🔄 Sync Everything</button>
   <script>
-    async function reloadAndSyncAll() {
+async function syncAll() {
+  log('🔁 Starting full sync...');
   const db = await dbPromise;
-  const allMessages = await db.getAll('messages');
 
-  if (allMessages.length === 0) {
-    log('📭 No offline messages to sync.');
-    return;
-  }
-
-  log(`🔄 Syncing ${allMessages.length} saved message(s)...`);
-  for (const msg of allMessages) {
+  // Step 1: Send any offline messages to the server
+  const offlineMessages = await db.getAll('messages');
+  for (const msg of offlineMessages) {
     try {
       await sendToServer(msg);
       await db.delete('messages', msg.id);
-      log(`✅ Synced & removed: ${msg.message}`);
+      log(`✅ Synced offline message: ${msg.message}`);
     } catch (err) {
-      log(`❌ Failed to sync message: ${msg.message}`);
+      log(`❌ Failed to sync: ${msg.message}`);
     }
   }
+
+  // Step 2: Fetch all updates from server
+  try {
+    const res = await fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec');
+    const serverData = await res.json();
+
+    // Step 3: Replace or merge with IndexedDB
+    const tx = db.transaction('messages', 'readwrite');
+    const store = tx.objectStore('messages');
+
+    await store.clear(); // optional: replace everything
+    for (const row of serverData) {
+      await store.put({ id: row[0], message: row[1], timestamp: row[2] });
+    }
+
+    log(`📥 Pulled ${serverData.length} messages from server`);
+  } catch (err) {
+    log('❌ Could not fetch server data');
+    console.error(err);
+  }
+
+  log('✅ Full sync complete!');
 }
+
   </script>
 </body>
