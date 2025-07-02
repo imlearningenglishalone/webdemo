@@ -10,42 +10,15 @@
  <button onclick="syncAll()">🔄 Sync Everything</button>
   <script>
 async function syncAll() {
-  console.log('🔁 Starting full sync...');
-  const db = await dbPromise;
-
-  // Step 1: Send any offline messages to the server
-  const offlineMessages = await db.getAll('messages');
-  for (const msg of offlineMessages) {
-    try {
-      await sendToServer(msg);
-      await db.delete('messages', msg.id);
-      console.log(`✅ Synced offline message: ${msg.message}`);
-    } catch (err) {
-      console.log(`❌ Failed to sync: ${msg.message}`);
-    }
-  }
-
-  // Step 2: Fetch all updates from server
-  try {
-    const res = await fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec');
-    const serverData = await res.json();
-
-    // Step 3: Replace or merge with IndexedDB
-    const tx = db.transaction('messages', 'readwrite');
-    const store = tx.objectStore('messages');
-
-    await store.clear(); // optional: replace everything
-    for (const row of serverData) {
-      await store.put({ id: row[0], message: row[1], timestamp: row[2] });
-    }
-
-    console.log(`📥 Pulled ${serverData.length} messages from server`);
-  } catch (err) {
-    console.log('❌ Could not fetch server data');
-    console.error(err);
-  }
-
-  console.log('✅ Full sync complete!');
+        navigator.serviceWorker.getRegistrations().then(regs => {
+          regs.forEach(reg => reg.unregister());
+        });
+        
+        caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
+        
+        indexedDB.databases().then(dbs => {
+          dbs.forEach(db => indexedDB.deleteDatabase(db.name));
+        });
 }
   </script>
 </body>
