@@ -10,29 +10,29 @@
  <button onclick="clearBrowserData()">🔄 Sync Everything</button>
   <script>
 async function clearBrowserData() {
-  // Unregister all service workers
-  const registrations = await navigator.serviceWorker.getRegistrations();
-  for (const reg of registrations) {
-    await reg.unregister();
-  }
-
-  // Delete all caches
-  const cacheKeys = await caches.keys();
-  for (const key of cacheKeys) {
-    await caches.delete(key);
-  }
-
-  // Delete all IndexedDB databases
-  if (indexedDB.databases) {
-    const databases = await indexedDB.databases();
-    for (const db of databases) {
-      await indexedDB.deleteDatabase(db.name);
-    }
-  } else {
-    console.warn("indexedDB.databases() not supported in this browser.");
-  }
-
-  console.log("Service workers, caches, and IndexedDB have been cleared.");
+      // Unregister all service workers
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      for (const reg of registrations) {
+        await reg.unregister();
+      }
+    
+      // Delete all caches
+      const cacheKeys = await caches.keys();
+      for (const key of cacheKeys) {
+        await caches.delete(key);
+      }
+    
+      // Delete all IndexedDB databases
+      if (indexedDB.databases) {
+        const databases = await indexedDB.databases();
+        for (const db of databases) {
+          await indexedDB.deleteDatabase(db.name);
+        }
+      } else {
+        console.warn("indexedDB.databases() not supported in this browser.");
+      }
+    
+      console.log("Service workers, caches, and IndexedDB have been cleared.");
 }
   </script>
 </body>
