@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OEE Production Report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg:       #0e0f11;
+    --surface:  #16181c;
+    --surface2: #1e2128;
+    --border:   rgba(255,255,255,0.07);
+    --border2:  rgba(255,255,255,0.12);
+    --text:     #e8e6e0;
+    --muted:    #72716a;
+    --accent:   #c8f542;
+    --accent2:  #5b8fff;
+    --warn:     #ffb940;
+    --danger:   #ff5f52;
+    --success:  #42e08f;
+    --mono:     'DM Mono', monospace;
+    --sans:     'DM Sans', sans-serif;
+    --display:  'Syne', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  .header-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── Layout ── */
+  main {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    min-height: calc(100vh - 60px);
+  }
+
+  /* ── Left Panel (data entry) ── */
+  .panel-left {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 1.5rem;
+    overflow-y: auto;
+    max-height: calc(100vh - 60px);
+    position: sticky;
+    top: 60px;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .field-group {
+    margin-bottom: 1.25rem;
+  }
+  label {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    font-family: var(--mono);
+    letter-spacing: 0.05em;
+  }
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 8px 12px;
+    outline: none;
+    transition: border-color 0.15s;
+    appearance: none;
+  }
+  input:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(200,245,66,0.12);
+  }
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2372716a'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 28px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* live calc preview */
+  .live-calc {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .calc-item { text-align: center; }
+  .calc-val {
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .calc-name {
+    font-size: 10px;
+    color: var(--muted);
+    font-family: var(--mono);
+    letter-spacing: 0.08em;
+  }
+
+  /* Add row button */
+  .btn-add {
+    width: 100%;
+    padding: 10px;
+    background: rgba(200,245,66,0.08);
+    border: 1px dashed rgba(200,245,66,0.3);
+    border-radius: 8px;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .btn-add:hover {
+    background: rgba(200,245,66,0.14);
+    border-color: rgba(200,245,66,0.5);
+  }
+
+  .btn-clear {
+    width: 100%;
+    padding: 8px;
+    background: transparent;
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-clear:hover { border-color: var(--danger); color: var(--danger); }
+
+  /* ── Right Panel (analysis) ── */
+  .panel-right {
+    padding: 1.5rem 2rem;
+    overflow-y: auto;
+  }
+
+  /* KPI cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .kpi-card.good::before  { background: var(--success); }
+  .kpi-card.avg::before   { background: var(--warn); }
+  .kpi-card.bad::before   { background: var(--danger); }
+  .kpi-card.neutral::before { background: var(--accent2); }
+
+  .kpi-name {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .kpi-val {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* Charts row */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+  .chart-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .chart-wrap { position: relative; }
+
+  /* Data table */
+  .table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .table-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .table-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+  td {
+    padding: 9px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    font-family: var(--mono);
+  }
+  .badge-good    { background: rgba(66,224,143,0.15); color: var(--success); }
+  .badge-avg     { background: rgba(255,185,64,0.15);  color: var(--warn); }
+  .badge-bad     { background: rgba(255,95,82,0.15);   color: var(--danger); }
+
+  /* Analysis insight box */
+  .insights {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .insight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  .insight-icon { font-size: 20px; margin-bottom: 8px; }
+  .insight-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .insight-body {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+  }
+  .empty-state .big { font-size: 40px; margin-bottom: 1rem; }
+  .empty-state p { font-size: 13px; }
+
+  /* Delete btn in table */
+  .btn-del {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: color 0.15s;
+  }
+  .btn-del:hover { color: var(--danger); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    main { grid-template-columns: 1fr; }
+    .panel-left { position: relative; top: 0; max-height: none; }
+    .kpi-grid { grid-template-columns: repeat(2,1fr); }
+    .charts-row { grid-template-columns: 1fr; }
+    .insights { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    .insights { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    OEE Report
+  </div>
+  <div class="header-meta" id="header-date"></div>
+</header>
+
+<main>
+  <!-- ── LEFT: Data Entry ── -->
+  <div class="panel-left">
+
+    <div class="section-label">Shift Info</div>
+    <div class="field-group">
+      <label>Machine / Line</label>
+      <input type="text" id="f-machine" placeholder="e.g. Line 3 – Press A" value="">
+    </div>
+    <div class="two-col">
+      <div class="field-group">
+        <label>Date</label>
+        <input type="text" id="f-date" placeholder="e.g. 2024-06-15">
+      </div>
+      <div class="field-group">
+        <label>Shift</label>
+        <select id="f-shift">
+          <option>Morning</option>
+          <option>Afternoon</option>
+          <option>Night</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-label">Time Data (min)</div>
+    <div class="two-col">
+      <div class="field-group">
+        <label>Planned Production Time</label>
+        <input type="number" id="f-planned" placeholder="480" min="0">
+      </div>
+      <div class="field-group">
+        <label>Unplanned Downtime</label>
+        <input type="number" id="f-downtime" placeholder="30" min="0">
+      </div>
+    </div>
+
+    <div class="section-label">Production Data</div>
+    <div class="two-col">
+      <div class="field-group">
+        <label>Ideal Cycle Time (sec/part)</label>
+        <input type="number" id="f-cycletime" placeholder="10" min="0" step="0.1">
+      </div>
+      <div class="field-group">
+        <label>Total Parts Produced</label>
+        <input type="number" id="f-total" placeholder="2400" min="0">
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Good Parts (first pass)</label>
+      <input type="number" id="f-good" placeholder="2350" min="0">
+    </div>
+
+    <!-- Live Preview -->
+    <div class="section-label">Live Calculation Preview</div>
+    <div class="live-calc">
+      <div class="calc-item">
+        <div class="calc-val" id="prev-av">—</div>
+        <div class="calc-name">Availability</div>
+      </div>
+      <div class="calc-item">
+        <div class="calc-val" id="prev-pe">—</div>
+        <div class="calc-name">Performance</div>
+      </div>
+      <div class="calc-item">
+        <div class="calc-val" id="prev-qu">—</div>
+        <div class="calc-name">Quality</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-bottom:1.25rem">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--muted)">OEE = </span>
+      <span style="font-family:var(--display);font-size:24px;font-weight:700;color:var(--accent)" id="prev-oee">—</span>
+    </div>
+
+    <button class="btn-add" onclick="addEntry()">＋ Add Entry to Report</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All Data</button>
+  </div>
+
+  <!-- ── RIGHT: Analysis ── -->
+  <div class="panel-right">
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi-card neutral" id="kpi-entries">
+        <div class="kpi-name">Entries</div>
+        <div class="kpi-val" id="kv-entries" style="color:var(--accent2)">0</div>
+        <div class="kpi-sub">shifts logged</div>
+      </div>
+      <div class="kpi-card neutral" id="kpi-oee">
+        <div class="kpi-name">Avg OEE</div>
+        <div class="kpi-val" id="kv-oee" style="color:var(--muted)">—</div>
+        <div class="kpi-sub" id="ks-oee">no data</div>
+      </div>
+      <div class="kpi-card neutral" id="kpi-av">
+        <div class="kpi-name">Avg Availability</div>
+        <div class="kpi-val" id="kv-av" style="color:var(--muted)">—</div>
+        <div class="kpi-sub" id="ks-av">no data</div>
+      </div>
+      <div class="kpi-card neutral" id="kpi-qu">
+        <div class="kpi-name">Avg Quality</div>
+        <div class="kpi-val" id="kv-qu" style="color:var(--muted)">—</div>
+        <div class="kpi-sub" id="ks-qu">no data</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-title">OEE Trend per Entry</div>
+        <div class="chart-wrap" style="height:180px">
+          <canvas id="chart-trend" role="img" aria-label="OEE trend line chart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Avg Factor Breakdown</div>
+        <div class="chart-wrap" style="height:180px">
+          <canvas id="chart-factors" role="img" aria-label="Bar chart of average OEE factors"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insights -->
+    <div class="insights" id="insights-section" style="display:none">
+      <div class="insight-card">
+        <div class="insight-icon">🔍</div>
+        <div class="insight-title">Biggest Loss</div>
+        <div class="insight-body" id="ins-loss">—</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">📈</div>
+        <div class="insight-title">Best Shift</div>
+        <div class="insight-body" id="ins-best">—</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">⚠️</div>
+        <div class="insight-title">Recommendation</div>
+        <div class="insight-body" id="ins-rec">—</div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <div class="table-header">
+        <div class="table-title">Shift Log</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)" id="row-count">0 records</div>
+      </div>
+      <div id="table-wrap">
+        <div class="empty-state">
+          <div class="big">📋</div>
+          <p>No data yet. Fill in the form and click<br><strong>Add Entry to Report</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+/* ── State ── */
+let entries = [];
+let trendChart = null, factorChart = null;
+
+/* ── Date header ── */
+document.getElementById('header-date').textContent = new Date().toLocaleDateString('en-US', {weekday:'short', year:'numeric', month:'short', day:'numeric'});
+
+/* ── Set today's date as default ── */
+const today = new Date();
+document.getElementById('f-date').value = today.toISOString().split('T')[0];
+
+/* ── Live preview ── */
+function liveCalc() {
+  const planned   = parseFloat(document.getElementById('f-planned').value)   || 0;
+  const downtime  = parseFloat(document.getElementById('f-downtime').value)  || 0;
+  const cycleSec  = parseFloat(document.getElementById('f-cycletime').value) || 0;
+  const total     = parseFloat(document.getElementById('f-total').value)     || 0;
+  const good      = parseFloat(document.getElementById('f-good').value)      || 0;
+
+  const runTime = planned - downtime;
+  const av = planned > 0 ? (runTime / planned) : 0;
+  const pe = (runTime > 0 && cycleSec > 0) ? ((total * cycleSec / 60) / runTime) : 0;
+  const qu = total > 0 ? (good / total) : 0;
+  const oee = av * pe * qu;
+
+  const fmt = v => v > 0 && isFinite(v) ? (Math.min(v,1)*100).toFixed(1)+'%' : '—';
+
+  document.getElementById('prev-av').textContent  = fmt(av);
+  document.getElementById('prev-pe').textContent  = fmt(pe);
+  document.getElementById('prev-qu').textContent  = fmt(qu);
+  document.getElementById('prev-oee').textContent = (oee > 0 && isFinite(oee)) ? (Math.min(oee,1)*100).toFixed(1)+'%' : '—';
+}
+
+['f-planned','f-downtime','f-cycletime','f-total','f-good'].forEach(id => {
+  document.getElementById(id).addEventListener('input', liveCalc);
+});
+
+/* ── Add Entry ── */
+function addEntry() {
+  const machine  = document.getElementById('f-machine').value.trim() || 'Unknown';
+  const date     = document.getElementById('f-date').value.trim()    || '—';
+  const shift    = document.getElementById('f-shift').value;
+  const planned  = parseFloat(document.getElementById('f-planned').value);
+  const downtime = parseFloat(document.getElementById('f-downtime').value) || 0;
+  const cycleSec = parseFloat(document.getElementById('f-cycletime').value);
+  const total    = parseFloat(document.getElementById('f-total').value);
+  const good     = parseFloat(document.getElementById('f-good').value);
+
+  if (!planned || !cycleSec || !total || !good) {
+    alert('Please fill in all production fields before adding an entry.');
+    return;
+  }
+
+  const runTime = planned - downtime;
+  const av  = Math.min(runTime / planned, 1);
+  const pe  = Math.min((total * cycleSec / 60) / runTime, 1);
+  const qu  = Math.min(good / total, 1);
+  const oee = av * pe * qu;
+
+  entries.push({ machine, date, shift, planned, downtime, cycleSec, total, good, av, pe, qu, oee, id: Date.now() });
+  renderAll();
+}
+
+/* ── Delete Entry ── */
+function deleteEntry(id) {
+  entries = entries.filter(e => e.id !== id);
+  renderAll();
+}
+
+/* ── Clear All ── */
+function clearAll() {
+  if (entries.length === 0) return;
+  if (confirm('Clear all entries?')) { entries = []; renderAll(); }
+}
+
+/* ── Render Everything ── */
+function renderAll() {
+  renderKPIs();
+  renderTable();
+  renderCharts();
+  renderInsights();
+}
+
+/* ── KPIs ── */
+function pct(v) { return (v * 100).toFixed(1) + '%'; }
+
+function rateClass(v) {
+  if (v >= 0.85) return 'good';
+  if (v >= 0.60) return 'avg';
+  return 'bad';
+}
+function rateColor(v) {
+  if (v >= 0.85) return 'var(--success)';
+  if (v >= 0.60) return 'var(--warn)';
+  return 'var(--danger)';
+}
+function rateLabel(v) {
+  if (v >= 0.85) return 'World class';
+  if (v >= 0.60) return 'Average';
+  return 'Needs improvement';
+}
+
+function renderKPIs() {
+  document.getElementById('kv-entries').textContent = entries.length;
+  if (entries.length === 0) {
+    ['kv-oee','kv-av','kv-qu'].forEach(id => { document.getElementById(id).textContent = '—'; document.getElementById(id).style.color = 'var(--muted)'; });
+    ['ks-oee','ks-av','ks-qu'].forEach(id => document.getElementById(id).textContent = 'no data');
+    ['kpi-oee','kpi-av','kpi-qu'].forEach(id => { document.getElementById(id).className = 'kpi-card neutral'; });
+    return;
+  }
+  const avgOee = entries.reduce((s,e) => s+e.oee, 0) / entries.length;
+  const avgAv  = entries.reduce((s,e) => s+e.av,  0) / entries.length;
+  const avgQu  = entries.reduce((s,e) => s+e.qu,  0) / entries.length;
+
+  const setKpi = (valId, subId, cardId, v) => {
+    document.getElementById(valId).textContent = pct(v);
+    document.getElementById(valId).style.color = rateColor(v);
+    document.getElementById(subId).textContent = rateLabel(v);
+    document.getElementById(cardId).className = 'kpi-card ' + rateClass(v);
+  };
+  setKpi('kv-oee','ks-oee','kpi-oee', avgOee);
+  setKpi('kv-av', 'ks-av', 'kpi-av',  avgAv);
+  setKpi('kv-qu', 'ks-qu', 'kpi-qu',  avgQu);
+}
+
+/* ── Table ── */
+function renderTable() {
+  document.getElementById('row-count').textContent = entries.length + ' record' + (entries.length !== 1 ? 's' : '');
+  if (entries.length === 0) {
+    document.getElementById('table-wrap').innerHTML = `<div class="empty-state"><div class="big">📋</div><p>No data yet. Fill in the form and click<br><strong>Add Entry to Report</strong>.</p></div>`;
+    return;
+  }
+  let rows = entries.map((e,i) => {
+    const cls = e.oee >= 0.85 ? 'badge-good' : e.oee >= 0.60 ? 'badge-avg' : 'badge-bad';
+    return `<tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td>${e.machine}</td>
+      <td>${e.date}</td>
+      <td>${e.shift}</td>
+      <td>${pct(e.av)}</td>
+      <td>${pct(e.pe)}</td>
+      <td>${pct(e.qu)}</td>
+      <td><span class="badge ${cls}">${pct(e.oee)}</span></td>
+      <td>${e.good.toLocaleString()} / ${e.total.toLocaleString()}</td>
+      <td><button class="btn-del" onclick="deleteEntry(${e.id})" title="Delete">✕</button></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('table-wrap').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>#</th><th>Machine</th><th>Date</th><th>Shift</th>
+        <th>Avail.</th><th>Perf.</th><th>Quality</th><th>OEE</th>
+        <th>Good / Total</th><th></th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+/* ── Charts ── */
+const chartDefaults = {
+  color: '#72716a',
+  borderColor: 'rgba(255,255,255,0.07)',
+};
+
+function renderCharts() {
+  // Trend chart
+  if (trendChart) trendChart.destroy();
+  const tCtx = document.getElementById('chart-trend').getContext('2d');
+
+  if (entries.length === 0) {
+    trendChart = new Chart(tCtx, {
+      type: 'line',
+      data: { labels: [], datasets: [{ data: [] }] },
+      options: { responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { x: { display: false }, y: { display: false } }
+      }
+    });
+  } else {
+    const labels = entries.map((e,i) => `#${i+1} ${e.shift}`);
+    trendChart = new Chart(tCtx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label: 'OEE',         data: entries.map(e => +(e.oee*100).toFixed(1)),  borderColor: '#c8f542', backgroundColor: 'rgba(200,245,66,0.08)', tension: 0.3, pointRadius: 4, pointBackgroundColor: '#c8f542', borderWidth: 2 },
+          { label: 'Availability',data: entries.map(e => +(e.av*100).toFixed(1)),   borderColor: '#5b8fff', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3, borderWidth: 1.5, borderDash: [4,3] },
+          { label: 'Performance', data: entries.map(e => +(e.pe*100).toFixed(1)),   borderColor: '#42e08f', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3, borderWidth: 1.5, borderDash: [4,3] },
+          { label: 'Quality',     data: entries.map(e => +(e.qu*100).toFixed(1)),   borderColor: '#ffb940', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3, borderWidth: 1.5, borderDash: [4,3] },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: 'bottom', labels: { color: '#72716a', font: { family: 'DM Mono', size: 10 }, boxWidth: 10, padding: 12 } },
+          tooltip: { backgroundColor: '#1e2128', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, titleColor: '#e8e6e0', bodyColor: '#72716a', titleFont: { family: 'DM Mono' }, bodyFont: { family: 'DM Mono', size: 11 } }
+        },
+        scales: {
+          x: { ticks: { color: '#72716a', font: { family: 'DM Mono', size: 10 }, maxRotation: 30 }, grid: { color: 'rgba(255,255,255,0.04)' } },
+          y: { min: 0, max: 100, ticks: { color: '#72716a', font: { family: 'DM Mono', size: 10 }, callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.04)' } }
+        }
+      }
+    });
+  }
+
+  // Factor bar chart
+  if (factorChart) factorChart.destroy();
+  const fCtx = document.getElementById('chart-factors').getContext('2d');
+
+  if (entries.length === 0) {
+    factorChart = new Chart(fCtx, {
+      type: 'bar',
+      data: { labels: ['Availability','Performance','Quality','OEE'], datasets: [{ data: [0,0,0,0], backgroundColor: 'rgba(255,255,255,0.05)' }] },
+      options: { responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { x: { ticks: { color: '#72716a', font: { family: 'DM Mono', size: 10 } }, grid: { display: false } }, y: { display: false } }
+      }
+    });
+  } else {
+    const n = entries.length;
+    const avgAv  = entries.reduce((s,e) => s+e.av,  0) / n * 100;
+    const avgPe  = entries.reduce((s,e) => s+e.pe,  0) / n * 100;
+    const avgQu  = entries.reduce((s,e) => s+e.qu,  0) / n * 100;
+    const avgOee = entries.reduce((s,e) => s+e.oee, 0) / n * 100;
+
+    factorChart = new Chart(fCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Availability','Performance','Quality','OEE'],
+        datasets: [{
+          data: [avgAv, avgPe, avgQu, avgOee].map(v => +v.toFixed(1)),
+          backgroundColor: ['#5b8fff','#42e08f','#ffb940','#c8f542'],
+          borderRadius: 4,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { backgroundColor: '#1e2128', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, titleColor: '#e8e6e0', bodyColor: '#72716a', titleFont: { family: 'DM Mono' }, bodyFont: { family: 'DM Mono', size: 11 }, callbacks: { label: ctx => ' ' + ctx.raw.toFixed(1) + '%' } }
+        },
+        scales: {
+          x: { ticks: { color: '#72716a', font: { family: 'DM Mono', size: 10 } }, grid: { display: false } },
+          y: { min: 0, max: 100, ticks: { color: '#72716a', font: { family: 'DM Mono', size: 10 }, callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.04)' } }
+        }
+      }
+    });
+  }
+}
+
+/* ── Insights ── */
+function renderInsights() {
+  const sec = document.getElementById('insights-section');
+  if (entries.length < 1) { sec.style.display = 'none'; return; }
+  sec.style.display = 'grid';
+
+  const n = entries.length;
+  const avgAv  = entries.reduce((s,e) => s+e.av,  0) / n;
+  const avgPe  = entries.reduce((s,e) => s+e.pe,  0) / n;
+  const avgQu  = entries.reduce((s,e) => s+e.qu,  0) / n;
+  const avgOee = entries.reduce((s,e) => s+e.oee, 0) / n;
+
+  // Biggest loss
+  const losses = [
+    { name: 'Availability', loss: 1 - avgAv },
+    { name: 'Performance',  loss: 1 - avgPe  },
+    { name: 'Quality',      loss: 1 - avgQu  },
+  ];
+  const biggest = losses.sort((a,b) => b.loss - a.loss)[0];
+  document.getElementById('ins-loss').textContent =
+    `${biggest.name} is the biggest loss factor at ${(biggest.loss*100).toFixed(1)}% below ideal.`;
+
+  // Best shift
+  const best = entries.reduce((b,e) => e.oee > b.oee ? e : b, entries[0]);
+  document.getElementById('ins-best').textContent =
+    `${best.machine} – ${best.shift} on ${best.date} with OEE of ${pct(best.oee)}.`;
+
+  // Recommendation
+  let rec = '';
+  if (biggest.name === 'Availability')  rec = 'Focus on reducing unplanned downtime. Review maintenance schedules and changeover procedures.';
+  else if (biggest.name === 'Performance') rec = 'Investigate speed losses and micro-stoppages. Check machine settings vs. ideal cycle time.';
+  else rec = 'Improve first-pass quality. Review process parameters, material quality, and operator training.';
+  if (avgOee < 0.6) rec = '⚠ OEE below 60%. ' + rec;
+  document.getElementById('ins-rec').textContent = rec;
+}
+
+/* ── Init charts empty ── */
+renderAll();
+</script>
+</body>
+</html>
